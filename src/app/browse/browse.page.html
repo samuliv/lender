@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-button (click)="quickSearch()">Quick Search</ion-button>
+      </ion-buttons>
+    <ion-title>
+      Browse
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+      <ion-item (click)="chooseLocationManually()">
+          <ion-label>
+            Category
+          </ion-label>
+          <ion-badge slot="end" color="secondary">All</ion-badge>  
+        </ion-item>
+
+    <ion-list-header>
+      <ion-label>Max Price (per hour)</ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-range min="0" max="201" color="secondary" [(ngModel)]="maxPrice">
+        <ion-badge slot="end" color="secondary" class="fixed-width">{{ maxPrice === 0 ? 'Free' : maxPrice === 201 ? '∞ €' : maxPrice + ' €' }}</ion-badge>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Use GPS location</ion-label>
+      <ion-toggle [(ngModel)]="useGpsLocation"></ion-toggle>
+    </ion-item>
+
+    <ion-item (click)="chooseLocationManually()">
+      <ion-label>
+        Location
+      </ion-label>
+      <ion-icon name="navigate" color="secondary" slot="end"></ion-icon>
+      <ion-badge slot="end" color="secondary">Espoo</ion-badge>  
+    </ion-item>
+    
+    <ion-list-header>
+      <ion-label>Max Distance</ion-label>      
+    </ion-list-header>
+    
+    <ion-item>
+      <ion-range min="1" max="201" color="secondary" [(ngModel)]="maxDistance">
+        <ion-badge slot="end" color="primary" class="fixed-width">{{ maxDistance === 201 ? '∞ km' : maxDistance + " km" }}</ion-badge>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Start Time</ion-label>
+      <ion-datetime display-format="MMM DD, YYYY HH:mm"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>End Time</ion-label>
+      <ion-datetime display-format="MMM DD, YYYY HH:mm"></ion-datetime>
+    </ion-item>
+  
+  </ion-list>
+
+  <ion-button expand="block">Browse 12349 items</ion-button>
+  
+</ion-content>

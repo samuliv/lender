@@ -8,42 +8,60 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'browse',
         children: [
           {
             path: '',
-            loadChildren: '../tab1/tab1.module#Tab1PageModule'
+            loadChildren: '../browse/browse.module#BrowsePageModule'
           }
         ]
       },
       {
-        path: 'tab2',
+        path: 'myitems',
         children: [
           {
             path: '',
-            loadChildren: '../tab2/tab2.module#Tab2PageModule'
+            loadChildren: '../myitems/myitems.module#MyItemsPageModule'
           }
         ]
       },
       {
-        path: 'tab3',
+        path: 'calendar',
         children: [
           {
             path: '',
-            loadChildren: '../tab3/tab3.module#Tab3PageModule'
+            loadChildren: '../calendar/calendar.module#CalendarPageModule'
+          }
+        ]
+      },
+      {
+        path: 'requests',
+        children: [
+          {
+            path: '',
+            loadChildren: '../requests/requests.module#RequestsPageModule'
+          }
+        ]
+      },
+      {
+        path: 'settings',
+        children: [
+          {
+            path: '',
+            loadChildren: '../settings/settings.module#SettingsPageModule'
           }
         ]
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/browse',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/browse',
     pathMatch: 'full'
   }
 ];

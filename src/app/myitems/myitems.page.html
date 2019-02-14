@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-button>My Items</ion-button>
+      </ion-buttons>
+    <ion-title>
+      Lendings
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list lines="full">
+    <ion-item-sliding *ngFor="let item of listItems | async">
+      <ion-item (click)="console.log('test')">
+        <ion-thumbnail slot="start">
+          <img src="data:image/jpeg;base64,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">
+        </ion-thumbnail>        
+        <ion-label>
+          <h3>BMW e36 Coupé (LUI-658)</h3>
+          <p class="starts">Starts: {{ item.starts }}</p>
+          <p class="ends">Ends: {{ item.ends }}</p>
+        </ion-label>
+        <ion-badge slot="end" color="success" *ngIf="item.status == 'accepted'"><ion-icon name="thumbs-up"></ion-icon></ion-badge>  
+        <ion-badge slot="end" color="success" *ngIf="item.status == 'rejected'"><ion-icon name="thumbs-down"></ion-icon></ion-badge>  
+        <ion-badge slot="end" color="warning" *ngIf="item.status == 'pending'"><ion-icon name="hourglass"></ion-icon></ion-badge>  
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option color="primary" (click)="unread(item)">Send Message</ion-item-option>
+      </ion-item-options>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="unread(item)" *ngIf="item.rejectable">Reject</ion-item-option>
+        <ion-item-option color="danger" (click)="unread(item)" *ngIf="item.cancellable">Cancel</ion-item-option>
+        <ion-item-option color="success" (click)="unread(item)" *ngIf="item.acceptable">Accept</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+</ion-content>
+  
+<ion-footer>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="viewPage">
+      <ion-segment-button value="all">All</ion-segment-button>
+      <ion-segment-button value="accepted">Accepted</ion-segment-button>
+      <ion-segment-button value="pending">Pending</ion-segment-button>      
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>
