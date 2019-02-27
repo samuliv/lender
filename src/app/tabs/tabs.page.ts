@@ -5,4 +5,13 @@ import { Component } from '@angular/core';
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss']
 })
-export class TabsPage {}
+export class TabsPage {
+  badgeNumberLent: number;
+  badgeNumberBorrowed: number;
+  badgeNumberMessages: number;
+  constructor () {
+    this.badgeNumberMessages = 1;
+    this.badgeNumberLent = 0;
+    this.badgeNumberBorrowed = 0;
+  }
+}

@@ -5,11 +5,11 @@ import { Feedback } from '../interfaces/feedback';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-requests',
-  templateUrl: 'requests.page.html',
-  styleUrls: ['requests.page.scss']
+  selector: 'app-messages',
+  templateUrl: 'messages.page.html',
+  styleUrls: ['messages.page.scss']
 })
-export class RequestsPage {
+export class MessagesPage {
 
   viewPage: string;
   inbox: Message[];
@@ -62,12 +62,12 @@ export class RequestsPage {
         break;
     }
   }
-  
+
   doRefresh(e: Event) {
     console.log('doRefresh()');
     this.refreshCurrent();
     setTimeout(() => {
-      e.target.complete();
+      //e.target.complete();
     }, 200);
   }
 

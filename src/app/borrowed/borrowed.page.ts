@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-calendar',
-  templateUrl: 'calendar.page.html',
-  styleUrls: ['calendar.page.scss']
+  selector: 'app-borrowed',
+  templateUrl: 'borrowed.page.html',
+  styleUrls: ['borrowed.page.scss']
 })
-export class CalendarPage {
+export class BorrowedPage {
   viewPage: string;
   constructor() {
     this.viewPage = 'all';

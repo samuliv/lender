@@ -15,15 +15,38 @@ export class BrowsePage {
   maxDistance: number;
   maxPrice: number;
 
+  startTime: string;
+  endTime: string;
+
+  browseItemsCount: string;
+  refreshTimer: any;
+
   constructor(public actionSheetController: ActionSheetController, public extra: ExtraService) {
     this.maxDistance = 20;
     this.useGpsLocation = true;
     this.maxPrice = 0;
     this.setDateRange = false;
+
+    const currentTime = new Date();
+    currentTime.setTime(currentTime.getTime() + (1 * 60 * 60 * 1000));
+    this.startTime = currentTime.toISOString();
+    currentTime.setTime(currentTime.getTime() + (1 * 60 * 60 * 1000));
+    this.endTime  = currentTime.toISOString();
   }
 
   chooseLocationManually() {
     console.log('**CLICK**');
+  }
+
+  someParameterChanged() {
+    clearTimeout(this.refreshTimer);
+    this.refreshTimer = setTimeout( () => { this.refreshBrowseItemsCount(); }, 250);
+  }
+
+  refreshBrowseItemsCount() {
+    console.log('***REFRESH BROWSE ITEM COUNT***');
+    // TODO
+    this.browseItemsCount = Math.floor(Math.random() * 100).toString();
   }
 
   async quickSearch() {

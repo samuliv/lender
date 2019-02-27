@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { ExtraService } from '../extra.service';
 
 @Component({
-  selector: 'app-myitems',
-  templateUrl: 'myitems.page.html',
-  styleUrls: ['myitems.page.scss']
+  selector: 'app-lent',
+  templateUrl: 'lent.page.html',
+  styleUrls: ['lent.page.scss']
 })
-export class MyItemsPage {
+export class LentPage {
 
   viewPage: string;
   listItems: Observable<LendItem[]>;
@@ -20,7 +20,7 @@ export class MyItemsPage {
     this.listItems = this.extra.getLendingsList(1);
   }
   ionViewDidEnter() {
-    console.log('myitems.page.ts : ionViewDidEnter()');
+    console.log('lent.page.ts : ionViewDidEnter()');
     this.refreshList();
   }
 }

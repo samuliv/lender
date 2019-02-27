@@ -17,29 +17,29 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'myitems',
+        path: 'lent',
         children: [
           {
             path: '',
-            loadChildren: '../myitems/myitems.module#MyItemsPageModule'
+            loadChildren: '../lent/lent.module#LentPageModule'
           }
         ]
       },
       {
-        path: 'calendar',
+        path: 'borrowed',
         children: [
           {
             path: '',
-            loadChildren: '../calendar/calendar.module#CalendarPageModule'
+            loadChildren: '../borrowed/borrowed.module#BorrowedPageModule'
           }
         ]
       },
       {
-        path: 'requests',
+        path: 'messages',
         children: [
           {
             path: '',
-            loadChildren: '../requests/requests.module#RequestsPageModule'
+            loadChildren: '../messages/messages.module#MessagesPageModule'
           }
         ]
       },
