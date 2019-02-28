@@ -17,7 +17,7 @@ export class SettingsPage {
   }
 
   myLendableItems() {
-    console.log('TODO');
+    this.router.navigate(['/my-lendable-items']);
   }
 
   async deleteAccount() {
