@@ -7,7 +7,8 @@ const routes: Routes = [
   { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
   { path: 'my-lendable-items', loadChildren: './my-lendable-items/my-lendable-items.module#MyLendableItemsPageModule' },
   { path: 'browse-category', loadChildren: './browse-category/browse-category.module#BrowseCategoryPageModule' },
-  { path: 'choose-location', loadChildren: './choose-location/choose-location.module#ChooseLocationPageModule' }
+  { path: 'choose-location', loadChildren: './choose-location/choose-location.module#ChooseLocationPageModule' },
+  { path: 'send-message', loadChildren: './send-message/send-message.module#SendMessagePageModule' }
 ];
 @NgModule({
   imports: [
