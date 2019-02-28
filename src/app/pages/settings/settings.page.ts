@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { WbmaService } from 'src/app/services/wbma/wbma.service';
 
 @Component({
   selector: 'app-settings',
@@ -9,7 +10,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class SettingsPage {
 
-  constructor (private router: Router, private alertController: AlertController) {
+  constructor (private router: Router, private alertController: AlertController, private wbma: WbmaService) {
   }
 
   viewAboutLender () {
@@ -50,7 +51,8 @@ export class SettingsPage {
         {
           text: 'OK',
           handler: () => {
-            console.log('TODO: LOGOUT');
+            this.wbma.logout();
+            this.router.navigate(['/login']);
           }
         }, {
           text: 'Cancel',

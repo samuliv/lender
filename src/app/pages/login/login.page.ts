@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { WbmaService } from 'src/app/services/wbma/wbma.service';
+import { AlertController } from '@ionic/angular';
+import { ExtraService } from 'src/app/services/extra/extra.service';
+import { UsernameAvailable } from 'src/app/interfaces/usernameavailable';
+import { LoginInfo } from 'src/app/interfaces/logininfo';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +13,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPage implements OnInit {
 
-  constructor() { }
+  username: string;
+  password: string;
+
+  constructor(private wbma: WbmaService, private extra: ExtraService, private alertController: AlertController) { }
 
   ngOnInit() {
+    console.log('login.page.ts : ngOnInit()');
+  }
+
+  loginButtonClick() {
+    this.wbma.login(this.username, this.password);
+    this.username = '';
+    this.password = '';
   }
 
 }

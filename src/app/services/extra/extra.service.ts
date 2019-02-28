@@ -15,7 +15,7 @@ export class ExtraService {
   constructor(private http: HttpClient) {
   }
 
-  private serialize (obj) {
+  private serialize (obj: any) {
     const str = [];
     for (const p in obj) {
       if (obj.hasOwnProperty(p)) {
