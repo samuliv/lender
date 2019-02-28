@@ -4,5 +4,7 @@ export interface LendItem {
     accetable: boolean;
     rejectable: boolean;
     cancellable: boolean;
+    item_id: number;
+    user_id: number;
     status: string;
   }

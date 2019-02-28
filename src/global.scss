@@ -9,3 +9,25 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+
+/* oneRow for displaying span with ion-segment in one row */
+.oneRow {
+    .left { 
+        float :left; 
+    }
+    .right { 
+        float: right; 
+        color:#fff; 
+        font-weight:bold;
+        background: #3880ff;
+        border-radius: 50%;
+        padding: 0 4px 0 4px;
+        margin-left: 4px;
+    }
+}
+/* with IOS display segment number with white background when selected */
+.sc-ion-segment-ios-h .segment-button-checked .oneRow .right, 
+.sc-ion-segment-ios-s .segment-button-checked .oneRow .right {
+    background: #fff; color: #3880ff;
+}

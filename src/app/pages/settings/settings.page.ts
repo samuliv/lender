@@ -17,7 +17,7 @@ export class SettingsPage {
   }
 
   myLendableItems() {
-    this.router.navigate(['/my-lendable-items']);
+    this.router.navigate(['/my-lendable-items/settings']);
   }
 
   async deleteAccount() {

@@ -5,10 +5,10 @@ const routes: Routes = [
   { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' },
   { path: 'readmessage/:id', loadChildren: './pages/readmessage/readmessage.module#ReadMessagePageModule' },
   { path: 'about', loadChildren: './pages/about/about.module#AboutPageModule' },
-  { path: 'my-lendable-items', loadChildren: './pages/my-lendable-items/my-lendable-items.module#MyLendableItemsPageModule' },
+  { path: 'my-lendable-items/:source', loadChildren: './pages/my-lendable-items/my-lendable-items.module#MyLendableItemsPageModule' },
   { path: 'browse-category', loadChildren: './pages/browse-category/browse-category.module#BrowseCategoryPageModule' },
   { path: 'choose-location', loadChildren: './pages/choose-location/choose-location.module#ChooseLocationPageModule' },
-  { path: 'send-message', loadChildren: './pages/send-message/send-message.module#SendMessagePageModule' },
+  { path: 'send-message/:source', loadChildren: './pages/send-message/send-message.module#SendMessagePageModule' },
   { path: 'my-profile', loadChildren: './pages/my-profile/my-profile.module#MyProfilePageModule' }
 ];
 @NgModule({

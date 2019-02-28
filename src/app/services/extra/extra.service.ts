@@ -38,7 +38,7 @@ export class ExtraService {
   }
 
   public getListLent(user_id: number) {
-    return this.http.get<LendItem[]>(this.extraURL + '?operation=lent&user_id=' + user_id);
+    return this.http.get<LendItem[]>(this.extraURL + '?operation=lends&user_id=' + user_id);
   }
 
   public getMessages(user_id: number) {

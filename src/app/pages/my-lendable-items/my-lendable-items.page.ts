@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-my-lendable-items',
@@ -8,13 +9,18 @@ import { NavController } from '@ionic/angular';
 })
 export class MyLendableItemsPage implements OnInit {
 
-  constructor(private navController: NavController) { }
+  constructor(private navController: NavController, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
   }
 
   goBack() {
-    this.navController.navigateBack('/tabs/settings');
+    const source = this.activatedRoute.snapshot.paramMap.get('source');
+    if (source === 'settings') {
+      this.navController.navigateBack('/tabs/settings');
+    } else {
+      this.navController.navigateBack('/tabs/lent');
+    }
   }
 
 }
