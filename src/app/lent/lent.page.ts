@@ -16,11 +16,17 @@ export class LentPage {
   constructor(public extra: ExtraService) {
     this.viewPage = 'all';
   }
+
   refreshList() {
     this.listItems = this.extra.getLendingsList(1);
   }
+
   ionViewDidEnter() {
     console.log('lent.page.ts : ionViewDidEnter()');
     this.refreshList();
+  }
+
+  itemClick(item: LendItem) {
+    console.log('ItemClick');
   }
 }

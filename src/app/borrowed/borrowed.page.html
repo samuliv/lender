@@ -4,6 +4,13 @@
       Borrowed
     </ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="viewPage">
+      <ion-segment-button value="all">All</ion-segment-button>
+      <ion-segment-button value="confirmed">Confirmed</ion-segment-button>
+      <ion-segment-button value="pending">Pending</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>  
 </ion-header>
 
 <ion-content>
@@ -22,13 +29,3 @@
   </ion-list>
 
 </ion-content>
-  
-<ion-footer>
-  <ion-toolbar>
-    <ion-segment [(ngModel)]="viewPage">
-      <ion-segment-button value="all">All</ion-segment-button>
-      <ion-segment-button value="confirmed">Confirmed</ion-segment-button>
-      <ion-segment-button value="pending">Pending</ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
-</ion-footer>
