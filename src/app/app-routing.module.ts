@@ -8,7 +8,8 @@ const routes: Routes = [
   { path: 'my-lendable-items', loadChildren: './pages/my-lendable-items/my-lendable-items.module#MyLendableItemsPageModule' },
   { path: 'browse-category', loadChildren: './pages/browse-category/browse-category.module#BrowseCategoryPageModule' },
   { path: 'choose-location', loadChildren: './pages/choose-location/choose-location.module#ChooseLocationPageModule' },
-  { path: 'send-message', loadChildren: './pages/send-message/send-message.module#SendMessagePageModule' }
+  { path: 'send-message', loadChildren: './pages/send-message/send-message.module#SendMessagePageModule' },
+  { path: 'my-profile-page', loadChildren: './pages/my-profile-page/my-profile-page.module#MyProfilePagePageModule' }
 ];
 @NgModule({
   imports: [
