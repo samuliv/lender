@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'browse-category', loadChildren: './pages/browse-category/browse-category.module#BrowseCategoryPageModule' },
   { path: 'choose-location', loadChildren: './pages/choose-location/choose-location.module#ChooseLocationPageModule' },
   { path: 'send-message', loadChildren: './pages/send-message/send-message.module#SendMessagePageModule' },
-  { path: 'my-profile-page', loadChildren: './pages/my-profile-page/my-profile-page.module#MyProfilePagePageModule' }
+  { path: 'my-profile', loadChildren: './pages/my-profile/my-profile.module#MyProfilePageModule' }
 ];
 @NgModule({
   imports: [
