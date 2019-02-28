@@ -12,7 +12,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../browse/browse.module#BrowsePageModule'
+            loadChildren: '../pages/browse/browse.module#BrowsePageModule'
           }
         ]
       },
@@ -21,7 +21,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../lent/lent.module#LentPageModule'
+            loadChildren: '../pages/lent/lent.module#LentPageModule'
           }
         ]
       },
@@ -30,7 +30,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../borrowed/borrowed.module#BorrowedPageModule'
+            loadChildren: '../pages/borrowed/borrowed.module#BorrowedPageModule'
           }
         ]
       },
@@ -39,7 +39,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../messages/messages.module#MessagesPageModule'
+            loadChildren: '../pages/messages/messages.module#MessagesPageModule'
           }
         ]
       },
@@ -48,7 +48,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../settings/settings.module#SettingsPageModule'
+            loadChildren: '../pages/settings/settings.module#SettingsPageModule'
           }
         ]
       },

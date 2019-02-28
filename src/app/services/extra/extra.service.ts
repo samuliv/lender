@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { LendItem } from './interfaces/lenditem';
-import { Message } from './interfaces/message';
-import { Feedback } from './interfaces/feedback';
-import { Success } from './interfaces/success';
+import { LendItem } from '../../interfaces/lenditem';
+import { Message } from '../../interfaces/message';
+import { Feedback } from '../../interfaces/feedback';
+import { Success } from '../../interfaces/success';
 
 @Injectable({
   providedIn: 'root'
@@ -37,8 +37,8 @@ export class ExtraService {
     });
   }
 
-  public getLendingsList(user_id: number) {
-    return this.http.get<LendItem[]>(this.extraURL + '?operation=lendings&user_id=' + user_id);
+  public getListLent(user_id: number) {
+    return this.http.get<LendItem[]>(this.extraURL + '?operation=lent&user_id=' + user_id);
   }
 
   public getMessages(user_id: number) {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ExtraService } from '../extra.service';
-import { Message } from '../interfaces/message';
-import { Feedback } from '../interfaces/feedback';
+import { ExtraService } from '../../services/extra/extra.service';
+import { Message } from '../../interfaces/message';
+import { Feedback } from '../../interfaces/feedback';
 import { Router } from '@angular/router';
 
 @Component({

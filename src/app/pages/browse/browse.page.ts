@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
-import { ExtraService } from '../extra.service';
+import { ExtraService } from '../../services/extra/extra.service';
 
 @Component({
   selector: 'app-browse',

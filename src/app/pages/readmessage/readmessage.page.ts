@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ExtraService } from '../extra.service';
+import { ExtraService } from '../../services/extra/extra.service';
 import { NavController, Platform } from '@ionic/angular';
-import { Message } from '../interfaces/message';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

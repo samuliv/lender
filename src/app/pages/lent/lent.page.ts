@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { LendItem } from '../interfaces/lenditem';
-import { Observable } from 'rxjs';
-import { ExtraService } from '../extra.service';
+import { LendItem } from '../../interfaces/lenditem';
+import { ExtraService } from '../../services/extra/extra.service';
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -12,14 +11,27 @@ import { AlertController } from '@ionic/angular';
 export class LentPage {
 
   viewPage: string;
-  listItems: Observable<LendItem[]>;
+  lentItems: LendItem[];
+  pendingItems: LendItem[];
+  toolbarBadgeLent: number;
+  toolbarBadgePending: number;
+  toolbarBadgeFeedback: number;
 
   constructor(public extra: ExtraService, private alertController: AlertController) {
-    this.viewPage = 'latest';
+    this.viewPage = 'lent';
+    this.resetToolbarBadges();
+  }
+
+  resetToolbarBadges() {
+    this.toolbarBadgeFeedback = 0;
+    this.toolbarBadgePending = 0;
+    this.toolbarBadgeLent = 0;
   }
 
   refreshList() {
-    this.listItems = this.extra.getLendingsList(1);
+    this.extra.getListLent(1).subscribe( res => {
+      this.lentItems = res;
+    });
   }
 
   ionViewDidEnter() {
