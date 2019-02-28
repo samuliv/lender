@@ -1,0 +1,28 @@
+<ion-header>
+
+  <ion-toolbar>
+    
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
+    </ion-buttons> 
+
+    <ion-title>
+      Message
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="reply()">Reply</ion-button>
+    </ion-buttons> 
+
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+  <p>From: {{ messageSenderName }}</p>
+  <p>Time: {{ messageTime }}</p>
+  <p>Message: </p>
+  <p>{{ message }}</p>
+
+</ion-content>

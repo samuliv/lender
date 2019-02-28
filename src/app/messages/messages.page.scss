@@ -10,3 +10,16 @@
     //color: #fff;
     color: #00cc00;
 }
+span.unread {
+    background:#3142cc;
+    font-size: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 2px 4px 2px 4px;
+    margin-bottom: 2px;
+    border-radius: 2px;
+}
+.messageTeaser {
+    font-size: 12px;
+}

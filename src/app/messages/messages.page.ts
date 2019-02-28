@@ -1,23 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ExtraService } from '../extra.service';
 import { Message } from '../interfaces/message';
 import { Feedback } from '../interfaces/feedback';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-messages',
   templateUrl: 'messages.page.html',
   styleUrls: ['messages.page.scss']
 })
-export class MessagesPage {
+export class MessagesPage implements OnInit {
 
   viewPage: string;
   inbox: Message[];
   outbox: Message[];
   feedback: Feedback[];
 
-  constructor(private extra: ExtraService) {
+  constructor(private extra: ExtraService, private router: Router) {
     this.viewPage = 'inbox';
+  }
+
+  ngOnInit() {
+    console.log('myitems.page.ts : ngOnInit()');
+    this.refreshAll();
   }
 
   refreshInbox() {
@@ -42,11 +47,31 @@ export class MessagesPage {
     });
   }
 
-  ionViewDidEnter() {
-    console.log('myitems.page.ts : ionViewDidEnter()');
+  refreshAll() {
     this.refreshInbox();
     this.refreshOutbox();
     this.refreshFeedback();
+  }
+
+  readInboxMessage(id: number, alreadyReaded: boolean, message: Message) {
+    if ( !alreadyReaded ) {
+      this.extra.markMessageAsReaded(id).subscribe(res => {
+        console.log('This message was unreaded. Trying to mark as readed:');
+        console.log('...markMessageAsReaded(id): success = ' + res.success);
+        if ( res.success ) {
+          message.readed = true;
+        }
+      });
+    }
+    this.router.navigate(['/readmessage/' + id]);
+  }
+
+  readOutboxMessage(id: number) {
+    this.router.navigate(['/readmessage/' + id]);
+  }
+
+  readFeedback(id: number) {
+    this.router.navigate(['/readmessage/' + id]);
   }
 
   refreshCurrent() {
@@ -63,12 +88,10 @@ export class MessagesPage {
     }
   }
 
-  doRefresh(e: Event) {
+  doRefresh(event) {
     console.log('doRefresh()');
     this.refreshCurrent();
-    setTimeout(() => {
-      //e.target.complete();
-    }, 200);
+    event.target.complete();
   }
 
 }

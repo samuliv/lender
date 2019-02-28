@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { LendItem } from './interfaces/lenditem';
 import { Message } from './interfaces/message';
 import { Feedback } from './interfaces/feedback';
+import { Success } from './interfaces/success';
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +45,20 @@ export class ExtraService {
     return this.http.get<Message[]>(this.extraURL + '?operation=messages&user_id=' + user_id);
   }
 
+  public getMessage(message_id: number) {
+    return this.http.get<Message>(this.extraURL + '?operation=message&message_id=' + message_id);
+  }
+
   public getFeedback(user_id: number) {
     return this.http.get<Feedback[]>(this.extraURL + '?operation=feedback&user_id=' + user_id);
+  }
+
+  public markMessageAsReaded(message_id: number) {
+    return this.http.get<Success>(this.extraURL + '?operation=markmessageasreaded&id=' + message_id);
+  }
+
+  public backgroundRefresh() {
+    // todo
   }
 
 }
