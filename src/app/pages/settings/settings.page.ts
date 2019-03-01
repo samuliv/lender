@@ -13,11 +13,15 @@ export class SettingsPage {
   constructor (private router: Router, private alertController: AlertController, private wbma: WbmaService) {
   }
 
+  viewMyProfile () {
+    this.router.navigate(['/my-profile']);
+  }
+
   viewAboutLender () {
     this.router.navigate(['/about']);
   }
 
-  myLendableItems() {
+  viewMyLendableItems() {
     this.router.navigate(['/my-lendable-items/settings']);
   }
 

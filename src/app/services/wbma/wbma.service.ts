@@ -42,6 +42,7 @@ export class WbmaService {
   }
 
   getMyUserID() {
+    console.log('getMyUserID() : ' + localStorage.getItem('user_id'));
     return parseInt(localStorage.getItem('user_id'), 10);
   }
 

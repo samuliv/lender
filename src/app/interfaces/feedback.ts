@@ -1,7 +1,8 @@
 export interface Feedback {
   message: string;
-  from: number;
+  user_id: number;
   time: string;
   ago: string;
   feedback: number;
+  role: string;
   }

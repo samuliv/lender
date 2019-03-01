@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LendItem } from '../../interfaces/lenditem';
 import { ExtraService } from '../../services/extra/extra.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { WbmaService } from 'src/app/services/wbma/wbma.service';
 
 @Component({
   selector: 'app-lent',
   templateUrl: 'lent.page.html',
   styleUrls: ['lent.page.scss']
 })
-export class LentPage {
+export class LentPage implements OnInit {
 
   viewPage: string;
   lentItems: LendItem[];
@@ -18,9 +19,13 @@ export class LentPage {
   toolbarBadgePending: number;
   toolbarBadgeFeedback: number;
 
-  constructor(public extra: ExtraService, private alertController: AlertController, private router: Router) {
+  constructor(public extra: ExtraService, private wbma: WbmaService, private alertController: AlertController, private router: Router) {
     this.viewPage = 'lent';
     this.resetToolbarBadges();
+  }
+
+  ngOnInit() {
+    this.refreshAll();
   }
 
   resetToolbarBadges() {
@@ -33,19 +38,50 @@ export class LentPage {
     this.router.navigate(['/my-lendable-items/lent']);
   }
 
-  refreshList() {
-    this.extra.getListLent(1).subscribe( res => {
+  refreshAll() {
+    this.refreshLentList();
+    this.refreshPendingList();
+    this.refreshFeedbackList();
+  }
+
+  refreshLentList() {
+    this.extra.getListLent(this.wbma.getMyUserID()).subscribe(res => {
       this.lentItems = res;
     });
   }
 
+  refreshPendingList() {
+    this.extra.getListLentPending(this.wbma.getMyUserID()).subscribe(res => {
+      this.pendingItems = res;
+      this.toolbarBadgePending = res.length;
+    });
+  }
+
+
+  refreshFeedbackList() {
+    // this.extra.getListLent(this.wbma.getMyUserID()).subscribe(res => {
+    //   this.pendingItems = res;
+    // });
+    // TODO
+  }
+
   refershCurrentView() {
-    this.refreshList(); //TODO
+    switch ( this.viewPage ) {
+      case 'lent':
+        this.refreshLentList();
+        break;
+      case 'pending':
+        this.refreshPendingList();
+        break;
+      default:
+        this.refreshFeedbackList();
+        break;
+    }
   }
 
   ionViewDidEnter() {
     console.log('lent.page.ts : ionViewDidEnter()');
-    this.refreshList();
+    this.refreshLentList();
   }
 
   itemClick(item: LendItem) {

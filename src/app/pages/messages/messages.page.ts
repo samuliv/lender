@@ -3,6 +3,7 @@ import { ExtraService } from '../../services/extra/extra.service';
 import { Message } from '../../interfaces/message';
 import { Feedback } from '../../interfaces/feedback';
 import { Router } from '@angular/router';
+import { WbmaService } from 'src/app/services/wbma/wbma.service';
 
 @Component({
   selector: 'app-messages',
@@ -16,7 +17,7 @@ export class MessagesPage implements OnInit {
   outbox: Message[];
   feedback: Feedback[];
 
-  constructor(private extra: ExtraService, private router: Router) {
+  constructor(private extra: ExtraService, private wbma: WbmaService, private router: Router) {
     this.viewPage = 'inbox';
   }
 
@@ -27,14 +28,14 @@ export class MessagesPage implements OnInit {
 
   refreshInbox() {
     console.log('refreshInbox()');
-    this.extra.getMessages(1).subscribe(res => {
+    this.extra.getMessages(this.wbma.getMyUserID()).subscribe(res => {
       this.inbox = res;
     });
   }
 
   refreshOutbox() {
     console.log('refreshOutbox()');
-    this.extra.getMessages(1).subscribe(res => {
+    this.extra.getMessages(this.wbma.getMyUserID()).subscribe(res => {
       this.inbox = res;
       console.log(res);
     });
@@ -42,7 +43,7 @@ export class MessagesPage implements OnInit {
 
   refreshFeedback() {
     console.log('refreshFeedback()');
-    this.extra.getFeedback(1).subscribe(res => {
+    this.extra.getFeedback(this.wbma.getMyUserID()).subscribe(res => {
       this.feedback = res;
     });
   }

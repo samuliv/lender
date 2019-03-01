@@ -41,6 +41,10 @@ export class ExtraService {
     return this.http.get<LendItem[]>(this.extraURL + '?operation=lends&user_id=' + user_id);
   }
 
+  public getListLentPending(user_id: number) {
+    return this.http.get<LendItem[]>(this.extraURL + '?operation=lends&pending=true&user_id=' + user_id);
+  }
+
   public getMessages(user_id: number) {
     return this.http.get<Message[]>(this.extraURL + '?operation=messages&user_id=' + user_id);
   }
