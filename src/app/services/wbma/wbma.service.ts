@@ -143,8 +143,8 @@ export class WbmaService {
 
   readMediaData(mediaItem: MediaItem[]) {
     mediaItem.forEach((i) => {
-      const mediaData: MediaData = {price: 0.50, category: 5};
-      i.media_data = mediaData;
+      i.media_data = JSON.parse(i.description);
+      i.media_data.thumb = this.getApiUploadsUrl() + i.filename.split('.').slice(0, -1).join('.') + '-tn160.png';
     })
     return mediaItem;
   }

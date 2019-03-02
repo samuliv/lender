@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
-import { MediaData } from 'src/app/interfaces/mediadata';
+import { MediaItem } from 'src/app/interfaces/mediaitem';
 
 @Component({
   selector: 'app-my-lendable-items',
@@ -13,7 +13,7 @@ export class MyLendableItemsPage implements OnInit {
 
   constructor(private navController: NavController, private activatedRoute: ActivatedRoute, private wbma: WbmaService) { }
 
-  myLendableItems: MediaData[];
+  myLendableItems: MediaItem[];
   showNoItemsAddedMessage: boolean;
 
   ngOnInit() {
@@ -21,10 +21,18 @@ export class MyLendableItemsPage implements OnInit {
     this.refreshList();
   }
 
+  itemClick() {
+    // TODO
+  }
+
+  addLendableItem() {
+    // TODO
+  }
+
   refreshList() {
     this.wbma.getLendableItems().subscribe((res) => {
       res = this.wbma.readMediaData(res);
-      console.log(res);
+      this.myLendableItems = res;
     });
   }
 
