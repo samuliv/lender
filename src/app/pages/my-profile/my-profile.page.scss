@@ -1,0 +1,16 @@
+.profile-picture {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    max-height: 150px;
+    max-width: 250px;
+}
+
+.user-fullname, .user-nickname, .user-stats {
+    text-align: center;
+}
+
+.user-stats {
+    font-size:14px;
+}

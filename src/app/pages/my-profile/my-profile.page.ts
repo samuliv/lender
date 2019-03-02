@@ -13,6 +13,8 @@ export class MyProfilePage implements OnInit {
   ngOnInit() {
   }
 
+  
+
   goBack() {
     this.navController.navigateBack('/tabs/settings');
   }
