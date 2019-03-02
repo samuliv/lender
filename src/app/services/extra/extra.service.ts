@@ -25,16 +25,16 @@ export class ExtraService {
     return '&' + str.join('&');
   }
 
-  private async xtraGET (operation: string, parameters: any) {
-    return new Promise((resolve, reject) => {
-      this.http.get(this.extraURL + '?operation=' + operation + this.serialize(parameters)).subscribe((data: any) => {
-        if ( !data.success ) {
-          console.log(data);
-          console.error('[xtraGET] [error] : ' + data.error);
-        }
-        resolve(data);
-      });
-    });
+  public acceptRequest(request_id: number) {
+    return this.http.get<Success>(this.extraURL + '?operation=acceptRequest&request_id=' + request_id.toString());
+  }
+
+  public rejectRequest(request_id: number) {
+    return this.http.get<Success>(this.extraURL + '?operation=rejectRequest&request_id=' + request_id.toString());
+  }
+
+  public cancelRequest(request_id: number) {
+    return this.http.get<Success>(this.extraURL + '?operation=cancelRequest&request_id=' + request_id.toString());
   }
 
   public getListLent(user_id: number) {

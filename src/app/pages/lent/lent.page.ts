@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LendItem } from '../../interfaces/lenditem';
 import { ExtraService } from '../../services/extra/extra.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonItemSliding, IonList, ActionSheetController, AngularDelegate } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
 
@@ -19,9 +19,15 @@ export class LentPage implements OnInit {
   toolbarBadgePending: number;
   toolbarBadgeFeedback: number;
 
-  constructor(public extra: ExtraService, private wbma: WbmaService, private alertController: AlertController, private router: Router) {
-    this.viewPage = 'lent';
-    this.resetToolbarBadges();
+
+  constructor(
+    private extra: ExtraService,
+    private wbma: WbmaService,
+    private alertController: AlertController,
+    private router: Router,
+    private actionSheetController: ActionSheetController) {
+      this.viewPage = 'lent';
+      this.resetToolbarBadges();
   }
 
   ngOnInit() {
@@ -84,15 +90,65 @@ export class LentPage implements OnInit {
     this.refreshLentList();
   }
 
-  itemClick(item: LendItem) {
-    console.log('ItemClick');
+  async itemClick(item: LendItem) {
+
+    const buttons: any = [{
+      text: 'Send Messsage to User',
+      handler: () => {
+        console.log('*CLICK*');
+      }
+    }];
+
+    if ( item.rejectable ) {
+      buttons.push({text: 'Reject Request', role: 'destructive', handler: () => {
+        this.reject(item);
+       }});
+    }
+
+    if ( item.cancellable ) {
+      buttons.push({text: 'Cancel Request', role: 'destructive', handler: () => {
+        this.cancel(item);
+      }});
+    }
+
+    if ( item.acceptable ) {
+      buttons.push({text: 'Accept Request', handler: () => {
+        this.accept(item);
+      }});
+    }
+
+    buttons.push({text: 'Close'});
+
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Request Operations',
+      buttons: buttons
+    });
+
+
+
+    await actionSheet.present();
   }
 
   sendMessage(item: LendItem) {
     this.router.navigate(['/send-message/lent-' + item.user_id]);
   }
 
-  async reject(item: LendItem) {
+  negativeRefresh() {
+    if ( this.viewPage === 'lent' ) {
+      this.refreshPendingList();
+    } else {
+      this.refreshLentList();
+    }
+  }
+
+  closeIis(iis: IonItemSliding) {
+    iis.close().catch((e) => { console.log('Cannot Close IonItemSliding Element'); });
+  }
+
+  async reject(item: LendItem, iis?: IonItemSliding) {
+    if (iis !== null && iis !== undefined ) {
+      this.closeIis(iis);
+    }
     const alert = await this.alertController.create({
       header: 'Reject Lend Request',
       subHeader: '',
@@ -101,11 +157,17 @@ export class LentPage implements OnInit {
         {
           text: 'Reject',
           handler: () => {
-            item.status = 'rejected';
-            item.accetable = false;
-            item.rejectable = false;
-            item.cancellable = false;
-            console.log('TODO');
+            this.extra.rejectRequest(item.item_id).subscribe(res => {
+              if ( res.success ) {
+                item.acceptable = false;
+                item.rejectable = false;
+                item.cancellable = false;
+                item.status = 'rejected';
+                this.negativeRefresh();
+              } else {
+                console.log('ERROR: ' + res.error);
+              }
+            });
           }
         }, {
           text: 'Cancel',
@@ -116,7 +178,10 @@ export class LentPage implements OnInit {
     await alert.present();
   }
 
-  async accept(item: LendItem) {
+  async accept(item: LendItem, iis?: IonItemSliding) {
+    if (iis !== null && iis !== undefined ) {
+      this.closeIis(iis);
+    }
     const alert = await this.alertController.create({
       header: 'Accept Lend Request',
       subHeader: '',
@@ -125,7 +190,17 @@ export class LentPage implements OnInit {
         {
           text: 'Accept',
           handler: () => {
-            console.log('TODO');
+            this.extra.acceptRequest(item.item_id).subscribe(res => {
+              if ( res.success ) {
+                item.acceptable = false;
+                item.rejectable = false;
+                item.cancellable = true;
+                item.status = 'accepted';
+                this.negativeRefresh();
+              } else {
+                console.log('ERROR: ' + res.error);
+              }
+            });
           }
         }, {
           text: 'Cancel',
@@ -136,7 +211,10 @@ export class LentPage implements OnInit {
     await alert.present();
   }
 
-  async cancel(item: LendItem) {
+  async cancel(item: LendItem, iis?: IonItemSliding) {
+    if (iis !== null && iis !== undefined ) {
+      this.closeIis(iis);
+    }
     const alert = await this.alertController.create({
       header: 'Cancel Lend Request',
       subHeader: '',
@@ -145,7 +223,15 @@ export class LentPage implements OnInit {
         {
           text: 'Cancel Lend',
           handler: () => {
-            console.log('TODO');
+            this.extra.cancelRequest(item.item_id).subscribe(res => {
+              if ( res.success ) {
+                item.cancellable = false;
+                item.status = 'cancelled';
+                this.negativeRefresh();
+              } else {
+                console.log( 'Error: ' + res.error );
+              }
+            });
           }
         }, {
           text: 'No',

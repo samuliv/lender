@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { ExtraService } from '../../services/extra/extra.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-browse',
@@ -21,7 +22,7 @@ export class BrowsePage {
   browseItemsCount: string;
   refreshTimer: any;
 
-  constructor(public actionSheetController: ActionSheetController, public extra: ExtraService) {
+  constructor(public actionSheetController: ActionSheetController, public extra: ExtraService, private router: Router) {
     this.maxDistance = 20;
     this.useGpsLocation = true;
     this.maxPrice = 0;
@@ -34,8 +35,12 @@ export class BrowsePage {
     this.endTime  = currentTime.toISOString();
   }
 
+  browseCategory() {
+    this.router.navigate(['/browse-category/browse']);
+  }
+
   chooseLocationManually() {
-    console.log('**CLICK**');
+    this.router.navigate(['/choose-location/browse']);
   }
 
   someParameterChanged() {

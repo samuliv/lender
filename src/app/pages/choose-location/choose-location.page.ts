@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-choose-location',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChooseLocationPage implements OnInit {
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute, private navController: NavController) { }
 
   ngOnInit() {
   }
+
+  goBack() {
+    const source = this.activatedRoute.snapshot.paramMap.get('source');
+    switch ( source ) {
+      case 'lent':
+        this.navController.navigateBack('/tabs/lent');
+        break;
+      default:
+        this.navController.navigateBack('/tabs/browse');
+        break;
+    }
+  }
+
 
 }

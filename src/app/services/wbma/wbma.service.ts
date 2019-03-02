@@ -5,7 +5,10 @@ import { LoginInfo } from 'src/app/interfaces/logininfo';
 import { UsernameAvailable } from 'src/app/interfaces/usernameavailable';
 import { RegisterNewUserInfo } from 'src/app/interfaces/registernewuserinfo';
 import { Router } from '@angular/router';
-
+import { MediaData } from 'src/app/interfaces/mediadata';
+import { Observable } from 'rxjs';
+import { LendItem } from 'src/app/interfaces/lenditem';
+import { map } from 'rxjs/operators';
 /*
   WBMA-api Communication Service
  */
@@ -17,8 +20,8 @@ export class WbmaService {
   private appTag = 'LENDER';
   private loggedIn = false;
   constructor(private http: HttpClient, private router: Router) {
-    if (this.getToken() !== null && this.getToken() !== '') {
-      console.log('Token is: ' + this.getToken());
+    if (this.getToken() !== '' && this.getMyUserID() !== -1 ) {
+      console.log('Login found. User ID: ' + this.getMyUserID());
       this.setLoginStatus(true);
     }
   }
@@ -38,11 +41,16 @@ export class WbmaService {
   }
 
   getToken() {
+    if ( localStorage.getItem('token') == null || localStorage.getItem('token') === '' ) {
+      return '';
+    }
     return localStorage.getItem('token');
   }
 
   getMyUserID() {
-    console.log('getMyUserID() : ' + localStorage.getItem('user_id'));
+    if ( localStorage.getItem('user_id') == null || localStorage.getItem('user_id') === '' ) {
+      return -1;
+    }
     return parseInt(localStorage.getItem('user_id'), 10);
   }
 
@@ -55,7 +63,11 @@ export class WbmaService {
     return this.loggedIn;
   }
 
-  getAllMedia() {
+  getLendableItems() {
+    return this.http.get<MediaItem[]>(this.apiUrl + 'tags/' + this.appTag)
+  }
+
+  getAllMediaByAppTagAsMediaItem() {
     return this.http.get<MediaItem[]>(this.apiUrl + 'tags/' + this.appTag);
   }
 
@@ -127,6 +139,14 @@ export class WbmaService {
 
   getApiUploadsUrl() {
     return this.getApiUrl() + 'uploads/';
+  }
+
+  readMediaData(mediaItem: MediaItem[]) {
+    mediaItem.forEach((i) => {
+      const mediaData: MediaData = {price: 0.50, category: 5};
+      i.media_data = mediaData;
+    })
+    return mediaItem;
   }
 
 }

@@ -1,7 +1,7 @@
 export interface LendItem {
     starts: string;
     ends: string;
-    accetable: boolean;
+    acceptable: boolean;
     rejectable: boolean;
     cancellable: boolean;
     item_id: number;
