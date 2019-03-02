@@ -23,4 +23,14 @@ export class GpsDistanceService {
 
     return (6371 * c);
   }
+
+  formatDistance(distance: number) {
+    if (distance >= 10) {
+      return Math.round(distance) + ' km';
+    } else if (distance >= 1) {
+      return (Math.round(distance * 10) / 10) + ' km';
+    } else {
+      return (Math.round(distance * 100) * 10) + ' m';
+    }
+  }
 }

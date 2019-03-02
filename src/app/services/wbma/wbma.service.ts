@@ -9,6 +9,7 @@ import { MediaData } from 'src/app/interfaces/mediadata';
 import { Observable } from 'rxjs';
 import { LendItem } from 'src/app/interfaces/lenditem';
 import { map } from 'rxjs/operators';
+import { SearchFilteringOptions } from 'src/app/interfaces/searchfilteringoptions';
 /*
   WBMA-api Communication Service
  */
@@ -145,8 +146,12 @@ export class WbmaService {
     mediaItem.forEach((i) => {
       i.media_data = JSON.parse(i.description);
       i.media_data.thumb = this.getApiUploadsUrl() + i.filename.split('.').slice(0, -1).join('.') + '-tn160.png';
-    })
+    });
     return mediaItem;
+  }
+
+  filterMediaItems(mediaItems: MediaItem[], filteringOptions: SearchFilteringOptions) {
+    return mediaItems;
   }
 
 }
