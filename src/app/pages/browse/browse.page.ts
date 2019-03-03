@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { ActionSheetController, Events } from '@ionic/angular';
 import { ExtraService } from '../../services/extra/extra.service';
 import { Router } from '@angular/router';
+import { GpsPositionService } from 'src/app/services/gps-position/gps-position.service';
 
 @Component({
   selector: 'app-browse',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['browse.page.scss']
 })
 
-export class BrowsePage {
+export class BrowsePage implements OnInit{
 
   useGpsLocation: boolean;
   setDateRange: boolean;
@@ -23,18 +24,38 @@ export class BrowsePage {
   browseItemsCount: string;
   refreshTimer: any;
 
-  constructor(public actionSheetController: ActionSheetController, public extra: ExtraService, private router: Router) {
-    this.maxDistance = 20;
-    this.useGpsLocation = true;
-    this.maxPrice = 0;
-    this.setDateRange = false;
-    this.currentLocationName = '-';
+  constructor(
+    public actionSheetController: ActionSheetController,
+    public extra: ExtraService,
+    private router: Router,
+    private gpsPositionService: GpsPositionService,
+    private events: Events) {
+      this.maxDistance = 20;
+      this.useGpsLocation = true;
+      this.maxPrice = 0;
+      this.setDateRange = false;
+      this.currentLocationName = '(none)';
 
-    const currentTime = new Date();
-    currentTime.setTime(currentTime.getTime() + (1 * 60 * 60 * 1000));
-    this.startTime = currentTime.toISOString();
-    currentTime.setTime(currentTime.getTime() + (1 * 60 * 60 * 1000));
-    this.endTime  = currentTime.toISOString();
+      const currentTime = new Date();
+      currentTime.setTime(currentTime.getTime() + (1 * 60 * 60 * 1000));
+      this.startTime = currentTime.toISOString();
+      currentTime.setTime(currentTime.getTime() + (1 * 60 * 60 * 1000));
+      this.endTime  = currentTime.toISOString();
+
+      this.events.subscribe('location-changed', () => {
+        this.refreshLocationData();
+      });
+  }
+
+  ngOnInit() {
+    this.refreshLocationData();
+  }
+
+  refreshLocationData() {
+    if (!this.gpsPositionService.getIsLocationByGPS()) {
+      this.useGpsLocation = false;
+    }
+    this.currentLocationName = this.gpsPositionService.getCurrentLocationName();
   }
 
   browseCategory() {
@@ -43,6 +64,13 @@ export class BrowsePage {
 
   chooseLocationManually() {
     this.router.navigate(['/choose-location/browse']);
+  }
+
+  gpsLocationClick() {
+    if (this.useGpsLocation) {
+      this.gpsPositionService.tryToFetchCurrentGPSCoordinates();
+    }
+    this.someParameterChanged();
   }
 
   someParameterChanged() {
@@ -91,7 +119,6 @@ export class BrowsePage {
   }
 
   ionViewDidEnter() {
-    this.extra.getMessages(1);
     console.log('browse.page.ts : ionViewDidEnter()');
   }
 
