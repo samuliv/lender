@@ -32,7 +32,7 @@
 
     <ion-item>
       <ion-label>Use GPS location</ion-label>
-      <ion-toggle [(ngModel)]="useGpsLocation" (ionChange)="someParameterChanged()"></ion-toggle>
+      <ion-toggle [(ngModel)]="useGpsLocation" (ionChange)="gpsLocationClick()"></ion-toggle>
     </ion-item>
 
     <ion-item (click)="chooseLocationManually()">

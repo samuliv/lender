@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { NavController, ActionSheetController, AlertController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
 import { MediaItem } from 'src/app/interfaces/mediaitem';
 
@@ -11,22 +11,69 @@ import { MediaItem } from 'src/app/interfaces/mediaitem';
 })
 export class MyLendableItemsPage implements OnInit {
 
-  constructor(private navController: NavController, private activatedRoute: ActivatedRoute, private wbma: WbmaService) { }
-
   myLendableItems: MediaItem[];
   showNoItemsAddedMessage: boolean;
+
+  constructor(
+    private navController: NavController,
+    private activatedRoute: ActivatedRoute,
+    private wbma: WbmaService,
+    private router: Router,
+    private actionSheetController: ActionSheetController,
+    private alertController: AlertController) { }
 
   ngOnInit() {
     this.showNoItemsAddedMessage = false;
     this.refreshList();
   }
 
-  itemClick() {
-    // TODO
+  editItem(item: MediaItem) {
+    this.router.navigate(['/add-lendable-item/' + item.file_id]);
+  }
+
+  async deleteItem(item: MediaItem) {
+    const alert = await this.alertController.create({
+      header: 'Delete Item',
+      subHeader: '',
+      message: 'Are you sure you want to delete this lendable item?',
+      buttons: [
+        {
+          text: 'Delete Item',
+          handler: () => {
+            // TODO
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async itemClick(item: MediaItem) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Request Operations',
+      buttons: [{
+        text: 'Edit Item',
+        handler: () => {
+          this.editItem(item);
+        }
+      }, {
+        text: 'Delete Item',
+        role: 'destructive',
+        handler: () => {
+          this.deleteItem(item);
+        }
+      }, { text: 'Close'}]
+    });
+
+    await actionSheet.present();
   }
 
   addLendableItem() {
-    // TODO
+    this.router.navigate(['/add-lendable-item']);
   }
 
   refreshList() {
