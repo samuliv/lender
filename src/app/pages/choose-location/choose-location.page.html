@@ -8,5 +8,25 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-label position="fixed">Search by Address</ion-label>
+  <ion-input placeholder="Type your Address" [(ngModel)]="address"></ion-input>
+  <ion-button (click)="searchForAddress()">Search</ion-button>
+  <ion-list lines="full">
 
+      <ion-item *ngFor="let item of addressOptions">
+  
+        <ion-item (click)="itemClick(item)">
+  
+          <ion-label>
+            <h3>{{ item.address }}</h3>
+            <p class="starts">{{ item.suburb }}</p>
+            <p class="starts">{{ item.city }}, {{ item.country }}</p>
+            <p class="starts">{{ item.coordinates.latitude }}, {{ item.coordinates.longitude }}</p>
+          </ion-label>
+  
+        </ion-item>
+        
+      </ion-item>
+  
+    </ion-list>
 </ion-content>

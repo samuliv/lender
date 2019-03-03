@@ -5,6 +5,6 @@ export interface Message {
   time: string;
   ago: string;
   readed: boolean;
-  data_binding?: number;
-  data_id?: number;
+  binded_user?: number;
+  binded_item?: number;
   }

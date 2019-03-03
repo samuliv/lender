@@ -15,6 +15,7 @@ export class BrowsePage {
   setDateRange: boolean;
   maxDistance: number;
   maxPrice: number;
+  currentLocationName: string;
 
   startTime: string;
   endTime: string;
@@ -27,6 +28,7 @@ export class BrowsePage {
     this.useGpsLocation = true;
     this.maxPrice = 0;
     this.setDateRange = false;
+    this.currentLocationName = '-';
 
     const currentTime = new Date();
     currentTime.setTime(currentTime.getTime() + (1 * 60 * 60 * 1000));

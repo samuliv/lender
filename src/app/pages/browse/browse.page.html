@@ -40,7 +40,7 @@
         Location
       </ion-label>
       <ion-icon *ngIf="useGpsLocation" name="navigate" color="secondary" slot="end"></ion-icon>
-      <ion-badge slot="end" color="secondary">Espoo</ion-badge>  
+      <ion-badge slot="end" color="secondary">{{ currentLocationName }}</ion-badge>  
     </ion-item>
     
     <ion-list-header>

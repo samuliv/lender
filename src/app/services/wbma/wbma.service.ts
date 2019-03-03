@@ -5,10 +5,6 @@ import { LoginInfo } from 'src/app/interfaces/logininfo';
 import { UsernameAvailable } from 'src/app/interfaces/usernameavailable';
 import { RegisterNewUserInfo } from 'src/app/interfaces/registernewuserinfo';
 import { Router } from '@angular/router';
-import { MediaData } from 'src/app/interfaces/mediadata';
-import { Observable } from 'rxjs';
-import { LendItem } from 'src/app/interfaces/lenditem';
-import { map } from 'rxjs/operators';
 import { SearchFilteringOptions } from 'src/app/interfaces/searchfilteringoptions';
 /*
   WBMA-api Communication Service

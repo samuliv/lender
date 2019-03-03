@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LendItem } from '../../interfaces/lenditem';
 import { ExtraService } from '../../services/extra/extra.service';
-import { AlertController, IonItemSliding, IonList, ActionSheetController, AngularDelegate } from '@ionic/angular';
+import { AlertController, IonItemSliding, ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
 
@@ -50,19 +50,44 @@ export class LentPage implements OnInit {
     this.refreshFeedbackList();
   }
 
+  refreshLentListBadge() {
+    let countPendingItems = 0;
+    this.lentItems.forEach((i) => {
+      if ( i.status === 'pending' ) {
+        countPendingItems++;
+      }
+      this.toolbarBadgeLent = countPendingItems;
+    });
+  }
+
+  refreshPendingListBadge() {
+    let countPendingItems = 0;
+    this.pendingItems.forEach((i) => {
+      if ( i.status === 'pending' ) {
+        countPendingItems++;
+      }
+      this.toolbarBadgePending = countPendingItems;
+    });
+  }
+
+  refreshAllBadges() {
+    this.refreshLentListBadge();
+    this.refreshPendingListBadge();
+  }
+
   refreshLentList() {
     this.extra.getListLent(this.wbma.getMyUserID()).subscribe(res => {
       this.lentItems = res;
+      this.refreshLentListBadge();
     });
   }
 
   refreshPendingList() {
     this.extra.getListLentPending(this.wbma.getMyUserID()).subscribe(res => {
       this.pendingItems = res;
-      this.toolbarBadgePending = res.length;
+      this.refreshPendingListBadge();
     });
   }
-
 
   refreshFeedbackList() {
     // this.extra.getListLent(this.wbma.getMyUserID()).subscribe(res => {
@@ -95,7 +120,7 @@ export class LentPage implements OnInit {
     const buttons: any = [{
       text: 'Send Messsage to User',
       handler: () => {
-        console.log('*CLICK*');
+        this.sendMessage(item);
       }
     }];
 
@@ -164,6 +189,7 @@ export class LentPage implements OnInit {
                 item.cancellable = false;
                 item.status = 'rejected';
                 this.negativeRefresh();
+                this.refreshAllBadges();
               } else {
                 console.log('ERROR: ' + res.error);
               }
@@ -197,6 +223,7 @@ export class LentPage implements OnInit {
                 item.cancellable = true;
                 item.status = 'accepted';
                 this.negativeRefresh();
+                this.refreshAllBadges();
               } else {
                 console.log('ERROR: ' + res.error);
               }
@@ -228,6 +255,7 @@ export class LentPage implements OnInit {
                 item.cancellable = false;
                 item.status = 'cancelled';
                 this.negativeRefresh();
+                this.refreshAllBadges();
               } else {
                 console.log( 'Error: ' + res.error );
               }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { OpenCageDataService } from 'src/app/services/opencagedata/opencagedata.service';
+import { Address } from 'src/app/interfaces/address';
 
 @Component({
   selector: 'app-choose-location',
@@ -9,9 +11,21 @@ import { NavController } from '@ionic/angular';
 })
 export class ChooseLocationPage implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute, private navController: NavController) { }
+  addressOptions: Address[];
+  address: string;
+  constructor(private activatedRoute: ActivatedRoute, private navController: NavController, private ocds: OpenCageDataService) { }
 
   ngOnInit() {
+  }
+
+  itemClick(item: Address) {
+    console.log(item.coordinates.latitude + ', ' + item.coordinates.longitude);
+  }
+
+  searchForAddress() {
+    this.ocds.searchByAddress(this.address).subscribe((res) => {
+      this.addressOptions = this.ocds.translateToAddress(res);
+    });
   }
 
   goBack() {

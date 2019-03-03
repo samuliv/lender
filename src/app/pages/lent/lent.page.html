@@ -66,12 +66,6 @@
         <ion-item-option color="primary" (click)="sendMessage(item)">Send Message</ion-item-option>
       </ion-item-options>
 
-      <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="reject(item, slidingCase)" *ngIf="item.rejectable">Reject</ion-item-option>
-        <ion-item-option color="danger" (click)="cancel(item, slidingCase)" *ngIf="item.cancellable">Cancel</ion-item-option>
-        <ion-item-option color="success" (click)="accept(item, slidingCase)" *ngIf="item.acceptable">Accept</ion-item-option>
-      </ion-item-options>
-
     </ion-item-sliding>
 
   </ion-list>
@@ -92,20 +86,14 @@
           <p class="ends">Ends: {{ item.ends }}</p>
         </ion-label>
 
-        <ion-badge slot="end" color="success" *ngIf="item.status === 'accepted'">Accepted</ion-badge>  
-        <ion-badge slot="end" color="danger" *ngIf="item.status === 'rejected'">Rejected</ion-badge>  
-        <ion-badge slot="end" color="warning" *ngIf="item.status === 'pending'">Pending</ion-badge>  
+        <ion-badge slot="end" color="success" *ngIf="item.status === 'accepted'">Accepted</ion-badge>
+        <ion-badge slot="end" color="danger" *ngIf="item.status === 'rejected'">Rejected</ion-badge>
+        <ion-badge slot="end" color="warning" *ngIf="item.status === 'pending'">Pending</ion-badge>
         
       </ion-item>
 
       <ion-item-options side="start">
         <ion-item-option color="primary" (click)="sendMessage(item)">Send Message</ion-item-option>
-      </ion-item-options>
-
-      <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="reject(item)" *ngIf="item.rejectable">Reject</ion-item-option>
-        <ion-item-option color="danger" (click)="cancel(item)" *ngIf="item.cancellable">Cancel</ion-item-option>
-        <ion-item-option color="success" (click)="accept(item)" *ngIf="item.acceptable">Accept</ion-item-option>
       </ion-item-options>
 
     </ion-item-sliding>
