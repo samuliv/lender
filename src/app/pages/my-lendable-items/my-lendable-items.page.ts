@@ -13,6 +13,7 @@ export class MyLendableItemsPage implements OnInit {
 
   myLendableItems: MediaItem[];
   showNoItemsAddedMessage: boolean;
+  source: string;
 
   constructor(
     private navController: NavController,
@@ -20,7 +21,9 @@ export class MyLendableItemsPage implements OnInit {
     private wbma: WbmaService,
     private router: Router,
     private actionSheetController: ActionSheetController,
-    private alertController: AlertController) { }
+    private alertController: AlertController) { 
+      this.source = this.activatedRoute.snapshot.paramMap.get('source');
+    }
 
   ngOnInit() {
     this.showNoItemsAddedMessage = false;
@@ -73,7 +76,7 @@ export class MyLendableItemsPage implements OnInit {
   }
 
   addLendableItem() {
-    this.router.navigate(['/add-lendable-item']);
+    this.router.navigate(['/add-lendable-item/0-' + this.source]);
   }
 
   refreshList() {
@@ -84,8 +87,7 @@ export class MyLendableItemsPage implements OnInit {
   }
 
   goBack() {
-    const source = this.activatedRoute.snapshot.paramMap.get('source');
-    if (source === 'settings') {
+    if (this.source === 'settings') {
       this.navController.navigateBack('/tabs/settings');
     } else {
       this.navController.navigateBack('/tabs/lent');

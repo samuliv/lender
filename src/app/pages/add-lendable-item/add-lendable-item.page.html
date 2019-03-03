@@ -9,4 +9,38 @@
 
 <ion-content padding>
 
+  <ion-item (click)="chooseCategory()">
+    <ion-label position="stacked">Category</ion-label>
+    <ion-label>{{ itemCategory }}</ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Title</ion-label>
+    <ion-input placeholder="Item Title" [(ngModel)]="itemTitle"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Description</ion-label>
+    <ion-textarea placeholder="Description..." [(ngModel)]="itemDescription"></ion-textarea>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Price per Hour (&euro;)</ion-label>
+    <ion-input type="number" placeholder="Price" [(ngModel)]="itemPrice"></ion-input>
+  </ion-item>
+
+  <ion-item>
+      <ion-label position="stacked">Item Location</ion-label>
+      <ion-label>{{ itemLocation }}</ion-label>
+    </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Item Image/Video</ion-label>
+    <ion-img src="https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png"></ion-img>
+  </ion-item>
+  
+  <br>
+  <ion-button expand="full" (click)="submitForm()">{{ submitButtonText }}</ion-button>
+
 </ion-content>
+  
