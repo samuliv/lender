@@ -14,3 +14,19 @@
 .user-stats {
     font-size:14px;
 }
+
+ion-item {
+    --ion-background-color: #52b2ff;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    border-radius: 4px;
+    position: relative;
+    width: 80%;
+    left: 10%;
+    right: 10%;
+}
