@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, Events, ActionSheetController } from '@ionic/angular';
+import { NavController, Events, ActionSheetController, AlertController, LoadingController } from '@ionic/angular';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Chooser } from '@ionic-native/chooser/ngx'
+import { MediaData } from 'src/app/interfaces/mediadata';
 
 @Component({
   selector: 'app-add-lendable-item',
@@ -19,9 +21,10 @@ export class AddLendableItemPage implements OnInit {
   itemCustomLocationLat: number;
   itemCustomLocationLon: number;
   itemUseDefaultLocation: boolean;
-  itemMediaSelected: boolean;
   submitButtonText: string;
   source: string; // for routing fix
+  file: Blob;
+  fileIsUploaded: boolean;
 
   constructor(
     private navController: NavController,
@@ -30,6 +33,9 @@ export class AddLendableItemPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private events: Events,
     private actionSheetController: ActionSheetController,
+    private chooser: Chooser,
+    private alertController: AlertController,
+    private loadingController: LoadingController,
     ) {
       this.itemCategory = '(please select)';
       this.itemCategoryID = -1;
@@ -41,7 +47,6 @@ export class AddLendableItemPage implements OnInit {
       this.itemCustomLocationLat = 0;
       this.itemCustomLocationLon = 0;
       this.itemCustomLocationSet = false;
-      this.itemMediaSelected = false;
       this.submitButtonText = 'Add Item';
       this.source = this.activatedRoute.snapshot.paramMap.get('source');
 
@@ -95,20 +100,71 @@ export class AddLendableItemPage implements OnInit {
         errors.push('Item price is not in valid format.');
       }
     }
-    if ( !this.itemMediaSelected ) {
+    if ( !this.fileIsUploaded ) {
       errors.push('Image or Video must have been selected for the Item.');
     }
     return errors;
   }
 
   submitForm() {
-    if (this.validateForm().length === 0) {
+    let validationErrors: string[] = [];
+    validationErrors = this.validateForm();
+    if (validationErrors.length === 0) {
       // Form is Valid, we can submit
+      this.presentLoading();
+      const formData = new FormData();
+      formData.append('title', this.itemTitle);
+      formData.append('file', this.file);
+
+      const lat = 0;
+      const lon = 0;
+
+      const description: MediaData = {
+        category: this.itemCategoryID,
+        price: this.parsePrice(this.itemPrice),
+        description: this.itemDescription,
+        lat: lat,
+        lon: lon,
+      };
+      
+      formData.append('description', JSON.stringify(description));
+      this.wbma.uploadFile(formData)
+        .subscribe((res: any) => {
+          if ( res.message === 'File uploaded' ) {
+            
+          }
+        })
     } else {
-      console.log('Not valid Form!');
-      console.log(this.validateForm());
+      let alertMessage = '';
+      for (let i = 0; i < validationErrors.length; i++ ) {
+        alertMessage += (i != 0 ? '<br>' : '') + validationErrors[i];
+      }
+      this.presentAlert(alertMessage);
     }
   }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Uploading...',
+      duration: 2000
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+
+    console.log('Loading dismissed!');
+    this.goBack();
+  }
+
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Check your Details',
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
 
   useDefaultLocation() {
     this.itemUseDefaultLocation = true;
@@ -119,6 +175,23 @@ export class AddLendableItemPage implements OnInit {
 
   checkDoesDefaultLocationExists() {
     // TODO
+  }
+
+  choosePicture() {
+    this.chooser.getFile('image/*, video/*').then(uploadedFile => {
+      if ( uploadedFile ) {
+        const uploadedImage: any = document.getElementById('uploadedImage');
+        this.file = new Blob([uploadedFile.data], { type: uploadedFile.mediaType });
+        uploadedImage.src = uploadedFile.dataURI;
+        this.fileIsUploaded = true;
+      } else {
+        this.fileIsUploaded = false;
+      }
+    })
+    .catch((e) => {
+      console.log(e.error);
+      this.fileIsUploaded = false;
+    });
   }
 
   chooseCustomLocation() {

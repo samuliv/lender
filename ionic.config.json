@@ -1,5 +1,7 @@
 {
   "name": "lender",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
