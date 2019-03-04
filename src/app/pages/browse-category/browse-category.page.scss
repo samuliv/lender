@@ -9,27 +9,36 @@
   padding: 12px 8px 12px 8px;
   font-size: 14px;
   outline: 1px solid #aaa;
+  height: auto;
 }
+
+.level1, .level2, .level3 {
+  font-size: 12px !important;
+}
+.level1 {
+  padding-left: 30px !important;
+}
+.level2 {
+  padding-left: 60px !important;
+}
+.level3 {
+  padding-left: 90px !important;
+}  
 
 .itemList li.selectedItem {
   background: #0000ff;
   color: #fff;
 }
 
-.level1, .level2, .level3 {
-  font-size: 12px !important;
+.itemList .hide {
+  display: none;
 }
 
-.level1 {
-  padding-left: 30px !important;
-}
-  .level2 {
-    padding-left: 60px !important;
-  }
-    .level3 {
-      padding-left: 90px !important;
-    }
+/* If animating, hiding may needed to do like this:
 
 .itemList .hide {
-  display: none !important;
-}
+  height: 0 !important;
+  padding: 0 !important;
+  outline: none !important;
+  opacity: 0 !important;
+} */

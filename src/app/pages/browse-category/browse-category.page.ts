@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Events } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { ExtraService } from 'src/app/services/extra/extra.service';
 
@@ -14,26 +14,35 @@ export class BrowseCategoryPage implements OnInit {
   subParameters: string;
   categories: any;
   allSelected: boolean;
+  noAll: boolean;
+  selectedCategory: number;
 
-  constructor(private navController: NavController, private activatedRoute: ActivatedRoute, private extraService: ExtraService) {
-    const fullSource: string = this.activatedRoute.snapshot.paramMap.get('source');
-    const splitted: string[] = fullSource.split('_');
-    this.allSelected = true;
-    this.source = splitted[0];
-    if ( splitted.length > 1 ) {
-      this.subParameters = splitted[1];
-    } else {
-      this.subParameters = '';
-    }
-
-    console.log('Source: ' + this.source);
-    console.log('subParameters: ' + this.subParameters);
-
-    if ( splitted.length > 1 ) {
-      this.subParameters = splitted[1];
-    } else {
-      this.subParameters = '';
-    }
+  constructor(
+    private navController: NavController,
+    private activatedRoute: ActivatedRoute,
+    private extraService: ExtraService,
+    private events: Events) {
+      const fullSource: string = this.activatedRoute.snapshot.paramMap.get('source');
+      const splitted: string[] = fullSource.split('_');
+      this.allSelected = true;
+      this.noAll = false;
+      this.selectedCategory = 0;
+      this.source = splitted[0];
+      if ( this.source === 'add-lendable-item' ) {
+        this.noAll = true; // Hide All Button
+        this.selectedCategory = -1;
+        this.allSelected = false;
+      }
+      if ( splitted.length > 1 ) {
+        this.subParameters = splitted[1];
+      } else {
+        this.subParameters = '';
+      }
+      if ( splitted.length > 1 ) {
+        this.subParameters = splitted[1];
+      } else {
+        this.subParameters = '';
+      }
   }
 
   ngOnInit() {
@@ -60,6 +69,7 @@ export class BrowseCategoryPage implements OnInit {
   itemClickAll() {
     this.clearSelections();
     this.allSelected = true;
+    this.selectedCategory = 0;
     console.log('Selected Category: All');
   }
 
@@ -74,6 +84,8 @@ export class BrowseCategoryPage implements OnInit {
 
   itemClick(item: any) {
     console.log('Selected Category:' + item.id + ' (' + item.name + ')');
+    this.events.publish('category-clicked', item.id, item.name);
+    this.selectedCategory = item.id;
     this.allSelected = false;
     if ( this.categories.length > 0 ) {
       this.clearSelections();

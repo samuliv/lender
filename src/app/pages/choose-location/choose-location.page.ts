@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, Events } from '@ionic/angular';
 import { Address } from 'src/app/interfaces/address';
 import { OpenStreetMapService } from 'src/app/services/openstreetmap/openstreetmap.service';
 import { GpsPositionService } from 'src/app/services/gps-position/gps-position.service';
@@ -17,13 +17,23 @@ export class ChooseLocationPage implements OnInit {
   refreshTimer: any;
 
   source: string;
+  extension: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private navController: NavController,
     private openStreetMap: OpenStreetMapService,
-    private gpsPositionService: GpsPositionService) {
-    this.source = this.activatedRoute.snapshot.paramMap.get('source');
+    private gpsPositionService: GpsPositionService,
+    private events: Events) {
+      this.source = this.activatedRoute.snapshot.paramMap.get('source');
+      this.extension = '';
+      const items = this.source.split('_');
+      if ( items.length > 1 ) {
+        this.source = items[0];
+        this.extension = items[1];
+      } else {
+        this.extension = '';
+      }
   }
 
   ngOnInit() {
@@ -31,6 +41,7 @@ export class ChooseLocationPage implements OnInit {
 
   itemClick(item: Address) {
     console.log(item.coordinates.latitude + ', ' + item.coordinates.longitude);
+    this.events.publish('location-choosed', item.coordinates.latitude, item.coordinates.longitude, item.city);
     if ( this.source === 'browse' ) {
       this.gpsPositionService.setGPSCoordinatesAndCity(
         item.coordinates.latitude,
@@ -57,6 +68,9 @@ export class ChooseLocationPage implements OnInit {
 
   goBack() {
     switch ( this.source ) {
+      case 'add-lendable-item':
+        this.navController.navigateBack('/add-lendable-item/' + this.extension);
+        break;
       case 'lent':
         this.navController.navigateBack('/tabs/lent');
         break;

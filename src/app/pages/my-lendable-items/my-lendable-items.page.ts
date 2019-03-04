@@ -31,7 +31,7 @@ export class MyLendableItemsPage implements OnInit {
   }
 
   editItem(item: MediaItem) {
-    this.router.navigate(['/add-lendable-item/' + item.file_id]);
+    this.router.navigate(['/add-lendable-item/' + item.file_id + '-' + this.source]);
   }
 
   async deleteItem(item: MediaItem) {
