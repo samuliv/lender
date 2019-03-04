@@ -64,6 +64,19 @@ export class AddLendableItemPage implements OnInit {
     this.router.navigate(['/browse-category/add-lendable-item_' + this.source]);
   }
 
+  parsePrice(price: string): number {
+    if (price === '') {
+      return -1;
+    } else {
+      price.replace(/,/g, '.');
+      if (isNaN(parseFloat(price))) {
+        return -1;
+      } else {
+        return parseFloat(price);
+      }
+    }
+  }
+
   validateForm() {
     const errors: string[] = [];
     if ( this.itemCategoryID < 1 ) {
@@ -77,6 +90,10 @@ export class AddLendableItemPage implements OnInit {
     }
     if ( this.itemPrice === '' ) {
       errors.push('Item price must be specified.');
+    } else {
+      if ( this.parsePrice(this.itemPrice) === -1 ) {
+        errors.push('Item price is not in valid format.');
+      }
     }
     if ( !this.itemMediaSelected ) {
       errors.push('Image or Video must have been selected for the Item.');
