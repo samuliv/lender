@@ -21,7 +21,7 @@ export class MyLendableItemsPage implements OnInit {
     private wbma: WbmaService,
     private router: Router,
     private actionSheetController: ActionSheetController,
-    private alertController: AlertController) { 
+    private alertController: AlertController) {
       this.source = this.activatedRoute.snapshot.paramMap.get('source');
     }
 

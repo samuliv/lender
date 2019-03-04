@@ -1,0 +1,35 @@
+.itemList {
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.itemList li {
+  list-style-type: none;
+  padding: 12px 8px 12px 8px;
+  font-size: 14px;
+  outline: 1px solid #aaa;
+}
+
+.itemList li.selectedItem {
+  background: #0000ff;
+  color: #fff;
+}
+
+.level1, .level2, .level3 {
+  font-size: 12px !important;
+}
+
+.level1 {
+  padding-left: 30px !important;
+}
+  .level2 {
+    padding-left: 60px !important;
+  }
+    .level3 {
+      padding-left: 90px !important;
+    }
+
+.itemList .hide {
+  display: none !important;
+}

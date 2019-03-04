@@ -57,6 +57,10 @@ export class ExtraService {
     return this.http.get<Feedback[]>(this.extraURL + '?operation=feedback&user_id=' + user_id);
   }
 
+  public getCategories() {
+    return this.http.get<any>(this.extraURL + '?operation=categories2');
+  }
+
   public markMessageAsReaded(message_id: number) {
     return this.http.get<Success>(this.extraURL + '?operation=markmessageasreaded&id=' + message_id);
   }

@@ -3,10 +3,15 @@
     <ion-buttons slot="start">
       <ion-button (click)="goBack()"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
     </ion-buttons>     
-    <ion-title>BrowseCategory</ion-title>
+    <ion-title>Categories</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+
+<ul class="itemList">
+  <li (click)="itemClickAll()" class="level0{{ allSelected ? ' selectedItem' : ''}}">All</li>
+  <li (click)="itemClick(item)" *ngFor="let item of categories" class="level{{ item.level }} {{item.display === true ? '' : 'hide' }} {{item.selected ? 'selectedItem' : ''}}">{{ item.name }}</li>
+</ul>
 
 </ion-content>
