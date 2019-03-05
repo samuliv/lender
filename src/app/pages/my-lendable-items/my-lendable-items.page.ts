@@ -3,6 +3,7 @@ import { NavController, ActionSheetController, AlertController } from '@ionic/an
 import { ActivatedRoute, Router } from '@angular/router';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
 import { MediaItem } from 'src/app/interfaces/mediaitem';
+import { ExtraService } from 'src/app/services/extra/extra.service';
 
 @Component({
   selector: 'app-my-lendable-items',
@@ -19,6 +20,7 @@ export class MyLendableItemsPage implements OnInit {
     private navController: NavController,
     private activatedRoute: ActivatedRoute,
     private wbma: WbmaService,
+    private extra: ExtraService,
     private router: Router,
     private actionSheetController: ActionSheetController,
     private alertController: AlertController) {
@@ -43,7 +45,17 @@ export class MyLendableItemsPage implements OnInit {
         {
           text: 'Delete Item',
           handler: () => {
-            // TODO
+            this.wbma.deleteMedia(item.file_id).subscribe((res) => {
+              if (res.message === 'File deleted') {
+                const item_id = item.file_id;
+                this.myLendableItems.splice(this.myLendableItems.indexOf(item), 1);
+                this.extra.itemDeleted(item_id).subscribe((r) => {
+                  if ( r.success ) {
+                    console.log('Item deletion passed to ExtraService Server Successfully.');
+                  }
+                });
+              }
+            });
           }
         }, {
           text: 'Cancel',

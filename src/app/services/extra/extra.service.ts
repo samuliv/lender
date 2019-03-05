@@ -29,6 +29,10 @@ export class ExtraService {
     return this.http.get<Success>(this.extraURL + '?operation=acceptRequest&request_id=' + request_id.toString());
   }
 
+  public itemDeleted(item_id: number) {
+    return this.http.get<Success>(this.extraURL + '?operation=item-deleted&item_id=' + item_id.toString());
+  }
+
   public rejectRequest(request_id: number) {
     return this.http.get<Success>(this.extraURL + '?operation=rejectRequest&request_id=' + request_id.toString());
   }

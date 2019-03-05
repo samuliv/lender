@@ -21,10 +21,10 @@ export class AddLendableItemPage implements OnInit {
   itemCustomLocationLat: number;
   itemCustomLocationLon: number;
   itemUseDefaultLocation: boolean;
-  submitButtonText: string;
   source: string; // for routing fix
   file: Blob;
   fileIsUploaded: boolean;
+  editItemID: number;
 
   constructor(
     private navController: NavController,
@@ -47,8 +47,24 @@ export class AddLendableItemPage implements OnInit {
       this.itemCustomLocationLat = 0;
       this.itemCustomLocationLon = 0;
       this.itemCustomLocationSet = false;
-      this.submitButtonText = 'Add Item';
       this.source = this.activatedRoute.snapshot.paramMap.get('source');
+      this.editItemID = parseInt(this.source.split('_')[0], 10);
+
+      if (this.editItemID > 0) {
+        this.wbma.getSingleMedia(this.editItemID).subscribe((res) => {
+          this.itemTitle = res.title;
+          const json = JSON.parse(res.description);
+          this.itemCategoryID = parseInt(json.category, 10);
+          this.itemCategory = '(wait..)';
+          this.itemPrice = json.price.toString().replace(',', '.');
+          this.itemDescription = json.description;
+          this.itemLocation = '(latlon...)';
+          this.itemCustomLocationLat = json.lat;
+          this.itemCustomLocationLon = json.lon;
+          this.itemCustomLocationSet = true;
+          this.itemUseDefaultLocation = false;
+        });
+      }
 
       this.events.subscribe('category-clicked', (categoryID, categoryName) => {
         this.itemCategoryID = categoryID;

@@ -6,6 +6,7 @@ import { UsernameAvailable } from 'src/app/interfaces/usernameavailable';
 import { RegisterNewUserInfo } from 'src/app/interfaces/registernewuserinfo';
 import { Router } from '@angular/router';
 import { SearchFilteringOptions } from 'src/app/interfaces/searchfilteringoptions';
+import { Success } from 'src/app/interfaces/success';
 /*
   WBMA-api Communication Service
  */
@@ -29,6 +30,21 @@ export class WbmaService {
       this.loggedIn = status;
       // this.events.publish('loginstatuschange'); TODO
     }
+  }
+
+  accessTokenHeader() {
+    return {
+      headers: new HttpHeaders({
+        'x-access-token': this.getToken(),
+      })};
+  }
+
+  accessTokenHeaderWithJSON() {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-access-token': this.getToken(),
+      })};
   }
 
   logout() {
@@ -68,6 +84,10 @@ export class WbmaService {
     return this.http.get<MediaItem[]>(this.apiUrl + 'tags/' + this.appTag);
   }
 
+  getSingleMedia(media_id: number) {
+    return this.http.get<MediaItem>(this.apiUrl + 'media/' + media_id.toString());
+  }
+
   loginPost(formData: any) {
     return this.http.post<LoginInfo>(this.apiUrl + 'login', formData);
   }
@@ -91,43 +111,32 @@ export class WbmaService {
     return this.http.post<RegisterNewUserInfo>(this.apiUrl + 'users', formData);
   }
 
+  deleteMedia(media_id: number) {
+    return this.http.delete<any>(this.apiUrl + 'media/' + media_id, this.accessTokenHeader());
+  }
+
   addTagToFile(file_id: number, tag: string) {
     const formData = { 'file_id' : file_id, 'tag': tag };
-    const headers = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'x-access-token': this.getToken(),
-      })
-    };
-    return this.http.post<any>(this.apiUrl + 'tags', formData, headers);
+    return this.http.post<any>(this.apiUrl + 'tags', formData, this.accessTokenHeaderWithJSON());
   }
 
   updateMyProfile(formData: FormData) {
-    const headers = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'x-access-token': this.getToken(),
-      })
-    };
-    return this.http.put<any>(this.apiUrl + 'users', formData, headers);
+    return this.http.put<any>(this.apiUrl + 'users', formData, this.accessTokenHeaderWithJSON());
   }
 
+
   uploadFile(formData: FormData) {
-    const headers = {
-      headers: new HttpHeaders({
-        'x-access-token': this.getToken(),
-      })
-    };
-    return this.http.post<any>(this.apiUrl + 'media', formData, headers);
+    return this.http.post<any>(this.apiUrl + 'media', formData, this.accessTokenHeader());
   }
 
   updateMediaItem(id: number, title: string, description: string) {
-    const headers = {
-      headers: new HttpHeaders({
-        'x-access-token': this.getToken(),
-      })
-    };
-    return this.http.put<any>(this.apiUrl + 'media/' + id.toString(), { 'title': title, 'description': description }, headers);
+    return this.http.put<any>(
+      this.apiUrl + 'media/' + id.toString(),
+      { 'title': title,
+        'description': description 
+      },
+      this.accessTokenHeader()
+      );
   }
 
   getApiUrl() {

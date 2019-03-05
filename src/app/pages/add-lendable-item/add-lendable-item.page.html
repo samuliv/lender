@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-button (click)="goBack()"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
     </ion-buttons>   
-    <ion-title>Add/Edit Item</ion-title>
+    <ion-title>{{ editItemID == 0 ? 'Add' : 'Edit'}} Item</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -40,7 +40,7 @@
   </ion-item>
   
   <br>
-  <ion-button expand="full" (click)="submitForm()">{{ submitButtonText }}</ion-button>
+  <ion-button expand="full" (click)="submitForm()">{{ editItemID == 0 ? 'Add Item' : 'Save Changes'}}</ion-button>
 
 </ion-content>
   
