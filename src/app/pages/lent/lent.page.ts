@@ -32,6 +32,7 @@ export class LentPage implements OnInit {
 
   ngOnInit() {
     this.refreshAll();
+    this.refreshLentList();
   }
 
   resetToolbarBadges() {
@@ -113,7 +114,6 @@ export class LentPage implements OnInit {
 
   ionViewDidEnter() {
     console.log('lent.page.ts : ionViewDidEnter()');
-    this.refreshLentList();
   }
 
   async itemClick(item: LendItem) {
