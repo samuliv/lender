@@ -21,6 +21,7 @@ export class BrowsePage implements OnInit{
   maxDistance: number;
   maxPrice: number;
   currentLocationName: string;
+  searchText: string;
 
   startTime: string;
   endTime: string;
@@ -48,6 +49,7 @@ export class BrowsePage implements OnInit{
       this.useGpsLocation = true;
       this.maxPrice = 5;
       this.setDateRange = false;
+      this.searchText = '';
       this.currentLocationName = '(none)';
 
 
@@ -154,7 +156,7 @@ export class BrowsePage implements OnInit{
     this.maxDistance = parseInt(args[2], 10);
     const neededAt = args[3];
     const neededFor = args[4];
-    this.extra.getCategoryNameById(this.selectedCategoryID).subscribe((res) => {
+    this.extra.getCategoryNameById(this.selectedCategoryID).subscribe((res) => {870
       if (res.success) {
         this.selectedCategoryName = res.response;
         // @ts-ignore

@@ -60,7 +60,12 @@
       <ion-label>End Time</ion-label>
       <ion-datetime display-format="MMM DD, YYYY HH:mm" yearValues="2019,2020" minuteValues="0,15,30,45" (ionChange)="someParameterChanged()" [(ngModel)]="endTime"></ion-datetime>
     </ion-item>
-  
+
+    <ion-item>
+      <ion-label>Search Text</ion-label>
+      <ion-input [(ngModel)]="searchText"></ion-input>
+    </ion-item>
+      
   </ion-list>
 
   <ion-button *ngIf="!browseItems" expand="block" (click)="browseItemsButtonClick()">Browse {{ borrowableItems.length }} items</ion-button>
