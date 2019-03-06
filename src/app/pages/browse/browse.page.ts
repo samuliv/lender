@@ -122,7 +122,10 @@ export class BrowsePage implements OnInit{
             hideItem = true;
           }
         }
-        if (hideItem === false && this.maxDistance !== 0 && distance > this.maxDistance) {
+        if (hideItem === false && this.maxPrice !== 201 && this.maxPrice < arr[i].media_data.price) {
+          hideItem = true;
+        }
+        if (hideItem === false && this.maxDistance !== 201 && distance > this.maxDistance) {
           hideItem = true;
         }
         if ( hideItem ) {
