@@ -63,7 +63,7 @@
 
     <ion-item>
       <ion-label>Search Text</ion-label>
-      <ion-input [(ngModel)]="searchText"></ion-input>
+      <ion-input (ionChange)="someParameterChanged()" [(ngModel)]="searchText"></ion-input>
     </ion-item>
       
   </ion-list>

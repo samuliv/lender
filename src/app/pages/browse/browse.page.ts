@@ -76,7 +76,11 @@ export class BrowsePage implements OnInit{
   }
 
   browseItemsButtonClick() {
-    this.browseItems = true;
+    if (this.borrowableItems.length > 0) {
+      this.browseItems = true;
+    } else {
+      console.log('No Items!');
+    }
   }
 
   closeBrowse() {
@@ -130,6 +134,21 @@ export class BrowsePage implements OnInit{
         }
         if (hideItem === false && this.maxDistance !== 201 && distance > this.maxDistance) {
           hideItem = true;
+        }
+        if (hideItem === false && this.searchText !== '') {
+          // perform text serach
+          const searchItems = this.searchText.split(' ');
+          let somethingFound = false;
+          for(let s = 0; s < searchItems.length; s++) {
+            if ( arr[i].title.toLowerCase() !== arr[i].title.toLowerCase().replace(searchItems[s].toLowerCase(), '') ) {
+              somethingFound = true;
+            } else if ( arr[i].media_data.description.toLowerCase() !== arr[i].media_data.description.toLowerCase().replace(searchItems[s].toLowerCase(), '') ) {
+              somethingFound = true;
+            }
+          }
+          if ( !somethingFound ) {
+            hideItem = true;
+          }
         }
         if ( hideItem ) {
           arr.splice(i, 1);
