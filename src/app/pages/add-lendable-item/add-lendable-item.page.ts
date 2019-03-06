@@ -127,6 +127,7 @@ export class AddLendableItemPage implements OnInit {
   }
 
   async submitForm() {
+    console.log('Trying to submit');
     let validationErrors: string[] = [];
     validationErrors = this.validateForm();
     if (validationErrors.length === 0) {
@@ -161,10 +162,20 @@ export class AddLendableItemPage implements OnInit {
         this.wbma.uploadFile(formData)
           .subscribe((res: any) => {
             if ( res.message === 'File uploaded' ) {
-              setTimeout(() => {
-                loading.dismiss();
-                this.goBack();
-               }, 2000); // 2000ms delay for thumbnail-creation ;)
+              this.wbma.addTagToFile(parseInt(res.file_id, 10), this.wbma.getAppTag()).subscribe((tag) => {
+                if ( tag.message === 'Tag added' ) {
+                  setTimeout(() => {
+                    loading.dismiss();
+                    this.goBack();
+                   }, 2000); // 2000ms delay for thumbnail-creation ;)
+                } else {
+                  loading.dismiss();
+                  this.presentAlert('Media upload failed', 'Tag adding failed');
+                }
+              });
+            } else {
+              loading.dismiss();
+              this.presentAlert('Media upload failed', 'File upload failed.');
             }
           });
       } else {

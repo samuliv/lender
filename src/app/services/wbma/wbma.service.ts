@@ -166,6 +166,10 @@ export class WbmaService {
     return this.getApiUrl() + 'uploads/';
   }
 
+  getAppTag() {
+    return this.appTag;
+  }
+
   readMediaData(mediaItem: MediaItem[]) {
     mediaItem.forEach((i) => {
       i.media_data = JSON.parse(i.description);
