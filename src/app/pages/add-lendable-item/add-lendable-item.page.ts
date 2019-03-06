@@ -127,7 +127,6 @@ export class AddLendableItemPage implements OnInit {
   }
 
   async submitForm() {
-    console.log('Trying to submit');
     let validationErrors: string[] = [];
     validationErrors = this.validateForm();
     if (validationErrors.length === 0) {
