@@ -6,6 +6,7 @@ import { GpsPositionService } from 'src/app/services/gps-position/gps-position.s
 import { MediaItem } from 'src/app/interfaces/mediaitem';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
 import { GpsDistanceService } from 'src/app/services/gps-distance/gps-distance.service';
+import { extractDirectiveDef } from '@angular/core/src/render3/definition';
 
 @Component({
   selector: 'app-browse',
@@ -45,7 +46,7 @@ export class BrowsePage implements OnInit{
     private events: Events) {
       this.maxDistance = 20;
       this.useGpsLocation = true;
-      this.maxPrice = 0;
+      this.maxPrice = 5;
       this.setDateRange = false;
       this.currentLocationName = '(none)';
 
@@ -146,36 +147,68 @@ export class BrowsePage implements OnInit{
     });
   }
 
-  async quickSearch() {
+  quickSearchAction(args: string[]) {
+    this.selectedCategoryID = parseInt(args[0], 10);
+    this.selectedCategoryName = '';
+    this.maxPrice = parseInt(args[1], 10);
+    this.maxDistance = parseInt(args[2], 10);
+    const neededAt = args[3];
+    const neededFor = args[4];
+    this.extra.getCategoryNameById(this.selectedCategoryID).subscribe((res) => {
+      if (res.success) {
+        this.selectedCategoryName = res.response;
+        // @ts-ignore
+        this.selectedCategoryContains = res.contains;
+      }
+    })
+  }
+
+  quickSearch(step?: number, args?: string[]) {
+    if (!step) {
+      step = 0;
+    }
+    if (!args) {
+      args = [];
+    }
+    const steps = `Please, select a category; Cars: 2; Power Tools: 28; Musical Instruments: 47; Accommodation: 34
+                   How much it can cost per hour?; Nothing: 0; 1e/h: 1; 5e/h: 5; 10e/h: 10; 50e/h: 50; No limit: 201
+                   How near it has to be located?; 2km : 2; 5km : 5; 20km : 20; No limit: 201
+                   When do you need it?; Immediately: immediately; After 2 hours: 2h; Tomorrow morning: tmrrw-m; Tomorrow evening: tmrrw-e
+                   How long do you need it?; for 1 hour: 1; for 2 hours: 2; for 8 hours: 8; whole day: 24; two days: 48`;
+    
+    const rows = steps.split('\n');
+    if (step !== 5) {
+      this.presentQuickSearchStep(step, rows[step], args);
+    } else {
+      this.quickSearchAction(args);
+    }
+  }
+
+  async presentQuickSearchStep(step: number, data: string, args?: string[]) {
+    const dataItems = data.split(';');
+    const buttons: any = [];
+    if (dataItems.length > 1) {
+      for (let i=1; i < dataItems.length; i++) {
+        const items = dataItems[i].split(':');
+        buttons.push({
+          text: items[0],
+          handler: () => {
+            args.push(items[1].trim());
+            this.quickSearch(step+1, args);
+          }
+        })
+      }
+    }
+    buttons.push({
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+        console.log('Quick Search Cancelled.');
+      }
+    });
     const actionSheet = await this.actionSheetController.create({
-      header: 'Quick Search',
-      buttons: [{
-        text: 'Cars',
-        handler: () => {
-          console.log('Share clicked');
-        }
-      }, {
-        text: 'Power Tools',
-        handler: () => {
-          console.log('Play clicked');
-        }
-      }, {
-        text: 'Musical Instruments',
-        handler: () => {
-          console.log('Favorite clicked');
-        }
-      }, {
-        text: 'Accommodation',
-        handler: () => {
-          console.log('Favorite clicked');
-        }
-      }, {
-        text: 'Cancel',
-        role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+      header: dataItems[0],
+      buttons: buttons,
     });
     await actionSheet.present();
   }
