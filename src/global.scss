@@ -31,3 +31,43 @@
 .sc-ion-segment-ios-s .segment-button-checked .oneRow .right {
     background: #fff; color: #3880ff;
 }
+
+$color-danger: #ff0000;
+$color-success: #00cc00;
+$color-pending: #ffff00;
+$color-special: #ff00ff;
+$color-fore-light: #fff;
+$color-fore-dark: #222;
+
+/* statuses / badges */
+.lender-badge {
+    text-transform: uppercase;
+    font-size: 11px;
+    padding: 4px 6px 4px 6px;
+}
+
+.status-onloan {
+    background-color: $color-special;
+    color: $color-fore-light;
+}
+.status-rejected,
+.status-cancelled,
+.status-uncommented,
+.status-expired {
+    background-color: $color-danger;
+    color: $color-fore-light;
+}
+.status-accepted {
+    background-color: $color-success;
+    color: $color-fore-light;
+}
+.status-pending {
+    background-color: $color-pending;
+    color: $color-fore-dark;
+}
+
+.img-thumbnail {
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+}

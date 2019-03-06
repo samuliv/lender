@@ -12,6 +12,7 @@
   <ion-item (click)="chooseCategory()">
     <ion-label position="stacked">Category</ion-label>
     <ion-label>{{ itemCategory }}</ion-label>
+    <ion-spinner name="dots" *ngIf="itemCategory === ''"></ion-spinner>
   </ion-item>
 
   <ion-item>
@@ -32,6 +33,7 @@
   <ion-item (click)="itemLocationClick()">
       <ion-label position="stacked">Item Location</ion-label>
       <ion-label>{{ itemLocation }}</ion-label>
+      <ion-spinner name="dots" *ngIf="itemLocation === ''"></ion-spinner>
     </ion-item>
 
   <ion-item (click)="choosePicture()">

@@ -78,6 +78,7 @@ export class LentPage implements OnInit {
   refreshLentList() {
     this.extra.getListLent(this.wbma.getMyUserID()).subscribe(res => {
       this.lentItems = res;
+      this.wbma.dataMerge(this.lentItems);
       this.refreshLentListBadge();
     });
   }
@@ -182,7 +183,7 @@ export class LentPage implements OnInit {
         {
           text: 'Reject',
           handler: () => {
-            this.extra.rejectRequest(item.item_id).subscribe(res => {
+            this.extra.rejectRequest(item.lend_id).subscribe(res => {
               if ( res.success ) {
                 item.acceptable = false;
                 item.rejectable = false;
@@ -216,7 +217,7 @@ export class LentPage implements OnInit {
         {
           text: 'Accept',
           handler: () => {
-            this.extra.acceptRequest(item.item_id).subscribe(res => {
+            this.extra.acceptRequest(item.lend_id).subscribe(res => {
               if ( res.success ) {
                 item.acceptable = false;
                 item.rejectable = false;
@@ -250,7 +251,7 @@ export class LentPage implements OnInit {
         {
           text: 'Cancel Lend',
           handler: () => {
-            this.extra.cancelRequest(item.item_id).subscribe(res => {
+            this.extra.cancelRequest(item.lend_id).subscribe(res => {
               if ( res.success ) {
                 item.cancellable = false;
                 item.status = 'cancelled';

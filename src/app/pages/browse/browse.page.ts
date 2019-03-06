@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, Events } from '@ionic/angular';
+import { ActionSheetController, Events, IonApp } from '@ionic/angular';
 import { ExtraService } from '../../services/extra/extra.service';
 import { Router } from '@angular/router';
 import { GpsPositionService } from 'src/app/services/gps-position/gps-position.service';
+import { MediaItem } from 'src/app/interfaces/mediaitem';
+import { WbmaService } from 'src/app/services/wbma/wbma.service';
+import { GpsDistanceService } from 'src/app/services/gps-distance/gps-distance.service';
 
 @Component({
   selector: 'app-browse',
@@ -21,20 +24,31 @@ export class BrowsePage implements OnInit{
   startTime: string;
   endTime: string;
 
+  selectedCategoryID = 0;
+  selectedCategoryName = 'All';
+  selectedCategoryContains: number[] = [];
+
   browseItemsCount: string;
   refreshTimer: any;
+  browseItems = false;
+
+  borrowableItems: MediaItem[] = [];
+  tempItems: MediaItem[] = [];
 
   constructor(
     public actionSheetController: ActionSheetController,
     public extra: ExtraService,
     private router: Router,
     private gpsPositionService: GpsPositionService,
+    private gpsDistance: GpsDistanceService,
+    private wbma: WbmaService,
     private events: Events) {
       this.maxDistance = 20;
       this.useGpsLocation = true;
       this.maxPrice = 0;
       this.setDateRange = false;
       this.currentLocationName = '(none)';
+
 
       const currentTime = new Date();
       currentTime.setTime(currentTime.getTime() + (1 * 60 * 60 * 1000));
@@ -45,10 +59,25 @@ export class BrowsePage implements OnInit{
       this.events.subscribe('location-changed', () => {
         this.refreshLocationData();
       });
+
+      this.events.subscribe('category-clicked', (id, categroyname, contains) => {
+        this.selectedCategoryID = id;
+        this.selectedCategoryName = categroyname;
+        this.selectedCategoryContains = contains;
+        this.someParameterChanged();
+      });
   }
 
   ngOnInit() {
     this.refreshLocationData();
+  }
+
+  browseItemsButtonClick() {
+    this.browseItems = true;
+  }
+
+  closeBrowse() {
+    this.browseItems = false;
   }
 
   refreshLocationData() {
@@ -56,6 +85,7 @@ export class BrowsePage implements OnInit{
       this.useGpsLocation = false;
     }
     this.currentLocationName = this.gpsPositionService.getCurrentLocationName();
+    this.someParameterChanged();
   }
 
   browseCategory() {
@@ -78,10 +108,39 @@ export class BrowsePage implements OnInit{
     this.refreshTimer = setTimeout( () => { this.refreshBrowseItemsCount(); }, 250);
   }
 
+  applyFiltering(arr: MediaItem[]) {
+    if (arr.length > 0) {
+      for (let i = arr.length - 1; i > -1; i--) {
+        let hideItem = false;
+        const distance = this.gpsDistance.calculateDistance(
+          this.gpsPositionService.latitude,
+          this.gpsPositionService.longitude,
+          arr[i].media_data.lat,
+          arr[i].media_data.lon);
+        if (this.selectedCategoryID !== 0) {
+          if(this.selectedCategoryContains.indexOf(arr[i].media_data.category) === -1) {
+            hideItem = true;
+          }
+        }
+        if (hideItem === false && this.maxDistance !== 0 && distance > this.maxDistance) {
+          hideItem = true;
+        }
+        if ( hideItem ) {
+          arr.splice(i, 1);
+        } else {
+          arr[i].distance = this.gpsDistance.formatDistance(distance);
+        }
+      }
+    }
+  }
+
   refreshBrowseItemsCount() {
-    console.log('***REFRESH BROWSE ITEM COUNT***');
-    // TODO
-    this.browseItemsCount = Math.floor(Math.random() * 100).toString();
+    this.borrowableItems = [];
+    this.wbma.getAllMediaByAppTagAsMediaItem().subscribe((res) => {
+      this.tempItems = this.wbma.readMediaData(res);
+      this.applyFiltering(this.tempItems);
+      this.borrowableItems = this.tempItems;
+    });
   }
 
   async quickSearch() {

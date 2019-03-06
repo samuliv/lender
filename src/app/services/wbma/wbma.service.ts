@@ -7,6 +7,8 @@ import { RegisterNewUserInfo } from 'src/app/interfaces/registernewuserinfo';
 import { Router } from '@angular/router';
 import { SearchFilteringOptions } from 'src/app/interfaces/searchfilteringoptions';
 import { Success } from 'src/app/interfaces/success';
+import { LendItem } from 'src/app/interfaces/lenditem';
+import { User } from 'src/app/interfaces/user';
 /*
   WBMA-api Communication Service
  */
@@ -84,6 +86,10 @@ export class WbmaService {
     return this.http.get<MediaItem[]>(this.apiUrl + 'tags/' + this.appTag);
   }
 
+  getUserInformation(user_id: number) {
+    return this.http.get<User>(this.apiUrl + 'users/' + user_id.toString(), this.accessTokenHeader());
+  }
+
   getSingleMedia(media_id: number) {
     return this.http.get<MediaItem>(this.apiUrl + 'media/' + media_id.toString());
   }
@@ -124,7 +130,6 @@ export class WbmaService {
     return this.http.put<any>(this.apiUrl + 'users', formData, this.accessTokenHeaderWithJSON());
   }
 
-
   uploadFile(formData: FormData) {
     return this.http.post<any>(this.apiUrl + 'media', formData, this.accessTokenHeader());
   }
@@ -133,10 +138,24 @@ export class WbmaService {
     return this.http.put<any>(
       this.apiUrl + 'media/' + id.toString(),
       { 'title': title,
-        'description': description 
+        'description': description
       },
       this.accessTokenHeader()
       );
+  }
+
+  dataMerge(arr: LendItem[]) {
+    if (arr.length > 0) {
+      for (let i = 0; i < arr.length; i++) {
+        arr[i].item_thumb = './assets/imgs/lendertest2.png';
+        this.getSingleMedia(arr[i].item_id).subscribe((res) => {
+          arr[i].item_title = res.title;
+          if (res.hasOwnProperty('thumbnails') && res.thumbnails.hasOwnProperty('w160')) {
+            arr[i].item_thumb = this.getApiUploadsUrl() + res.thumbnails.w160;
+          }
+        });
+      }
+    }
   }
 
   getApiUrl() {

@@ -4,6 +4,8 @@ import { WbmaService } from 'src/app/services/wbma/wbma.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Chooser } from '@ionic-native/chooser/ngx'
 import { MediaData } from 'src/app/interfaces/mediadata';
+import { OpenStreetMapService } from 'src/app/services/openstreetmap/openstreetmap.service';
+import { ExtraService } from 'src/app/services/extra/extra.service';
 
 @Component({
   selector: 'app-add-lendable-item',
@@ -11,16 +13,17 @@ import { MediaData } from 'src/app/interfaces/mediadata';
   styleUrls: ['./add-lendable-item.page.scss'],
 })
 export class AddLendableItemPage implements OnInit {
-  itemCategoryID: number;
-  itemCategory: string;
-  itemTitle: string;
-  itemDescription: string;
-  itemPrice: string;
-  itemLocation: string;
-  itemCustomLocationSet: boolean;
-  itemCustomLocationLat: number;
-  itemCustomLocationLon: number;
-  itemUseDefaultLocation: boolean;
+  itemCategoryID = -1;
+  itemCategory = '(please select)';
+  itemTitle = '';
+  itemDescription = '';
+  itemPrice = '0';
+  itemLocation = '(default location)';
+  itemCustomLocationSet = false;
+  itemCustomLocationLat = 0;
+  itemCustomLocationLon = 0;
+  itemUseDefaultLocation = true;
+
   source: string; // for routing fix
   file: Blob;
   fileIsUploaded: boolean;
@@ -34,19 +37,11 @@ export class AddLendableItemPage implements OnInit {
     private events: Events,
     private actionSheetController: ActionSheetController,
     private chooser: Chooser,
+    private openstreetmap: OpenStreetMapService,
+    private extra: ExtraService,
     private alertController: AlertController,
     private loadingController: LoadingController,
     ) {
-      this.itemCategory = '(please select)';
-      this.itemCategoryID = -1;
-      this.itemLocation = '(default location)';
-      this.itemTitle = '';
-      this.itemPrice = '0';
-      this.itemDescription = '';
-      this.itemUseDefaultLocation = true;
-      this.itemCustomLocationLat = 0;
-      this.itemCustomLocationLon = 0;
-      this.itemCustomLocationSet = false;
       this.source = this.activatedRoute.snapshot.paramMap.get('source');
       this.editItemID = parseInt(this.source.split('_')[0], 10);
 
@@ -55,14 +50,22 @@ export class AddLendableItemPage implements OnInit {
           this.itemTitle = res.title;
           const json = JSON.parse(res.description);
           this.itemCategoryID = parseInt(json.category, 10);
-          this.itemCategory = '(wait..)';
+          this.itemCategory = '';
           this.itemPrice = json.price.toString().replace(',', '.');
           this.itemDescription = json.description;
-          this.itemLocation = '(latlon...)';
+          this.itemLocation = '';
           this.itemCustomLocationLat = json.lat;
           this.itemCustomLocationLon = json.lon;
           this.itemCustomLocationSet = true;
           this.itemUseDefaultLocation = false;
+          this.openstreetmap.describeCoordinates(json.lat, json.lon).then((location: string) => {
+            this.itemLocation = location;
+          });
+          this.extra.getCategoryNameById(this.itemCategoryID).subscribe(cat => {
+            if (cat.success) {
+              this.itemCategory = cat.response;
+            }
+          });
         });
       }
 
@@ -109,6 +112,7 @@ export class AddLendableItemPage implements OnInit {
     if ( this.itemDescription.length < 3 ) {
       errors.push('Item description must contain over 3 characters.');
     }
+    // TODO : LOCATION
     if ( this.itemPrice === '' ) {
       errors.push('Item price must be specified.');
     } else {
@@ -116,24 +120,32 @@ export class AddLendableItemPage implements OnInit {
         errors.push('Item price is not in valid format.');
       }
     }
-    if ( !this.fileIsUploaded ) {
+    if ( this.editItemID === 0 && !this.fileIsUploaded ) {
       errors.push('Image or Video must have been selected for the Item.');
     }
     return errors;
   }
 
-  submitForm() {
+  async submitForm() {
     let validationErrors: string[] = [];
     validationErrors = this.validateForm();
     if (validationErrors.length === 0) {
       // Form is Valid, we can submit
-      this.presentLoading();
+      const loading = await this.loadingController.create({ message: (this.editItemID === 0 ? 'Uploading...' : 'Saving...') });
+      await loading.present();
       const formData = new FormData();
       formData.append('title', this.itemTitle);
       formData.append('file', this.file);
 
-      const lat = 0;
-      const lon = 0;
+      let lat = 0;
+      let lon = 0;
+
+      if ( this.itemUseDefaultLocation ) {
+        // TODO
+      } else {
+        lat = this.itemCustomLocationLat;
+        lon = this.itemCustomLocationLon;
+      }
 
       const description: MediaData = {
         category: this.itemCategoryID,
@@ -142,28 +154,39 @@ export class AddLendableItemPage implements OnInit {
         lat: lat,
         lon: lon,
       };
-      
-      formData.append('description', JSON.stringify(description));
-      this.wbma.uploadFile(formData)
-        .subscribe((res: any) => {
-          if ( res.message === 'File uploaded' ) {
-            
+      const jsonString = JSON.stringify(description);
+      if ( this.editItemID === 0 ) {
+        // User is uploading new file
+        formData.append('description', jsonString);
+        this.wbma.uploadFile(formData)
+          .subscribe((res: any) => {
+            if ( res.message === 'File uploaded' ) {
+              setTimeout(() => {
+                loading.dismiss();
+                this.goBack();
+               }, 2000); // 2000ms delay for thumbnail-creation ;)
+            }
+          });
+      } else {
+        // Editing existing file
+        this.wbma.updateMediaItem(this.editItemID, this.itemTitle, jsonString).subscribe((res) => {
+          if (res.message === 'File info updated') {
+            loading.dismiss();
+            this.goBack();
           }
-        })
+        });
+      }
     } else {
       let alertMessage = '';
       for (let i = 0; i < validationErrors.length; i++ ) {
-        alertMessage += (i != 0 ? '<br>' : '') + validationErrors[i];
+        alertMessage += (i !== 0 ? '<br>' : '') + validationErrors[i];
       }
-      this.presentAlert(alertMessage);
+      this.presentAlert('Check your Details', alertMessage);
     }
   }
 
   async presentLoading() {
-    const loading = await this.loadingController.create({
-      message: 'Uploading...',
-      duration: 2000
-    });
+    const loading = await this.loadingController.create({ message: 'Uploading...' });
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
@@ -172,9 +195,9 @@ export class AddLendableItemPage implements OnInit {
     this.goBack();
   }
 
-  async presentAlert(message: string) {
+  async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({
-      header: 'Check your Details',
+      header: header,
       message: message,
       buttons: ['OK']
     });
@@ -194,20 +217,24 @@ export class AddLendableItemPage implements OnInit {
   }
 
   choosePicture() {
-    this.chooser.getFile('image/*, video/*').then(uploadedFile => {
-      if ( uploadedFile ) {
-        const uploadedImage: any = document.getElementById('uploadedImage');
-        this.file = new Blob([uploadedFile.data], { type: uploadedFile.mediaType });
-        uploadedImage.src = uploadedFile.dataURI;
-        this.fileIsUploaded = true;
-      } else {
+    if ( this.editItemID !== 0 ) {
+      this.presentAlert('WBMA Backend', 'Image/video cannot be modified after first upload due to the WBMA Backend restrictions :(');
+    } else {
+      this.chooser.getFile('image/*, video/*').then(uploadedFile => {
+        if ( uploadedFile ) {
+          const uploadedImage: any = document.getElementById('uploadedImage');
+          this.file = new Blob([uploadedFile.data], { type: uploadedFile.mediaType });
+          uploadedImage.src = uploadedFile.dataURI;
+          this.fileIsUploaded = true;
+        } else {
+          this.fileIsUploaded = false;
+        }
+      })
+      .catch((e) => {
+        console.log(e.error);
         this.fileIsUploaded = false;
-      }
-    })
-    .catch((e) => {
-      console.log(e.error);
-      this.fileIsUploaded = false;
-    });
+      });
+    }
   }
 
   chooseCustomLocation() {

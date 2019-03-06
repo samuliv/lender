@@ -11,8 +11,10 @@
 
   <img id="avatar" class="profile-picture" src="https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png">
 
-  <h1 class="user-nickname">samuliv</h1>
-  <div class="user-fullname">Samuli Virtanen</div>
+  <h1 class="user-nickname">{{ userName }}</h1>
+  <div *ngIf="userFullname" class="user-fullname">{{ userFullName }}</div>
+  <div class="user-fullname">{{ userEmail }}</div>
+  
   <div class="user-stats">Lent: 0 items<br>Borrowed: 0 items<br>Lendable stuff: 0<br>Member since: yesterday</div>
 
   <ion-list-header>

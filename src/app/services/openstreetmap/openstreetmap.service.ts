@@ -18,7 +18,19 @@ export class OpenStreetMapService {
   }
 
   searchByCoordinates(latitude: number, longitude: number) {
-    return this.http.get<OpenStreetMapResponse[]>(this.apiUrl + '&q=' + latitude.toString() + '%2C%20' + longitude.toString());
+    return this.http.get<OpenStreetMapResponse[]>(this.apiUrl + '&q=' + latitude.toString() + '+' + longitude.toString());
+  }
+
+  describeCoordinates(latitude: number, longitude: number) {
+    return new Promise((resolve, reject) => {
+      this.searchByCoordinates(latitude, longitude).subscribe((res) => {
+        if (res.length > 0) {
+          resolve(this.translateToAddress(res)[0].city);
+        } else {
+          resolve('Unknown');
+        }
+      });
+    });
   }
 
   translateToAddress(data: OpenStreetMapResponse[]) {

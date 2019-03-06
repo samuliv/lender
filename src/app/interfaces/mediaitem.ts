@@ -1,5 +1,11 @@
 import { MediaData } from './mediadata';
 
+export interface Thumbnails {
+    w160: string;
+    w320: string;
+    w640: string;
+}
+
 export interface MediaItem {
     tag_id: number;
     file_id: number;
@@ -13,4 +19,7 @@ export interface MediaItem {
     mime_type: string;
     time_added: string;
     media_data?: MediaData;
+    thumbnails?: Thumbnails;
+    distance?: string;
+    item_thumb: string;
 }

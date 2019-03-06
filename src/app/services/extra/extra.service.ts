@@ -69,6 +69,10 @@ export class ExtraService {
     return this.http.get<Success>(this.extraURL + '?operation=markmessageasreaded&id=' + message_id);
   }
 
+  public getCategoryNameById(id: number) {
+    return this.http.get<Success>(this.extraURL + '?operation=get-category-byid&id=' + id);
+  }
+
   public backgroundRefresh() {
     // todo
   }

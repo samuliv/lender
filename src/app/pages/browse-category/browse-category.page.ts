@@ -71,6 +71,7 @@ export class BrowseCategoryPage implements OnInit {
     this.allSelected = true;
     this.selectedCategory = 0;
     console.log('Selected Category: All');
+    this.events.publish('category-clicked', 0, 'All', []);
   }
 
   clearSelections() {
@@ -84,7 +85,7 @@ export class BrowseCategoryPage implements OnInit {
 
   itemClick(item: any) {
     console.log('Selected Category:' + item.id + ' (' + item.name + ')');
-    this.events.publish('category-clicked', item.id, item.name);
+    this.events.publish('category-clicked', item.id, item.name, item.contains);
     this.selectedCategory = item.id;
     this.allSelected = false;
     if ( this.categories.length > 0 ) {

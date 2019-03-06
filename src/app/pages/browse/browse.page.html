@@ -1,8 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-        <ion-button (click)="quickSearch()">Quick Search</ion-button>
-      </ion-buttons>
+      <ion-button *ngIf="!browseItems" (click)="quickSearch()">Quick Search</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-button *ngIf="browseItems" (click)="closeBrowse()">Close</ion-button>
+    </ion-buttons>
     <ion-title>
       Browse
     </ion-title>
@@ -11,14 +14,14 @@
 
 <ion-content>
 
-  <ion-list>
+  <ion-list *ngIf="!browseItems">
 
-      <ion-item (click)="browseCategory()">
-          <ion-label>
-            Category
-          </ion-label>
-          <ion-badge slot="end" color="secondary">All</ion-badge>  
-        </ion-item>
+    <ion-item (click)="browseCategory()">
+        <ion-label>
+          Category
+        </ion-label>
+        <ion-badge slot="end" color="secondary">{{ selectedCategoryName }}</ion-badge>  
+      </ion-item>
 
     <ion-list-header>
       <ion-label>Max Price (per hour)</ion-label>
@@ -65,6 +68,23 @@
   
   </ion-list>
 
-  <ion-button expand="block">Browse {{ browseItemsCount }} items</ion-button>
-  
+  <ion-button *ngIf="!browseItems" expand="block" (click)="browseItemsButtonClick()">Browse {{ borrowableItems.length }} items</ion-button>
+
+  <ion-list *ngIf="browseItems">
+    <ion-item class="listitem" *ngFor="let item of borrowableItems" (click)="itemClick(item)">
+
+      <ion-thumbnail class="thumbnail" slot="start">
+        <img class="img-thumbnail" *ngIf="item.media_data.thumb" [src]="item.media_data.thumb">
+      </ion-thumbnail>
+
+      <ion-label>
+        <h3>{{ item.title }}</h3>
+        <ion-badge slot="end" class="lender-badge">{{ item.distance }}</ion-badge>
+      </ion-label>
+
+      <ion-badge slot="end" class="lender-badge">{{ item.media_data.price }} &euro;/h</ion-badge>
+
+    </ion-item>
+  </ion-list>
+
 </ion-content>
