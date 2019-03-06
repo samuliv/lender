@@ -92,11 +92,11 @@ export class AddLendableItemPage implements OnInit {
     if (price === '') {
       return -1;
     } else {
-      price.replace(/,/g, '.');
-      if (isNaN(parseFloat(price))) {
+      const priceValue = price.toString().replace(',', '.');
+      if (isNaN(parseFloat(priceValue))) {
         return -1;
       } else {
-        return parseFloat(price);
+        return parseFloat(priceValue);
       }
     }
   }
@@ -132,7 +132,9 @@ export class AddLendableItemPage implements OnInit {
     validationErrors = this.validateForm();
     if (validationErrors.length === 0) {
       // Form is Valid, we can submit
-      const loading = await this.loadingController.create({ message: (this.editItemID === 0 ? 'Uploading...' : 'Saving...') });
+      const loading = await this.loadingController.create({ 
+        message: (this.editItemID === 0 ? 'Uploading...' : 'Saving...'), 
+        duration: 9000 });
       await loading.present();
       const formData = new FormData();
       formData.append('title', this.itemTitle);
