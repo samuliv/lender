@@ -5,3 +5,107 @@
 .fixed-width {
   width: 60px;
 }
+.card-img {
+  max-height: 200px;
+}
+
+.lender-card {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  margin: 10px;
+  -webkit-box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.37);
+  -moz-box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.37);
+  box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.37);
+
+  span.distance,
+  span.price {
+    background: #333;
+    float: right;
+    border-radius: 4px;
+    color: #fff;
+  }
+
+  .footer-right {
+    float: right;
+  }
+}
+
+.lender-card table {
+  width: 100%;
+}
+
+.lender-card table td {
+  vertical-align: top
+}
+
+.lender-card-content {
+  padding: 10px;
+}
+
+.lender-card-content img {
+  max-height: 150px;
+  max-width: 100px;
+}
+
+.lender-card-title {
+  text-transform: uppercase;
+}
+.lender-card-title, 
+.lender-card-footer {
+  padding: 10px;
+  font-size: 11px;
+  font-weight: bold;
+  background: #666;
+  color: #fff;
+  width: 100%;
+}
+
+.lender-card-footer-request {
+  background: #222;
+  color: #fff;
+  font-size: 11px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 15px 5px 15px 5px;
+}
+
+.lender-card-content td.description {
+  font-size: 11px;
+  color: #444;
+}
+
+.lender-card-footer {
+  font-weight: 400;
+}
+
+.lender-card-footer table {
+  width: 100%;
+}
+.lender-card-footer table td {
+  padding: 2px;
+}
+.td-left {
+  width: 50%;
+}
+.td-right {
+  width: 50%;
+  text-align: right;
+}
+.lender-card-description {
+  font-size: 11px;
+  color: #333;
+}
+.highlight {
+  font-weight: 700;
+  font-weight: bold;
+  border-radius: 4px;
+  display: inline-block;
+  background: #eee;
+  color: #333;
+  padding: 0px 4px 0px 4px;
+}

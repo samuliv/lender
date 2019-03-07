@@ -9,6 +9,9 @@
     <ion-title>
       Browse
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="!browseItems" (click)="moreSearchOptionsToggle()">{{ moreSearchOptions ? 'Less Options' : 'More Options' }}</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -23,6 +26,10 @@
         <ion-badge slot="end" color="secondary">{{ selectedCategoryName }}</ion-badge>  
       </ion-item>
 
+    <ion-item *ngIf="moreSearchOptions">
+      <ion-label>Search Text</ion-label>
+      <ion-input (ionChange)="someParameterChanged()" [(ngModel)]="searchText"></ion-input>
+    </ion-item>
 
     <ion-item>
       <ion-label>Max Price</ion-label>
@@ -60,17 +67,57 @@
       <ion-label>End Time</ion-label>
       <ion-datetime display-format="MMM DD, YYYY HH:mm" yearValues="2019,2020" minuteValues="0,15,30,45" (ionChange)="someParameterChanged()" [(ngModel)]="endTime"></ion-datetime>
     </ion-item>
-
-    <ion-item>
-      <ion-label>Search Text</ion-label>
-      <ion-input (ionChange)="someParameterChanged()" [(ngModel)]="searchText"></ion-input>
-    </ion-item>
       
   </ion-list>
 
   <ion-button *ngIf="!browseItems" expand="block" (click)="browseItemsButtonClick()">Browse {{ borrowableItems.length }} items</ion-button>
 
-  <ion-list *ngIf="browseItems">
+  <div *ngIf="browseItems">
+
+    <div *ngFor="let item of borrowableItems" class="lender-card">
+      <div class="lender-card-title">{{ item.title }}</div>
+      <div class="lender-card-content">
+        <table>
+          <tr>
+            <td style="width: 10px;">
+              <img [src]="item.media_data.thumb">
+            </td>
+            <td class="description">
+              {{ item.media_data.description }}        
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="lender-card-footer">
+        <table>
+          <tr>
+            <td class="td-left">Price: <span class="highlight">{{ item.media_data.price === 0 ? 'FREE' : item.media_data.price + ' &euro;/h' }} </span></td>
+            <td class="td-right">Distance: <span class="highlight">{{ item.distance }} away</span></td>
+          </tr>
+          <tr>
+              <td class="td-left">User: <b>samuli_v</b></td>
+              <td class="td-right">
+                <span class="highlight">
+                    <ion-icon name="basket"></ion-icon> 15
+                  <ion-icon name="thumbs-up"></ion-icon> 100%
+                  <ion-icon name="thumbs-down"></ion-icon> 0%
+                </span>
+              </td>
+            </tr>
+            <tr>
+            <td colspan="2">Location: ESPOO / Leppävaara</td>
+          </tr>
+        </table>
+     </div>
+     <div class="lender-card-footer-request" (click)="requestLendNow(item)">
+        Request Lend Now
+     </div>
+    </div>
+
+  </div>
+
+
+    <!--
     <ion-item class="listitem" *ngFor="let item of borrowableItems" (click)="itemClick(item)">
 
       <ion-thumbnail class="thumbnail" slot="start">
@@ -84,7 +131,6 @@
 
       <ion-badge slot="end" class="lender-badge">{{ item.media_data.price }} &euro;/h</ion-badge>
 
-    </ion-item>
-  </ion-list>
+    </ion-item> -->
 
 </ion-content>

@@ -33,6 +33,7 @@ export class BrowsePage implements OnInit{
   browseItemsCount: string;
   refreshTimer: any;
   browseItems = false;
+  moreSearchOptions = false;
 
   borrowableItems: MediaItem[] = [];
   tempItems: MediaItem[] = [];
@@ -75,6 +76,13 @@ export class BrowsePage implements OnInit{
     this.refreshLocationData();
   }
 
+  moreSearchOptionsToggle() {
+    this.moreSearchOptions = !this.moreSearchOptions;
+    if (this.searchText !== '') {
+      this.someParameterChanged();
+    }
+  }
+
   browseItemsButtonClick() {
     if (this.borrowableItems.length > 0) {
       this.browseItems = true;
@@ -115,6 +123,10 @@ export class BrowsePage implements OnInit{
     this.refreshTimer = setTimeout( () => { this.refreshBrowseItemsCount(); }, 250);
   }
 
+  requestLendNow() {
+    console.log('TODO');
+  }
+
   applyFiltering(arr: MediaItem[]) {
     if (arr.length > 0) {
       for (let i = arr.length - 1; i > -1; i--) {
@@ -135,14 +147,16 @@ export class BrowsePage implements OnInit{
         if (hideItem === false && this.maxDistance !== 201 && distance > this.maxDistance) {
           hideItem = true;
         }
-        if (hideItem === false && this.searchText !== '') {
+        if (hideItem === false && this.moreSearchOptions && this.searchText !== '') {
           // perform text serach
           const searchItems = this.searchText.split(' ');
           let somethingFound = false;
           for(let s = 0; s < searchItems.length; s++) {
             if ( arr[i].title.toLowerCase() !== arr[i].title.toLowerCase().replace(searchItems[s].toLowerCase(), '') ) {
               somethingFound = true;
-            } else if ( arr[i].media_data.description.toLowerCase() !== arr[i].media_data.description.toLowerCase().replace(searchItems[s].toLowerCase(), '') ) {
+            } else if ( arr[i].media_data.description.toLowerCase() 
+                        !== arr[i].media_data.description.toLowerCase().replace(searchItems[s].toLowerCase(), '')
+                        ) {
               somethingFound = true;
             }
           }
@@ -196,7 +210,7 @@ export class BrowsePage implements OnInit{
                    How near it has to be located?; 2km : 2; 5km : 5; 20km : 20; No limit: 201
                    When do you need it?; Immediately: immediately; After 2 hours: 2h; Tomorrow morning: tmrrw-m; Tomorrow evening: tmrrw-e
                    How long do you need it?; for 1 hour: 1; for 2 hours: 2; for 8 hours: 8; whole day: 24; two days: 48`;
-    
+
     const rows = steps.split('\n');
     if (step !== 5) {
       this.presentQuickSearchStep(step, rows[step], args);
