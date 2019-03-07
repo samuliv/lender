@@ -3,7 +3,11 @@
   overflow: hidden;
 }
 .fixed-width {
-  width: 60px;
+  width: 90px;
+  float: right;
+}
+.slider-label {
+  min-width: 60px;
 }
 .card-img {
   max-height: 200px;

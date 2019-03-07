@@ -80,6 +80,8 @@ export class BrowsePage implements OnInit{
     this.moreSearchOptions = !this.moreSearchOptions;
     if (this.searchText !== '') {
       this.someParameterChanged();
+    } else {
+      // We do not need refresh if the search text is empty
     }
   }
 

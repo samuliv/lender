@@ -28,14 +28,13 @@
 
     <ion-item *ngIf="moreSearchOptions">
       <ion-label>Search Text</ion-label>
-      <ion-input (ionChange)="someParameterChanged()" [(ngModel)]="searchText"></ion-input>
+      <ion-input (ionChange)="someParameterChanged()" [(ngModel)]="searchText" placeholder="type search text here..."></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label>Max Price</ion-label>
-      <ion-range min="0" max="201" color="secondary" [(ngModel)]="maxPrice" (ionChange)="someParameterChanged()">
-        <ion-badge slot="end" color="secondary" class="fixed-width">{{ maxPrice === 0 ? 'Free' : maxPrice === 201 ? '∞ €' : maxPrice + ' €' }}</ion-badge>
-      </ion-range>
+      <ion-label class="slider-label">Price</ion-label>
+      <ion-range min="0" max="201" color="secondary" [(ngModel)]="maxPrice" (ionChange)="someParameterChanged()"></ion-range>
+      <ion-badge slot="end" color="secondary" class="fixed-width">{{ maxPrice === 0 ? 'Only Free' : maxPrice === 201 ? 'Any price' : 'max ' + maxPrice + ' €' }}</ion-badge>
     </ion-item>
 
     <ion-item>
@@ -52,10 +51,9 @@
     </ion-item>
     
     <ion-item>
-      <ion-label>Max Distance</ion-label>
-      <ion-range min="1" max="201" color="secondary" [(ngModel)]="maxDistance" (ionChange)="someParameterChanged()">
-        <ion-badge slot="end" color="primary" class="fixed-width">{{ maxDistance === 201 ? '∞ km' : maxDistance + " km" }}</ion-badge>
-      </ion-range>
+      <ion-label class="slider-label">Distance</ion-label>
+      <ion-range min="1" max="201" color="secondary" [(ngModel)]="maxDistance" (ionChange)="someParameterChanged()"></ion-range>
+      <ion-badge slot="end" color="primary" class="fixed-width">{{ maxDistance === 201 ? 'Anywhere' : "max " + maxDistance + " km" }}</ion-badge>
     </ion-item>
 
     <ion-item>
