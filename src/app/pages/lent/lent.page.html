@@ -54,7 +54,7 @@
           <p class="ends"><ion-icon name="return-left"></ion-icon> {{ item.ends }}</p>
         </ion-label>
 
-        <ion-badge slot="end" class="lender-badge status-{{item.status}}">{{item.status}}</ion-badge>  
+        <ion-badge slot="end" class="lender-badge" [ngClass]="'status-' + item.status">{{item.status}}</ion-badge>  
 
     </ion-item>
     </div>
