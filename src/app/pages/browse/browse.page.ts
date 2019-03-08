@@ -190,7 +190,10 @@ export class BrowsePage implements OnInit{
       if (this.tempItems.length > 0) {
         for (let i = 0; i < this.tempItems.length; i++) {
           this.extra.availabilityCheck(
-            this.tempItems[i], (this.startTime === '' ? '1.1.1980' : this.startTime), (this.endTime === '' ? '1.1.2199' : this.endTime)).subscribe((avlbl) => {
+            this.tempItems[i],
+            (this.startTime === '' ? '1.1.1980' : this.startTime),
+            (this.endTime === '' ? '1.1.2199' : this.endTime)
+            ).subscribe((avlbl) => {
             if (avlbl.available) {
               this.tempItems[i].user_score = avlbl.feedback;
               this.tempItems[i].user_feedback_negative = avlbl.feedback_negative;

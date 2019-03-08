@@ -4,6 +4,7 @@ import { LendItem } from '../../interfaces/lenditem';
 import { Message } from '../../interfaces/message';
 import { Feedback } from '../../interfaces/feedback';
 import { Success } from '../../interfaces/success';
+import { UserInfo } from '../../interfaces/user-info';
 import { MediaItem } from 'src/app/interfaces/mediaitem';
 import { AvailabilityResponse } from 'src/app/interfaces/availabilityresponse';
 
@@ -80,12 +81,16 @@ export class ExtraService {
                                   time_from + '&end=' + time_to + '&requester=' + requester.toString() + '&owner=' + owner.toString());
   }
 
+  public getUserInfo(user_id: number) {
+    return this.http.get<UserInfo>(this.extraURL + '?operation=user-info&user_id=' + user_id.toString());
+  }
+
   public backgroundRefresh() {
     // todo
   }
 
   public availabilityCheck(item: MediaItem, startTime: string, endTime: string) {
-    return this.http.get<AvailabilityResponse>(this.extraURL + '?operation=availability-check&id=' + item.file_id + '&start=' + startTime + '&end=' + endTime);
+    return this.http.get<AvailabilityResponse>(this.extraURL + '?operation=availability-check&id=' + item.file_id + '&start=' + startTime + '&end=' + endTime + '&owner=' + item.user_id);
   }
 
 }

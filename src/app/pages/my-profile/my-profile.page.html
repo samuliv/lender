@@ -15,25 +15,25 @@
   <div class="user-fullname" *ngIf="userFullname" >{{ userFullName }}</div>
   <div class="user-email">{{ userEmail }}</div>
   
-  <div class="user-stats">
+  <div class="user-stats" *ngIf="userInfo">
     <table>
       <tr>
         <td>lent</td>
-        <td>0</td>
+        <td>{{ userInfo.lent }}</td>
         <td>borrowed</td>
-        <td>0</td>
+        <td>{{ userInfo.borrowed }}</td>
       </tr>
       <tr>
         <td>lendable stuff</td>
-        <td>0</td>
-        <td><ion-icon name="basket"></ion-icon> rating</td>
-        <td>0</td>
+        <td>{{ lendableStuff }}</td>
+        <td><ion-icon name="star"></ion-icon> rating</td>
+        <td>{{ userInfo.rating }}</td>
       </tr>
       <tr>
         <td><ion-icon name="thumbs-up"></ion-icon> feedback</td>
-        <td>100 %</td>
+        <td>{{ userInfo.feedback_positive }} %</td>
         <td><ion-icon name="thumbs-down"></ion-icon> feedback</td>
-        <td>0 %</td>
+        <td>{{ userInfo.feedback_negative }} %</td>
       </tr>
     </table>
   </div>
