@@ -7,6 +7,7 @@ import { MediaItem } from 'src/app/interfaces/mediaitem';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
 import { GpsDistanceService } from 'src/app/services/gps-distance/gps-distance.service';
 import { extractDirectiveDef } from '@angular/core/src/render3/definition';
+import { OpenStreetMapService } from 'src/app/services/openstreetmap/openstreetmap.service';
 
 @Component({
   selector: 'app-browse',
@@ -30,7 +31,6 @@ export class BrowsePage implements OnInit{
   selectedCategoryName = 'All';
   selectedCategoryContains: number[] = [];
 
-  browseItemsCount: string;
   refreshTimer: any;
   browseItems = false;
   moreSearchOptions = false;
@@ -44,6 +44,7 @@ export class BrowsePage implements OnInit{
     private router: Router,
     private gpsPositionService: GpsPositionService,
     private gpsDistance: GpsDistanceService,
+    private openStreetMap: OpenStreetMapService,
     private wbma: WbmaService,
     private events: Events) {
       this.maxDistance = 20;
@@ -122,7 +123,9 @@ export class BrowsePage implements OnInit{
 
   someParameterChanged() {
     clearTimeout(this.refreshTimer);
-    this.refreshTimer = setTimeout( () => { this.refreshBrowseItemsCount(); }, 250);
+    this.refreshTimer = setTimeout( () => {
+      this.refreshBrowseItems();
+    }, 250);
   }
 
   requestLendNow() {
@@ -175,12 +178,30 @@ export class BrowsePage implements OnInit{
     }
   }
 
-  refreshBrowseItemsCount() {
+  refreshBrowseItems() {
     this.borrowableItems = [];
     this.wbma.getAllMediaByAppTagAsMediaItem().subscribe((res) => {
       this.tempItems = this.wbma.readMediaData(res);
       this.applyFiltering(this.tempItems);
-      this.borrowableItems = this.tempItems;
+      if (this.tempItems.length > 0) {
+        for (let i = 0; i < this.tempItems.length; i++) {
+          this.extra.availabilityCheck(this.tempItems[i], '', '').subscribe((avlbl) => {
+            if (avlbl.available) {
+              this.tempItems[i].user_score = avlbl.feedback;
+              this.tempItems[i].user_feedback_negative = avlbl.feedback_negative;
+              this.tempItems[i].user_feedback_positive = avlbl.feedback_positive;
+              this.borrowableItems.push(this.tempItems[i]);
+              this.wbma.getUserInformation(this.tempItems[i].user_id).subscribe((user) => {
+                this.tempItems[i].user_name = user.username;
+              })
+              this.openStreetMap.describeCoordinates(this.tempItems[i].media_data.lat, this.tempItems[i].media_data.lon).then((location) => {
+                this.tempItems[i].location = location;
+              })
+            }
+          });
+        }
+      }
+      //this.borrowableItems = this.tempItems;
     });
   }
 

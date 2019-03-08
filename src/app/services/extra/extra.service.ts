@@ -4,6 +4,8 @@ import { LendItem } from '../../interfaces/lenditem';
 import { Message } from '../../interfaces/message';
 import { Feedback } from '../../interfaces/feedback';
 import { Success } from '../../interfaces/success';
+import { MediaItem } from 'src/app/interfaces/mediaitem';
+import { AvailabilityResponse } from 'src/app/interfaces/availabilityresponse';
 
 @Injectable({
   providedIn: 'root'
@@ -75,6 +77,10 @@ export class ExtraService {
 
   public backgroundRefresh() {
     // todo
+  }
+
+  public availabilityCheck(item: MediaItem, startTime: string, endTime: string) {
+    return this.http.get<AvailabilityResponse>(this.extraURL + '?operation=availability-check&id=' + item.file_id + '&start=' + startTime + '&end=' + endTime);
   }
 
 }

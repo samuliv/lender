@@ -23,7 +23,7 @@
         <ion-label>
           Category
         </ion-label>
-        <ion-badge slot="end" color="secondary">{{ selectedCategoryName }}</ion-badge>  
+        <ion-badge slot="end" color="primary">{{ selectedCategoryName }}</ion-badge>  
       </ion-item>
 
     <ion-item *ngIf="moreSearchOptions">
@@ -33,8 +33,8 @@
 
     <ion-item>
       <ion-label class="slider-label">Price</ion-label>
-      <ion-range min="0" max="201" color="secondary" [(ngModel)]="maxPrice" (ionChange)="someParameterChanged()"></ion-range>
-      <ion-badge slot="end" color="secondary" class="fixed-width">{{ maxPrice === 0 ? 'Only Free' : maxPrice === 201 ? 'Any price' : 'max ' + maxPrice + ' €' }}</ion-badge>
+      <ion-range min="0" max="201" color="primary" [(ngModel)]="maxPrice" (ionChange)="someParameterChanged()"></ion-range>
+      <ion-badge slot="end" color="primary" class="fixed-width">{{ maxPrice === 0 ? 'Only Free' : maxPrice === 201 ? 'Any price' : 'max ' + maxPrice + ' €' }}</ion-badge>
     </ion-item>
 
     <ion-item>
@@ -46,13 +46,13 @@
       <ion-label>
         Location
       </ion-label>
-      <ion-icon *ngIf="useGpsLocation" name="navigate" color="secondary" slot="end"></ion-icon>
-      <ion-badge slot="end" color="secondary">{{ currentLocationName }}</ion-badge>  
+      <ion-icon *ngIf="useGpsLocation" name="navigate" color="primary" slot="end"></ion-icon>
+      <ion-badge slot="end" color="primary">{{ currentLocationName }}</ion-badge>  
     </ion-item>
     
     <ion-item>
       <ion-label class="slider-label">Distance</ion-label>
-      <ion-range min="1" max="201" color="secondary" [(ngModel)]="maxDistance" (ionChange)="someParameterChanged()"></ion-range>
+      <ion-range min="1" max="201" color="primary" [(ngModel)]="maxDistance" (ionChange)="someParameterChanged()"></ion-range>
       <ion-badge slot="end" color="primary" class="fixed-width">{{ maxDistance === 201 ? 'Anywhere' : "max " + maxDistance + " km" }}</ion-badge>
     </ion-item>
 
@@ -78,7 +78,7 @@
         <table>
           <tr>
             <td style="width: 10px;">
-              <img [src]="item.media_data.thumb">
+              <img [src]="item.media_data.thumb" class="browse-thumb-img">
             </td>
             <td class="description">
               {{ item.media_data.description }}        
@@ -93,17 +93,17 @@
             <td class="td-right">Distance: <span class="highlight">{{ item.distance }} away</span></td>
           </tr>
           <tr>
-              <td class="td-left">User: <b>samuli_v</b></td>
+              <td class="td-left">User: <b>{{ item.user_name }}</b></td>
               <td class="td-right">
                 <span class="highlight">
-                    <ion-icon name="basket"></ion-icon> 15
-                  <ion-icon name="thumbs-up"></ion-icon> 100%
-                  <ion-icon name="thumbs-down"></ion-icon> 0%
+                    <ion-icon name="star"></ion-icon> {{ !item.user_score ? 0 : item.user_score }}
+                  <ion-icon name="thumbs-up" *ngIf="item.user_feedback_positive"></ion-icon> {{ !item.user_feedback_positive || item.user_feedback_positive === 0 ? '' : item.user_feedback_positive + ' %' }}
+                  <ion-icon name="thumbs-down" *ngIf="item.user_feedback_negative"></ion-icon> {{ !item.user_feedback_negative || item.user_feedback_negative === 0 ? '' : item.user_feedback_negative + ' %' }}
                 </span>
               </td>
             </tr>
             <tr>
-            <td colspan="2">Location: ESPOO / Leppävaara</td>
+            <td colspan="2">Location: {{ item.location }}</td>
           </tr>
         </table>
      </div>

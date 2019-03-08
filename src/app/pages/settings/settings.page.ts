@@ -32,7 +32,7 @@ export class SettingsPage {
       message: 'Are you sure you want to delete all your data and your account permanently?',
       buttons: [
         {
-          text: 'Delete Account',
+          text: 'Delete',
           handler: () => {
             console.log('TODO: DELETE ACCOUNT');
           }

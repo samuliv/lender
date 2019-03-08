@@ -15,6 +15,8 @@ export interface MediaItem {
     title: string;
     description: string;
     user_id: number;
+    user_name?: string;
+    location?: string;
     media_type: string;
     mime_type: string;
     time_added: string;
@@ -22,4 +24,7 @@ export interface MediaItem {
     thumbnails?: Thumbnails;
     distance?: string;
     item_thumb: string;
+    user_score?: number;
+    user_feedback_positive?: number;
+    user_feedback_negative?: number;
 }

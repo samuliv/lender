@@ -50,8 +50,8 @@
 
         <ion-label>
           <h3>{{ item.item_title }}</h3>
-          <p class="starts">Starts: {{ item.starts }}</p>
-          <p class="ends">Ends: {{ item.ends }}</p>
+          <p class="starts"><ion-icon name="return-right"></ion-icon> {{ item.starts }}</p>
+          <p class="ends"><ion-icon name="return-left"></ion-icon> {{ item.ends }}</p>
         </ion-label>
 
         <ion-badge slot="end" class="lender-badge status-{{item.status}}">{{item.status}}</ion-badge>  
