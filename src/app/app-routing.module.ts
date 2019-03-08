@@ -20,7 +20,10 @@ const routes: Routes = [
     canActivate: [AuthGuard] },
   { path: 'my-profile', loadChildren: './pages/my-profile/my-profile.module#MyProfilePageModule', canActivate: [AuthGuard] },
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
-  { path: 'add-lendable-item/:source', loadChildren: './pages/add-lendable-item/add-lendable-item.module#AddLendableItemPageModule' }
+  { path: 'add-lendable-item/:source', loadChildren: './pages/add-lendable-item/add-lendable-item.module#AddLendableItemPageModule' },
+  { path: 'view-media', loadChildren: './pages/viewMedia/view-media/view-media.module#ViewMediaPageModule' },
+  { path: 'view-media', loadChildren: './pages/view-media/view-media.module#ViewMediaPageModule' },
+  { path: 'request-item', loadChildren: './pages/request-item/request-item.module#RequestItemPageModule' }
 ];
 @NgModule({
   imports: [
