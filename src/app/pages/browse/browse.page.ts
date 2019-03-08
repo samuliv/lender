@@ -65,7 +65,7 @@ export class BrowsePage implements OnInit{
         this.refreshLocationData();
       });
 
-      this.events.subscribe('category-clicked', (id, categroyname, contains) => {
+      this.events.subscribe('category-clicked-browse', (id, categroyname, contains) => {
         this.selectedCategoryID = id;
         this.selectedCategoryName = categroyname;
         this.selectedCategoryContains = contains;
@@ -114,6 +114,10 @@ export class BrowsePage implements OnInit{
     this.router.navigate(['/choose-location/browse']);
   }
 
+  viewMedia(media_id: number) {
+    this.router.navigate(['/view-media/' + media_id.toString()]);
+  }
+
   gpsLocationClick() {
     if (this.useGpsLocation) {
       this.gpsPositionService.tryToFetchCurrentGPSCoordinates();
@@ -128,8 +132,8 @@ export class BrowsePage implements OnInit{
     }, 250);
   }
 
-  requestLendNow() {
-    console.log('TODO');
+  requestLendNow(item: MediaItem) {
+    this.router.navigate(['/request-item/' + item.file_id.toString() + '_' + this.startTime + '_' + this.endTime]);
   }
 
   applyFiltering(arr: MediaItem[]) {
@@ -185,7 +189,8 @@ export class BrowsePage implements OnInit{
       this.applyFiltering(this.tempItems);
       if (this.tempItems.length > 0) {
         for (let i = 0; i < this.tempItems.length; i++) {
-          this.extra.availabilityCheck(this.tempItems[i], '', '').subscribe((avlbl) => {
+          this.extra.availabilityCheck(
+            this.tempItems[i], (this.startTime === '' ? '1.1.1980' : this.startTime), (this.endTime === '' ? '1.1.2199' : this.endTime)).subscribe((avlbl) => {
             if (avlbl.available) {
               this.tempItems[i].user_score = avlbl.feedback;
               this.tempItems[i].user_feedback_negative = avlbl.feedback_negative;
@@ -194,7 +199,7 @@ export class BrowsePage implements OnInit{
               this.wbma.getUserInformation(this.tempItems[i].user_id).subscribe((user) => {
                 this.tempItems[i].user_name = user.username;
               })
-              this.openStreetMap.describeCoordinates(this.tempItems[i].media_data.lat, this.tempItems[i].media_data.lon).then((location) => {
+              this.openStreetMap.describeCoordinates(this.tempItems[i].media_data.lat, this.tempItems[i].media_data.lon).then((location: string) => {
                 this.tempItems[i].location = location;
               })
             }

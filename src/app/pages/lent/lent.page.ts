@@ -167,14 +167,7 @@ export class LentPage implements OnInit {
     }
   }
 
-  closeIis(iis: IonItemSliding) {
-    iis.close().catch((e) => { console.log('Cannot Close IonItemSliding Element'); });
-  }
-
-  async reject(item: LendItem, iis?: IonItemSliding) {
-    if (iis !== null && iis !== undefined ) {
-      this.closeIis(iis);
-    }
+  async reject(item: LendItem) {
     const alert = await this.alertController.create({
       header: 'Reject Lend Request',
       subHeader: '',
@@ -205,10 +198,7 @@ export class LentPage implements OnInit {
     await alert.present();
   }
 
-  async accept(item: LendItem, iis?: IonItemSliding) {
-    if (iis !== null && iis !== undefined ) {
-      this.closeIis(iis);
-    }
+  async accept(item: LendItem) {
     const alert = await this.alertController.create({
       header: 'Accept Lend Request',
       subHeader: '',
@@ -225,6 +215,7 @@ export class LentPage implements OnInit {
                 item.status = 'accepted';
                 this.negativeRefresh();
                 this.refreshAllBadges();
+                console.log('Success.');
               } else {
                 console.log('ERROR: ' + res.error);
               }
@@ -239,10 +230,7 @@ export class LentPage implements OnInit {
     await alert.present();
   }
 
-  async cancel(item: LendItem, iis?: IonItemSliding) {
-    if (iis !== null && iis !== undefined ) {
-      this.closeIis(iis);
-    }
+  async cancel(item: LendItem) {
     const alert = await this.alertController.create({
       header: 'Cancel Lend Request',
       subHeader: '',

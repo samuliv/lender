@@ -69,7 +69,7 @@ export class AddLendableItemPage implements OnInit {
         });
       }
 
-      this.events.subscribe('category-clicked', (categoryID, categoryName) => {
+      this.events.subscribe('category-clicked-add-lendable-item', (categoryID, categoryName) => {
         this.itemCategoryID = categoryID;
         this.itemCategory = categoryName;
       });

@@ -78,7 +78,7 @@
         <table>
           <tr>
             <td style="width: 10px;">
-              <img [src]="item.media_data.thumb" class="browse-thumb-img">
+              <img [src]="item.media_data.thumb" class="browse-thumb-img" (click)="viewMedia(item.file_id)">
             </td>
             <td class="description">
               {{ item.media_data.description }}        

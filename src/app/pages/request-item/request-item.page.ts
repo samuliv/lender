@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController, AlertController } from '@ionic/angular';
+import { WbmaService } from 'src/app/services/wbma/wbma.service';
+import { ActivatedRoute } from '@angular/router';
+import { MediaItem } from 'src/app/interfaces/mediaitem';
+import { TimeService } from 'src/app/services/time/time.service';
+import { ExtraService } from 'src/app/services/extra/extra.service';
 
 @Component({
   selector: 'app-request-item',
@@ -7,9 +13,117 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RequestItemPage implements OnInit {
 
-  constructor() { }
+  mediaID = 0;
+  startTime = '';
+  endTime = '';
+  title = '';
+  description = '';
+  mediaItem: MediaItem;
 
-  ngOnInit() {
+  pricePerHour = '';
+  pricePerHourNumber = -1;
+  priceTotal = '';
+
+  constructor(
+    private navController: NavController,
+    private wbma: WbmaService,
+    private extra: ExtraService,
+    private activatedRoute: ActivatedRoute,
+    private time: TimeService,
+    private alertController: AlertController,
+    ) {
+      const chunks = this.activatedRoute.snapshot.paramMap.get('id').split('_');
+      this.mediaID = parseInt(chunks[0], 10);
+      this.startTime = chunks[1];
+      this.endTime = chunks[2];
+    }
+
+  someParameterChanged() {
+    this.calculateTotalCost();
   }
 
+  sendRequest(mediaItem: MediaItem) {
+    this.extra.requestLend(mediaItem.file_id, this.startTime, this.endTime, this.wbma.getMyUserID(), mediaItem.user_id).subscribe((res) => {
+      if (res.success) {
+        this.successMessage();
+      } else {
+        this.errorMessage(res.error);
+      }
+    })
+  }
+
+  async sendRequestButtonClick() {
+    const alert = await this.alertController.create({
+      header: 'Send Request',
+      subHeader: '',
+      message: 'Do you want to send the Lending request? The lending is about to cost you ' + this.priceTotal,
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.sendRequest(this.mediaItem);
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async successMessage() {
+    const alert = await this.alertController.create({
+      header: 'Lend Request Sent',
+      message: 'Your lending request is successfully sent to the lender.',
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            this.goBack();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async errorMessage(error: string) {
+    const alert = await this.alertController.create({
+      header: 'Request Failed',
+      message: error,
+      buttons: [
+        {
+          text: 'OK'
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  calculateTotalCost() {
+    const timeDiff = this.time.calculateTimeDifference(this.startTime, this.endTime);
+    if (timeDiff !== -1){
+      this.priceTotal = ( (timeDiff/3600) * this.pricePerHourNumber).toFixed(2).toString() + ' €';
+    } else {
+      this.priceTotal = '';
+    }
+  }
+
+  ngOnInit() {
+    this.wbma.getSingleMedia(this.mediaID).subscribe((media) => {
+      this.wbma.readSingleMediaData(media);
+      this.mediaItem = media;
+      this.pricePerHour = media.media_data.price.toString() + ' €/h';
+      this.pricePerHourNumber = media.media_data.price;
+      this.calculateTotalCost();
+      this.wbma.getUserInformation(media.user_id).subscribe((user) => {
+        this.mediaItem.user_name = user.username;
+      })
+    })
+  }
+
+  goBack() {
+    this.navController.navigateBack('/tabs/browse');
+  }
 }

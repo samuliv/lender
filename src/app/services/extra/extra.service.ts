@@ -75,6 +75,11 @@ export class ExtraService {
     return this.http.get<Success>(this.extraURL + '?operation=get-category-byid&id=' + id);
   }
 
+  public requestLend(item_id: number, time_from: string, time_to: string, requester: number, owner: number) {
+    return this.http.get<Success>(this.extraURL + '?operation=lend-request&id=' + item_id.toString() + '&start=' + 
+                                  time_from + '&end=' + time_to + '&requester=' + requester.toString() + '&owner=' + owner.toString());
+  }
+
   public backgroundRefresh() {
     // todo
   }

@@ -30,19 +30,11 @@
 }  
 
 .itemList li.selectedItem {
-  background: #4d72bb;
+  background: #4b87ff;
   color: #fff;
+  font-weight: bold;
 }
 
 .itemList .hide {
   display: none;
 }
-
-/* If animating, hiding may needed to do like this:
-
-.itemList .hide {
-  height: 0 !important;
-  padding: 0 !important;
-  outline: none !important;
-  opacity: 0 !important;
-} */

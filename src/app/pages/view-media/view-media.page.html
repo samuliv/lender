@@ -1,9 +1,30 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>viewMedia</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="goBack()" color="dark"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
+      </ion-buttons>
+      <ion-title>
+        View Media
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content padding>
+
+  <div class="media-container">
+    <div class="media-holder lender-border lender-shadow">
+      
+      <img *ngIf="mediaItemMIMEBASE === 'image'" [src]="mediaItemURL" class="media media-image" (click)="goBack()">
+
+      <video *ngIf="mediaItemMIMEBASE === 'video'" controls autoplay class="media media-video">
+        <source [src]="mediaItemURL">
+      </video>
+
+      <audio *ngIf="mediaItemMIMEBASE === 'audio'" controls autoplay class="media media-audio">
+        <source [src]="mediaFileURL">
+      </audio>
+
+    </div>
+  </div>
 
 </ion-content>

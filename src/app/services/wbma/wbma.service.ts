@@ -170,10 +170,14 @@ export class WbmaService {
     return this.appTag;
   }
 
+  readSingleMediaData(mediaItem: MediaItem) {
+    mediaItem.media_data = JSON.parse(mediaItem.description);
+    mediaItem.media_data.thumb = this.getApiUploadsUrl() + mediaItem.filename.split('.').slice(0, -1).join('.') + '-tn160.png';
+  }
+
   readMediaData(mediaItem: MediaItem[]) {
     mediaItem.forEach((i) => {
-      i.media_data = JSON.parse(i.description);
-      i.media_data.thumb = this.getApiUploadsUrl() + i.filename.split('.').slice(0, -1).join('.') + '-tn160.png';
+      this.readSingleMediaData(i);
     });
     return mediaItem;
   }

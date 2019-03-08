@@ -17,19 +17,19 @@
     <ion-segment-button value="lent">
       <div class="oneRow">
         <div class="left">Latest</div>
-        <div *ngIf="toolbarBadgeLent!=0" class="right">{{ toolbarBadgeLent }}</div>
+        <div *ngIf="toolbarBadgeLent!=0" class="segment-badge">{{ toolbarBadgeLent }}</div>
       </div>
     </ion-segment-button>
     <ion-segment-button value="pending">
         <div class="oneRow">
           <div class="left">Pending</div>
-          <div *ngIf="toolbarBadgePending!=0" class="right">{{ toolbarBadgePending }}</div>
+          <div *ngIf="toolbarBadgePending!=0" class="segment-badge">{{ toolbarBadgePending }}</div>
         </div>
     </ion-segment-button>
     <ion-segment-button value="feedback">
         <div class="oneRow">
           <div class="left">Feedback</div>
-          <div *ngIf="toolbarBadgeFeedback!=0" class="right">{{ toolbarBadgeFeedback }}</div>
+          <div *ngIf="toolbarBadgeFeedback!=0" class="segment-badge">{{ toolbarBadgeFeedback }}</div>
         </div>
     </ion-segment-button>
   </ion-segment>
