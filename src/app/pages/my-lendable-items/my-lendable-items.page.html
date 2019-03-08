@@ -1,23 +1,23 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-        <ion-button (click)="goBack()"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
+        <ion-button (click)="goBack()" color="dark"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
       </ion-buttons> 
     <ion-title>My Items</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="addLendableItem()">Add Item</ion-button>
+      <ion-button (click)="addLendableItem()" color="dark">Add Item</ion-button>
     </ion-buttons> 
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
     <ion-list lines="full">
 
-        <ion-item-sliding *ngFor="let item of myLendableItems">
+        <div class="list-item" *ngFor="let item of myLendableItems" (click)="itemClick(item)">
     
-          <ion-item (click)="itemClick(item)">
+          <ion-item color="primary">
     
-            <ion-thumbnail slot="start">
+            <ion-thumbnail slot="start" class="lender-thumbnail">
               <img src="{{ item.media_data.thumb }}">
             </ion-thumbnail>    
     
@@ -29,7 +29,7 @@
     
           </ion-item>
           
-        </ion-item-sliding>
+        </div>
     
       </ion-list>
 </ion-content>

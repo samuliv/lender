@@ -6,42 +6,46 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
 
-    <ion-list-header>
-        <ion-label></ion-label>
-    </ion-list-header>
-
-    <div id="logos">
-        <img class="logo" src="../../../assets/imgs/lendertest2.png">
-        <img class="logotext" src="../../../assets/imgs/Lender.png">
+    <div class="logos">
+        <img class="logo-icon" src="../../../assets/imgs/lendertest2.png">
+        <img class="logo-text" src="../../../assets/imgs/Lender.png">
     </div>
 
-    <ion-list class="secondary">
+    <div class="assign-to-bottom">
+      <ion-button expand="block" size="large" (click)="viewMyProfile()">My Profile</ion-button>
+      <ion-button expand="block" (click)="viewMyLendableItems()">My Lendable Items</ion-button>
+      <ion-button expand="block" (click)="viewAboutLender()">About Lender</ion-button>
+      <div class="spacer"></div>
+      <ion-button expand="block" color="danger" size="small" (click)="deleteAccount()">Delete Account</ion-button>
+      <div class="spacer"></div>
+      <ion-button expand="block" color="danger" (click)="logOut()">Log Out</ion-button>
+    </div>
 
-        <ion-item class="settings" (click)="viewMyProfile()">
-            <ion-avatar slot="start">
-                <img src="data:image/jpeg;base64,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">
-            </ion-avatar>
-            <ion-label>My Profile</ion-label>
+    <!--
+    <ion-list class="ion-list-lender">
+
+        <ion-item class="ion-list-lender-item" (click)="viewMyProfile()">
+          <ion-label>My Profile</ion-label>
         </ion-item>
 
-      <ion-item class="settings" (click)="viewMyLendableItems()">
+      <ion-item class="ion-list-lender-item" (click)="viewMyLendableItems()">
         <ion-label>My Lendable Items</ion-label>
       </ion-item>
 
-      <ion-item class="settings" (click)="viewAboutLender()">
+      <ion-item class="ion-list-lender-item" (click)="viewAboutLender()">
         <ion-label>About Lender</ion-label>
       </ion-item>
 
-      <ion-item class="settings" (click)="deleteAccount()">
+      <ion-item class="ion-list-lender-item" (click)="deleteAccount()">
         <ion-label>Delete Account</ion-label>
       </ion-item>
 
-      <ion-item class="settings" (click)="logOut()">
+      <ion-item class="ion-list-lender-item" (click)="logOut()">
         <ion-label>Log Out</ion-label>
       </ion-item>
       
-    </ion-list>
+    </ion-list> -->
 
 </ion-content>

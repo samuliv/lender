@@ -1,22 +1,49 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="goBack()"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
+      <ion-button (click)="goBack()" color="dark"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
     </ion-buttons> 
     <ion-title>MyProfile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
 
   <img id="avatar" class="profile-picture" src="https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png">
 
-  <h1 class="user-nickname">{{ userName }}</h1>
-  <div *ngIf="userFullname" class="user-fullname">{{ userFullName }}</div>
-  <div class="user-fullname">{{ userEmail }}</div>
+  <div class="user-nickname">{{ userName }}</div>
+  <div class="user-fullname" *ngIf="userFullname" >{{ userFullName }}</div>
+  <div class="user-email">{{ userEmail }}</div>
   
-  <div class="user-stats">Lent: 0 items<br>Borrowed: 0 items<br>Lendable stuff: 0<br>Member since: yesterday</div>
+  <div class="user-stats">
+    <table>
+      <tr>
+        <td>lent</td>
+        <td>0</td>
+        <td>borrowed</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>lendable stuff</td>
+        <td>0</td>
+        <td><ion-icon name="basket"></ion-icon> rating</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td><ion-icon name="thumbs-up"></ion-icon> feedback</td>
+        <td>100 %</td>
+        <td><ion-icon name="thumbs-down"></ion-icon> feedback</td>
+        <td>0 %</td>
+      </tr>
+    </table>
+  </div>
 
+  <ion-button expand="block" (click)="viewMyProfile()">Edit Information</ion-button>
+  <ion-button expand="block" (click)="viewMyProfile()">Change Password</ion-button>
+  <ion-button expand="block" (click)="viewMyProfile()">Change Profile Picture</ion-button>
+  <ion-button expand="block" (click)="viewMyProfile()">My Default Location</ion-button>
+
+  <!--
   <ion-list-header>
       <ion-label></ion-label>
   </ion-list-header>
@@ -39,6 +66,6 @@
       <ion-label>Change My Default Location</ion-label>
     </ion-item>
     
-  </ion-list>
+  </ion-list> -->
 
 </ion-content>

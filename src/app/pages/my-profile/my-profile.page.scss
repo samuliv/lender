@@ -2,19 +2,44 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
-    max-height: 150px;
+    max-height: 120px;
     max-width: 250px;
 }
 
-.user-fullname, .user-nickname, .user-stats {
+.user-fullname, .user-nickname, .user-email, .user-stats {
     text-align: center;
 }
-
+.user-nickname {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.user-fullname, .user-email {
+    font-size: 13px;
+}
 .user-stats {
-    font-size:14px;
+    font-size:11px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.user-stats table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+.user-stats table td {
+    font-size: 10px;
+    border: 1px solid #f2f2f2;
+    padding: 4px;
+    color: #444;
+}
+.user-stats table td:nth-child(2n) {
+    font-weight: bold;
+    color: #222;
 }
 
+/*
 ion-item {
     --ion-background-color: #52b2ff;
     text-decoration: none;
@@ -30,3 +55,4 @@ ion-item {
     left: 10%;
     right: 10%;
 }
+*/

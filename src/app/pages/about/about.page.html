@@ -1,22 +1,39 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="goBack()"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
+      <ion-button (click)="goBack()" color="dark"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
     </ion-buttons>     
     <ion-title>About Lender</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <h1>Lender</h1>
-  <p>v.0.01</p>
-  <p>Copyright &copy; Team AVS 2019</p>
-  <p>
-    <a href="https://github.com/samuliv/lender" target="_blank">https://github.com/samuliv/lender</a>
+
+  <div class="logos">
+      <img class="logo-icon" src="../../../assets/imgs/lendertest2.png">
+      <img class="logo-text" src="../../../assets/imgs/Lender.png">
+  </div>
+
+  <p class="center small">v.0.01</p>
+  
+  <br>
+    <p class="center small">Copyright &copy; Team Lender 2019</p>
+  <br>
+
+  <p class="center">
+    <a href="https://tiny.cc/lender-app" target="_blank">tiny.cc/lender-app</a>
+    <br>
+    <a href="https://github.com/samuliv/lender" target="_blank">github.com/samuliv/lender</a>
   </p>
-  <ul>
-    <li>Samuli Virtanen</li>
-    <li>Visa Soininen</li>
-    <li>Alex Mäkinen</li>
-  </ul>
+  
+  <br>
+  
+  <p class="center small strong">Lender Team</p>
+  <p class="center small">
+    Samuli Virtanen
+    <br>
+    Visa Soininen
+    <br>
+    Alex Mäkinen
+  </p>
 </ion-content>

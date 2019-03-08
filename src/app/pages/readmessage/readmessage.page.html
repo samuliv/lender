@@ -3,7 +3,7 @@
   <ion-toolbar>
     
     <ion-buttons slot="start">
-      <ion-button (click)="goBack()"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
+      <ion-button (click)="goBack()" color="dark"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
     </ion-buttons> 
 
     <ion-title>
@@ -11,14 +11,14 @@
     </ion-title>
 
     <ion-buttons slot="end">
-      <ion-button (click)="reply()">Reply</ion-button>
+      <ion-button (click)="reply()" color="dark">Reply</ion-button>
     </ion-buttons> 
 
   </ion-toolbar>
 
 </ion-header>
 
-<ion-content>
+<ion-content padding>
 
   <p>From: {{ messageSenderName }}</p>
   <p>Time: {{ messageTime }}</p>

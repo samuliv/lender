@@ -32,6 +32,11 @@
     background: #fff; color: #3880ff;
 }
 
+$color-lender: #0000ff;
+
+$color-primary: #000 !important;
+$primary: #000 !important;
+
 $color-danger: #ff0000;
 $color-success: #00cc00;
 $color-pending: #ffff00;
@@ -71,3 +76,69 @@ $color-fore-dark: #222;
     width: 60px;
     object-fit: cover;
 }
+
+
+/* global theming */
+:root {
+    --ion-color-primary: #8bb2ff;
+    --ion-color-primary-shade: #6185ce;
+    --ion-color-primary-contrast: #000;
+
+    --ion-color-danger: #ff7a7a;
+    --ion-color-danger-shade: #b84747;
+    --ion-color-danger-contrast: #fff;
+    
+    // Tab bar
+    --ion-tab-bar-color: rgba(31,31,31, 0.4); // non-active forecolor text
+    --ion-tab-bar-color-activated: #222; // tab bar active forecolor text
+    --ion-tab-bar-background: #4b87ff; //tab bar bg color
+    --ion-tab-bar-border-color: #4b87ff;
+
+    // Tollbar
+    --ion-toolbar-background: #4b87ff; // Toolbar Background Color
+    --ion-toolbar-color: #222; // Toolbar Foreground Color
+}
+
+.padding {
+    padding: 0px 14px 14px 14px !important;
+}
+
+.list-item {
+    background: #8bb2ff;
+    width: 100%;
+    border: 1px solid #8bb2ff;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    overflow: hidden;
+}
+
+.lender-thumbnail {
+    border: 1px solid rgba(0,0,0,0.4);
+    border-radius: 8px;
+    overflow:hidden;
+}
+
+.center {
+    text-align: center;
+}
+
+.assign-to-bottom {
+    display: block;
+    position: absolute;
+    width: 90%;
+    bottom: 15px;
+    left: 5%;
+    right: 5%;
+  }
+  .spacer {
+    display: block;
+    width: 100%;
+    height: 10px;
+  }
+
+  .small {
+      font-size: 12px !important;
+  }
+  .strong {
+      font-weight: bold;
+  }

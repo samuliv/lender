@@ -2,47 +2,49 @@
 
   <ion-toolbar>
     <ion-buttons slot="start">
-        <ion-button (click)="refershCurrentView()">Refresh</ion-button>
+        <ion-button (click)="refershCurrentView()" color="dark">Refresh</ion-button>
       </ion-buttons>
     <ion-title>
       Lent
     </ion-title>
     <ion-buttons slot="end">
-        <ion-button (click)="myLendableItems()">My Items</ion-button>
+        <ion-button (click)="myLendableItems()" color="dark">My Items</ion-button>
       </ion-buttons>
   </ion-toolbar>
-
-  <ion-toolbar>
-    <ion-segment [(ngModel)]="viewPage">
-      <ion-segment-button value="lent">
+  
+<ion-toolbar>
+  <ion-segment [(ngModel)]="viewPage" color="dark">
+    <ion-segment-button value="lent">
+      <div class="oneRow">
+        <div class="left">Latest</div>
+        <div *ngIf="toolbarBadgeLent!=0" class="right">{{ toolbarBadgeLent }}</div>
+      </div>
+    </ion-segment-button>
+    <ion-segment-button value="pending">
         <div class="oneRow">
-          <div class="left">Latest</div>
-          <div *ngIf="toolbarBadgeLent!=0" class="right">{{ toolbarBadgeLent }}</div>
+          <div class="left">Pending</div>
+          <div *ngIf="toolbarBadgePending!=0" class="right">{{ toolbarBadgePending }}</div>
         </div>
-      </ion-segment-button>
-      <ion-segment-button value="pending">
-          <div class="oneRow">
-            <div class="left">Pending</div>
-            <div *ngIf="toolbarBadgePending!=0" class="right">{{ toolbarBadgePending }}</div>
-          </div>
-      </ion-segment-button>
-      <ion-segment-button value="feedback">
-          <div class="oneRow">
-            <div class="left">Feedback</div>
-            <div *ngIf="toolbarBadgeFeedback!=0" class="right">{{ toolbarBadgeFeedback }}</div>
-          </div>
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>  
+    </ion-segment-button>
+    <ion-segment-button value="feedback">
+        <div class="oneRow">
+          <div class="left">Feedback</div>
+          <div *ngIf="toolbarBadgeFeedback!=0" class="right">{{ toolbarBadgeFeedback }}</div>
+        </div>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+
 </ion-header>
 
-<ion-content>
+<ion-content padding>
 
   <ion-list *ngIf="viewPage === 'lent'" lines="full">
 
-    <ion-item class="listitem" *ngFor="let item of lentItems" (click)="itemClick(item)">
+    <div class="list-item" *ngFor="let item of lentItems" (click)="itemClick(item)">
+        <ion-item color="primary">
 
-        <ion-thumbnail class="thumbnail" slot="start">
+        <ion-thumbnail class="lender-thumbnail" slot="start">
           <img class="img-thumbnail" *ngIf="item.item_thumb" [src]="item.item_thumb">
         </ion-thumbnail>    
 
@@ -55,6 +57,7 @@
         <ion-badge slot="end" class="lender-badge status-{{item.status}}">{{item.status}}</ion-badge>  
 
     </ion-item>
+    </div>
 
   </ion-list>
 

@@ -9,19 +9,19 @@
     <ion-tab-button tab="lent">
       <ion-icon name="log-out"></ion-icon>
       <ion-label>Lent</ion-label>
-      <ion-badge *ngIf="badgeNumberLent!=0">{{badgeNumberLent}}</ion-badge>
+      <ion-badge color="light" *ngIf="badgeNumberLent!=0">{{badgeNumberLent}}</ion-badge>
     </ion-tab-button>
 
     <ion-tab-button tab="borrowed">
       <ion-icon name="log-in"></ion-icon>
       <ion-label>Borrowed</ion-label>
-      <ion-badge *ngIf="badgeNumberBorrowed!=0">{{badgeNumberBorrowed}}</ion-badge>
+      <ion-badge color="light" *ngIf="badgeNumberBorrowed!=0">{{badgeNumberBorrowed}}</ion-badge>
     </ion-tab-button>
 
     <ion-tab-button tab="messages">
       <ion-icon name="chatboxes"></ion-icon>
       <ion-label>Messages</ion-label>
-      <ion-badge *ngIf="badgeNumberMessages!=0">{{badgeNumberMessages}}</ion-badge>
+      <ion-badge color="light" *ngIf="badgeNumberMessages!=0">{{badgeNumberMessages}}</ion-badge>
     </ion-tab-button>
 
     <ion-tab-button tab="settings">

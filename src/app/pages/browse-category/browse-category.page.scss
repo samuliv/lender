@@ -8,25 +8,29 @@
   list-style-type: none;
   padding: 12px 8px 12px 8px;
   font-size: 14px;
-  outline: 1px solid #aaa;
   height: auto;
+  box-sizing: border-box;
 }
 
 .level1, .level2, .level3 {
   font-size: 12px !important;
+  padding: 8px 8px 8px 8px !important;
 }
 .level1 {
-  padding-left: 30px !important;
+  margin-left: 30px !important;
+  width: calc(100% - 30px);
 }
 .level2 {
-  padding-left: 60px !important;
+  margin-left: 60px !important;
+  width: calc(100% - 60px);
 }
 .level3 {
-  padding-left: 90px !important;
+  margin-left: 90px !important;
+  width: calc(100% - 90px);
 }  
 
 .itemList li.selectedItem {
-  background: #0000ff;
+  background: #4d72bb;
   color: #fff;
 }
 

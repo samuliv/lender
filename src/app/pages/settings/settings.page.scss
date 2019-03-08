@@ -1,4 +1,5 @@
-.settings {
+/*
+.ion-list-lender-item {
   --ion-background-color: #52b2ff;
   text-decoration: none;
   display: block;
@@ -7,16 +8,33 @@
   font-weight: bold;
   margin-top: 0.4rem;
   margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  border-radius: 4px;
+  margin-right: 0.5rem;  
 }
 
-.secondary {
+.ion-list-lender {
   display: block;
   position: absolute;
   bottom: 1%;
-  width: 80%;
-  left: 10%;
-  right: 10%;
+  width: 90%;
+  left: 5%;
+  right: 5%;
   align-items: center;
+}
+*/
+
+.logos {
+  display: block;
+  width: 100%;
+}
+.logo-icon, .logo-text {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.logo-icon {
+  height: 60px;
+  margin-bottom: 10px;
+}
+.logo-text {
+  height: 40px;
 }
