@@ -7,6 +7,7 @@ import { Success } from '../../interfaces/success';
 import { UserInfo } from '../../interfaces/user-info';
 import { MediaItem } from 'src/app/interfaces/mediaitem';
 import { AvailabilityResponse } from 'src/app/interfaces/availabilityresponse';
+import { Status } from 'src/app/interfaces/status';
 
 @Injectable({
   providedIn: 'root'
@@ -52,8 +53,8 @@ export class ExtraService {
     return this.http.get<LendItem[]>(this.extraURL + '?operation=lends&pending=true&user_id=' + user_id);
   }
 
-  public getMessages(user_id: number) {
-    return this.http.get<Message[]>(this.extraURL + '?operation=messages&user_id=' + user_id);
+  public getMessages(user_id: number, sent?: boolean) {
+    return this.http.get<Message[]>(this.extraURL + '?operation=messages&user_id=' + user_id + (sent ? '&sent=true' : ''));
   }
 
   public getMessage(message_id: number) {
@@ -62,6 +63,10 @@ export class ExtraService {
 
   public getFeedback(user_id: number) {
     return this.http.get<Feedback[]>(this.extraURL + '?operation=feedback&user_id=' + user_id);
+  }
+
+  public getUserStatus(user_id: number) {
+    return this.http.get<Status>(this.extraURL + '?operation=status&user_id=' + user_id);
   }
 
   public getCategories() {

@@ -107,7 +107,7 @@
           </tr>
         </table>
      </div>
-     <div class="lender-card-footer-request" (click)="requestLendNow(item)">
+     <div class="lender-card-footer-request" (click)="requestLendNow(item)" *ngIf="item.user_id !== myUserID">
         Request Lend Now
      </div>
     </div>

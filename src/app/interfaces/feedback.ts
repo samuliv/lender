@@ -5,4 +5,5 @@ export interface Feedback {
   ago: string;
   feedback: number;
   role: string;
+  user_name?: string;
   }

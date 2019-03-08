@@ -7,6 +7,7 @@ export class TimeService {
 
   constructor() { }
 
+  // Calculates time difference between two Time string and returns difference in seconds.
   calculateTimeDifference(fromTimeString: string, toTimeString: string) {
     
     if (fromTimeString !== '' && toTimeString !== '') {
@@ -16,10 +17,7 @@ export class TimeService {
       if (fromTime.getTime() < toTime.getTime()) {
         return ((toTime.getTime() - fromTime.getTime()) / 1000);
       }
-      
-
     }
-    
     return -1;
   }
 }

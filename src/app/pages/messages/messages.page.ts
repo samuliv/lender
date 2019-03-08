@@ -4,6 +4,8 @@ import { Message } from '../../interfaces/message';
 import { Feedback } from '../../interfaces/feedback';
 import { Router } from '@angular/router';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
+import { GlobalService } from 'src/app/services/global/global.service';
+import { Events } from '@ionic/angular';
 
 @Component({
   selector: 'app-messages',
@@ -16,28 +18,65 @@ export class MessagesPage implements OnInit {
   inbox: Message[];
   outbox: Message[];
   feedback: Feedback[];
+  badgeInbox = 0;
 
-  constructor(private extra: ExtraService, private wbma: WbmaService, private router: Router) {
+  constructor(
+    private extra: ExtraService,
+    private wbma: WbmaService,
+    private glb: GlobalService,
+    private events: Events,
+    private router: Router) {
     this.viewPage = 'inbox';
   }
 
   ngOnInit() {
-    console.log('myitems.page.ts : ngOnInit()');
+    console.log('messages.page.ts : ngOnInit()');
     this.refreshAll();
+    this.events.subscribe('refresh-messages', () => {
+      this.refreshInbox();
+    });
+  }
+
+  getUserNames(arr: Message[], sent: boolean) {
+    if (arr.length > 0) {
+      for (let i = 0; i < arr.length; i++) {
+        this.wbma.getUserInformation((sent ? arr[i].to : arr[i].from)).subscribe((userData) => {
+          if (sent) {
+            arr[i].recipient_name = userData.username;
+          } else {
+            arr[i].sender_name = userData.username;
+          }
+        });
+      }
+    }
+  }
+
+  refreshBadgeInbox() {
+    console.log('refreshBadgeInbox()');
+    this.badgeInbox = 0;    
+    if (this.inbox.length > 0) {
+      this.inbox.forEach((i) => {
+        if (!i.readed) {
+          this.badgeInbox++;
+        }
+      });
+    }
   }
 
   refreshInbox() {
     console.log('refreshInbox()');
     this.extra.getMessages(this.wbma.getMyUserID()).subscribe(res => {
       this.inbox = res;
+      this.getUserNames(this.inbox, false);
+      this.refreshBadgeInbox();
     });
   }
 
   refreshOutbox() {
     console.log('refreshOutbox()');
-    this.extra.getMessages(this.wbma.getMyUserID()).subscribe(res => {
-      this.inbox = res;
-      console.log(res);
+    this.extra.getMessages(this.wbma.getMyUserID(), true).subscribe(res => {
+      this.outbox = res;
+      this.getUserNames(this.outbox, true);
     });
   }
 
@@ -61,6 +100,8 @@ export class MessagesPage implements OnInit {
         console.log('...markMessageAsReaded(id): success = ' + res.success);
         if ( res.success ) {
           message.readed = true;
+          this.refreshBadgeInbox();
+          this.glb.tabBarIconsNeedRefreshing();
         }
       });
     }

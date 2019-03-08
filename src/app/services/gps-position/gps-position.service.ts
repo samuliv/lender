@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Coordinates } from 'src/app/interfaces/coordinates';
 import { Events } from '@ionic/angular';
+import { Geolocation } from '@ionic-native/geolocation/ngx'
+import { OpenStreetMapService } from '../openstreetmap/openstreetmap.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,26 +15,48 @@ export class GpsPositionService {
   locationIsAvailable: boolean;
   locationByGPS: boolean;
 
-  constructor(public events: Events) {
-    this.latitude = 0;
-    this.longitude = 0;
-    this.currentCity = '(none)';
-    this.locationIsAvailable = false;
-    this.locationByGPS = false;
-    if ( localStorage.getItem('CurrentLat') != null
-          && localStorage.getItem('CurrentLon') != null
-          && localStorage.getItem('CurrentCity') != null ) {
-      this.latitude = parseFloat(localStorage.getItem('CurrentLat'));
-      this.longitude = parseFloat(localStorage.getItem('CurrentLon'));
-      this.currentCity = localStorage.getItem('CurrentCity');
-      this.locationIsAvailable = true;
-    }
+  constructor(
+    private events: Events,
+    private geolocation: Geolocation,
+    private openStreetMap: OpenStreetMapService,
+    ) {
+      this.latitude = 0;
+      this.longitude = 0;
+      this.currentCity = '(none)';
+      this.locationIsAvailable = false;
+      this.locationByGPS = false;
+      if ( localStorage.getItem('CurrentLat') != null
+            && localStorage.getItem('CurrentLon') != null
+            && localStorage.getItem('CurrentCity') != null ) {
+        this.latitude = parseFloat(localStorage.getItem('CurrentLat'));
+        this.longitude = parseFloat(localStorage.getItem('CurrentLon'));
+        this.currentCity = localStorage.getItem('CurrentCity');
+        this.locationIsAvailable = true;
+      }
   }
 
   tryToFetchCurrentGPSCoordinates() {
     // TODO
     console.log('***TRY TO FETCH CURRENT GPS COORDINATES***');
     console.log('*** TO DO ***');
+    this.geolocation.getCurrentPosition().then((res) => {
+      console.log('WE GOT GPS DATA!');
+      console.log('GPS lat:' + res.coords.latitude);
+      console.log('GPS lon:' + res.coords.longitude);
+      this.latitude = res.coords.latitude;
+      this.longitude = res.coords.longitude;
+      this.locationByGPS = true;
+      this.openStreetMap.describeCoordinates(this.latitude, this.longitude).then((location) => {
+        this.currentCity = location.toString();
+        console.log('WE LOCATED YOU AT: ' + location.toString());
+        localStorage.setItem('CurrentLat', this.latitude.toString());
+        localStorage.setItem('CurrentLon', this.longitude.toString());
+        localStorage.setItem('CurrentCity', location.toString());
+        this.events.publish('location-changed');
+      });
+    }).catch((err) => {
+      console.log('Geolocation error: ' + err);
+    });
   }
 
   setGPSCoordinatesAndCity(latitude: number, longitude: number, city: string) {

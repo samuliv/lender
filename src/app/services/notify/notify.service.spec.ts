@@ -1,11 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { OpenCageDataService } from './opencagedata.service';
 
-describe('OpenCageDataService', () => {
+import { NotifyService } from './notify.service';
+
+describe('NotifyService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: OpenCageDataService = TestBed.get(OpenCageDataService);
+    const service: NotifyService = TestBed.get(NotifyService);
     expect(service).toBeTruthy();
   });
 });

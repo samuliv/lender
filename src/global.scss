@@ -89,9 +89,17 @@ $color-fore-dark: #222;
     --ion-color-primary-shade: #6185ce;
     --ion-color-primary-contrast: #000;
 
+    --ion-color-secondary: #ffd37e;
+    --ion-color-secondary-shade: #dbae53;
+    --ion-color-secondary-contrast: #222;
+
     --ion-color-danger: #ff7a7a;
     --ion-color-danger-shade: #b84747;
     --ion-color-danger-contrast: #fff;
+
+    --ion-color-success: #bfff7e;
+    --ion-color-success-shade: #9edd5e;
+    --ion-color-success-contrast: #222;
     
     // Tab bar
     --ion-tab-bar-color: rgba(31,31,31, 0.4); // non-active forecolor text
@@ -112,14 +120,25 @@ $color-fore-dark: #222;
 }
 
 .list-item {
-    background: #8bb2ff;
+    background: #8bb2ff linear-gradient(#8bb2ff, #7ea2e9);
     width: 100%;
-    border: 1px solid #8bb2ff;
+    border: 1px solid #6086d1;
     border-radius: 8px;
     margin-bottom: 4px;
     overflow: hidden;
 }
-
+.list-item-secondary {
+    background: #eee linear-gradient(#fafafa, #eaeaea);
+    border: 1px solid #ddd;
+}
+.list-item-success {
+    background: #eee linear-gradient(#bfff7e, #a6e26a);
+    border: 1px solid #a6e26a;
+}
+.list-item-danger {
+    background: #eee linear-gradient(#ff7a7a, #db6464);
+    border: 1px solid #db6464;
+}
 .lender-thumbnail {
     border: 1px solid rgba(0,0,0,0.4);
     border-radius: 8px;

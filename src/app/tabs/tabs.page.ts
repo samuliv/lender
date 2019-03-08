@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { GlobalService } from '../services/global/global.service';
+import { Events } from '@ionic/angular';
 
 @Component({
   selector: 'app-tabs',
@@ -9,9 +11,21 @@ export class TabsPage {
   badgeNumberLent: number;
   badgeNumberBorrowed: number;
   badgeNumberMessages: number;
-  constructor () {
-    this.badgeNumberMessages = 1;
-    this.badgeNumberLent = 0;
-    this.badgeNumberBorrowed = 0;
+  
+  constructor (
+    private glbl: GlobalService,
+    private events: Events,
+  ) {
+    this.fetchBadgeNumbers();
+    this.events.subscribe('refresh-tab-badges', () => {
+      this.fetchBadgeNumbers();
+    });
   }
+
+  fetchBadgeNumbers() {
+    this.badgeNumberBorrowed = this.glbl.getBadgeTabBarBorrowed();
+    this.badgeNumberLent = this.glbl.getBadgeTabBarLent();
+    this.badgeNumberMessages = this.glbl.getBadgeTabBarMessages();
+  }
+
 }

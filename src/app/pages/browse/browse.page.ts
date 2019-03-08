@@ -34,6 +34,7 @@ export class BrowsePage implements OnInit{
   refreshTimer: any;
   browseItems = false;
   moreSearchOptions = false;
+  myUserID = -1;
 
   borrowableItems: MediaItem[] = [];
   tempItems: MediaItem[] = [];
@@ -133,7 +134,11 @@ export class BrowsePage implements OnInit{
   }
 
   requestLendNow(item: MediaItem) {
-    this.router.navigate(['/request-item/' + item.file_id.toString() + '_' + this.startTime + '_' + this.endTime]);
+    if (item.user_id === this.wbma.getMyUserID()) {
+      console.log('Cannot lend own items.');
+    } else {
+      this.router.navigate(['/request-item/' + item.file_id.toString() + '_' + this.startTime + '_' + this.endTime]);
+    }
   }
 
   applyFiltering(arr: MediaItem[]) {
@@ -281,6 +286,7 @@ export class BrowsePage implements OnInit{
 
   ionViewDidEnter() {
     console.log('browse.page.ts : ionViewDidEnter()');
+    this.myUserID = this.wbma.getMyUserID();
   }
 
 }

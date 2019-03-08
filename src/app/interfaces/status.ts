@@ -1,5 +1,7 @@
 export interface Status {
+    success: boolean;
     unreaded_messages: number,
-    latest_message: number,
-    latest_feedback: number,
+    unhandled_lends: number;
+    unreaded_borrowings: number;
+    latest_unreaded_message: number;
     }

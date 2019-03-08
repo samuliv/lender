@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { LendItem } from '../../interfaces/lenditem';
 import { ExtraService } from '../../services/extra/extra.service';
-import { AlertController, IonItemSliding, ActionSheetController } from '@ionic/angular';
+import { AlertController, IonItemSliding, ActionSheetController, Events } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-lent',
@@ -25,6 +26,8 @@ export class LentPage implements OnInit {
     private wbma: WbmaService,
     private alertController: AlertController,
     private router: Router,
+    private events: Events,
+    private glb: GlobalService,
     private actionSheetController: ActionSheetController) {
       this.viewPage = 'lent';
       this.resetToolbarBadges();
@@ -33,6 +36,10 @@ export class LentPage implements OnInit {
   ngOnInit() {
     this.refreshAll();
     this.refreshLentList();
+    this.events.subscribe('refresh-lent', () => {
+      this.refreshLentList();
+      this.refreshPendingList();
+    });
   }
 
   resetToolbarBadges() {
@@ -77,6 +84,7 @@ export class LentPage implements OnInit {
   }
 
   refreshLentList() {
+    this.toolbarBadgeLent = 0;
     this.extra.getListLent(this.wbma.getMyUserID()).subscribe(res => {
       this.lentItems = res;
       this.wbma.dataMerge(this.lentItems);
@@ -85,8 +93,10 @@ export class LentPage implements OnInit {
   }
 
   refreshPendingList() {
+    this.toolbarBadgePending = 0;
     this.extra.getListLentPending(this.wbma.getMyUserID()).subscribe(res => {
       this.pendingItems = res;
+      this.wbma.dataMerge(this.pendingItems);
       this.refreshPendingListBadge();
     });
   }
@@ -178,6 +188,7 @@ export class LentPage implements OnInit {
           handler: () => {
             this.extra.rejectRequest(item.lend_id).subscribe(res => {
               if ( res.success ) {
+                this.glb.tabBarIconsNeedRefreshing();
                 item.acceptable = false;
                 item.rejectable = false;
                 item.cancellable = false;
@@ -209,6 +220,7 @@ export class LentPage implements OnInit {
           handler: () => {
             this.extra.acceptRequest(item.lend_id).subscribe(res => {
               if ( res.success ) {
+                this.glb.tabBarIconsNeedRefreshing();
                 item.acceptable = false;
                 item.rejectable = false;
                 item.cancellable = true;
