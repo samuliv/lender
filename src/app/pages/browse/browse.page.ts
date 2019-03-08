@@ -6,7 +6,6 @@ import { GpsPositionService } from 'src/app/services/gps-position/gps-position.s
 import { MediaItem } from 'src/app/interfaces/mediaitem';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
 import { GpsDistanceService } from 'src/app/services/gps-distance/gps-distance.service';
-import { extractDirectiveDef } from '@angular/core/src/render3/definition';
 import { OpenStreetMapService } from 'src/app/services/openstreetmap/openstreetmap.service';
 
 @Component({
