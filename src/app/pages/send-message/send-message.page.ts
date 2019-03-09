@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-send-message',
@@ -12,12 +13,12 @@ export class SendMessagePage implements OnInit {
   goBackTo: string;
   userId: number;
 
-  constructor(private navController: NavController, private activatedRoute: ActivatedRoute) { }
+  constructor(private navController: NavController, private activatedRoute: ActivatedRoute, private glb: GlobalService) { }
 
   ngOnInit() {
     const items = this.activatedRoute.snapshot.paramMap.get('source').split('-');
     this.goBackTo = items[0];
-    this.userId = parseInt(items[1], 10);
+    this.userId = parseInt(items[1], 10);    
   }
 
   goBack() {

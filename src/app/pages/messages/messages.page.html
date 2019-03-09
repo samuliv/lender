@@ -69,8 +69,13 @@
           <div class="span-container">
             <span class="big-number">{{ item.feedback === 1 ? '+' : '-' }}</span>
             <span class="badge-time">{{ item.ago }}</span>
+            <span class="badge-time">{{ item.role }}</span>
           </div>
+          <div class="span-container" *ngIf="item.item_name">
+              <span class="badge-time">{{ item.item_name }}</span>
+            </div>
           <p class="starts">{{ item.message }}</p>
+          <span class="username">{{ item.user_name }}</span>
         </ion-label>
       </ion-item>
     </div>

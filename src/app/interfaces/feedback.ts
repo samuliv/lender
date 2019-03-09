@@ -5,5 +5,7 @@ export interface Feedback {
   ago: string;
   feedback: number;
   role: string;
+  item: number;
   user_name?: string;
+  item_name?: string;
   }

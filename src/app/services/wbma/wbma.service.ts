@@ -11,6 +11,7 @@ import {LendItem} from 'src/app/interfaces/lenditem';
 import {User} from 'src/app/interfaces/user';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { WbmaMergableItem } from 'src/app/interfaces/wbma-mergable-item';
 
 /*
   Metropolia WBMA-api Communication Service
@@ -97,6 +98,11 @@ export class WbmaService {
         return this.http.get<User>(this.apiUrl + 'users/' + user_id.toString(), this.accessTokenHeader());
     }
 
+    getAllUsers() {
+        return this.http.get<User[]>(this.apiUrl + 'users', this.accessTokenHeader());
+    }
+
+
     getSingleMedia(media_id: number) {
         return this.http.get<MediaItem>(this.apiUrl + 'media/' + media_id.toString());
     }
@@ -165,7 +171,7 @@ export class WbmaService {
         );
     }
 
-    dataMerge(arr: LendItem[]) {
+    dataMerge(arr: WbmaMergableItem[]) {
         if (arr.length > 0) {
             for (let i = 0; i < arr.length; i++) {
                 arr[i].item_thumb = './assets/imgs/lendertest2.png';

@@ -1,4 +1,6 @@
-export interface LendItem {
+import { WbmaMergableItem } from "./wbma-mergable-item";
+
+export interface LendItem extends WbmaMergableItem {
     starts: string;
     ends: string;
     acceptable: boolean;
@@ -13,4 +15,5 @@ export interface LendItem {
     item_category?: number;
     item_category_name?: string;
     item_thumb?: string;
+    readed?: boolean;
   }

@@ -65,6 +65,14 @@ $color-fore-dark: #222;
     background-color: $color-pending;
     color: $color-fore-dark;
 }
+.status-finished {
+    background-color: #222;
+    color: #eee;
+}
+.status-inprogress {
+    background-color: #e4a929;
+    color: #222;
+}
 
 .img-thumbnail {
     background: #fff;

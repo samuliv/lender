@@ -9,6 +9,7 @@ import { MediaItem } from 'src/app/interfaces/mediaitem';
 import { AvailabilityResponse } from 'src/app/interfaces/availabilityresponse';
 import { Status } from 'src/app/interfaces/status';
 import { Category } from 'src/app/interfaces/category';
+import { UnfeedbackedItem } from '../../interfaces/unfeedbacked-item';
 
 @Injectable({
   providedIn: 'root'
@@ -46,12 +47,24 @@ export class ExtraService {
     return this.http.get<Success>(this.extraURL + '?operation=cancelRequest&request_id=' + request_id.toString());
   }
 
+  public cancelBorrow(request_id: number) {
+    return this.http.get<Success>(this.extraURL + '?operation=cancelBorrow&request_id=' + request_id.toString());
+  }
+
   public getListLent(user_id: number) {
     return this.http.get<LendItem[]>(this.extraURL + '?operation=lends&user_id=' + user_id);
   }
 
   public getListLentPending(user_id: number) {
     return this.http.get<LendItem[]>(this.extraURL + '?operation=lends&pending=true&user_id=' + user_id);
+  }
+
+  public getListBorrowed(user_id: number) {
+    return this.http.get<LendItem[]>(this.extraURL + '?operation=borrowings&user_id=' + user_id);
+  }
+
+  public getListBorrowedPending(user_id: number) {
+    return this.http.get<LendItem[]>(this.extraURL + '?operation=borrowings&pending=true&user_id=' + user_id);
   }
 
   public getMessages(user_id: number, sent?: boolean) {
@@ -64,6 +77,14 @@ export class ExtraService {
 
   public getFeedback(user_id: number) {
     return this.http.get<Feedback[]>(this.extraURL + '?operation=feedback&user_id=' + user_id);
+  }
+
+  public markBorrowedItemAsReaded(item_id: number) {
+    return this.http.get<Success>(this.extraURL + '?operation=mark-borrowed-item-as-readed&item_id=' + item_id);
+  }
+
+  public getUnfeedbackedItems(user_id: number, lends: boolean) {
+    return this.http.get<UnfeedbackedItem[]>(this.extraURL + '?operation=unfeedbacked&user_id=' + user_id + '&role=' + (lends ? 'lends' : 'borrowings'));
   }
 
   public getUserStatus(user_id: number) {

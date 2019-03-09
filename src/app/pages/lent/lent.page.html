@@ -81,4 +81,25 @@
 
   </ion-list>
 
+  <ion-list *ngIf="viewPage === 'feedback'" lines="full">
+
+      <div class="list-item" *ngFor="let item of feedbackItems">
+          <ion-item color="transparent">
+          <ion-thumbnail class="lender-thumbnail" slot="start">
+            <img class="img-thumbnail" *ngIf="item.item_thumb" [src]="item.item_thumb">
+          </ion-thumbnail>
+  
+            <ion-label>
+              <span class="give-feedback">Please, give feedback!</span>
+              <h3>{{ item.item_title }}</h3>
+              <p class="starts"><ion-icon name="return-right"></ion-icon> {{ item.starts }}</p>
+              <p class="ends"><ion-icon name="return-left"></ion-icon> {{ item.ends }}</p>
+            </ion-label>
+  
+          <ion-badge slot="end" class="lender-badge status-{{item.status}}">{{item.status}}</ion-badge>  
+        </ion-item>
+      </div>
+  
+    </ion-list>
+
 </ion-content>

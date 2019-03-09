@@ -51,6 +51,16 @@ export class MessagesPage implements OnInit {
     }
   }
 
+  getUserNamesFeedback(arr: Feedback[]) {
+    if (arr.length > 0) {
+      for (let i = 0; i < arr.length; i++) {
+        this.wbma.getUserInformation(arr[i].user_id).subscribe((userData) => {
+          arr[i].user_name = userData.username;
+        });
+      }
+    }
+  }
+
   refreshBadgeInbox() {
     console.log('refreshBadgeInbox()');
     this.badgeInbox = 0;    
@@ -84,6 +94,12 @@ export class MessagesPage implements OnInit {
     console.log('refreshFeedback()');
     this.extra.getFeedback(this.wbma.getMyUserID()).subscribe(res => {
       this.feedback = res;
+      this.getUserNamesFeedback(this.feedback);
+      this.feedback.forEach((i) => {
+        this.wbma.getSingleMedia(i.item).subscribe((media) => {
+          i.item_name = media.title;
+        })
+      })
     });
   }
 

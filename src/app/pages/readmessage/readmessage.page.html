@@ -19,10 +19,19 @@
 </ion-header>
 
 <ion-content padding>
+  
+  <ion-badge color="light">From:</ion-badge>
+  <ion-badge color="dark">{{ messageSenderName }}</ion-badge>
+  <br>
+  <ion-badge color="light">Time:</ion-badge>
+  <ion-badge color="dark">{{ messageTime }}</ion-badge>
+  <br><br>
+  <ion-badge color="light">Message:</ion-badge>
 
-  <p>From: {{ messageSenderName }}</p>
-  <p>Time: {{ messageTime }}</p>
-  <p>Message: </p>
-  <p>{{ message }}</p>
+  <br>
+
+  <p>
+    {{ message }}
+  </p>
 
 </ion-content>

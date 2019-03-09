@@ -5,6 +5,7 @@ import { AlertController, IonItemSliding, ActionSheetController, Events } from '
 import { Router } from '@angular/router';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
 import { GlobalService } from 'src/app/services/global/global.service';
+import { UnfeedbackedItem } from 'src/app/interfaces/unfeedbacked-item';
 
 @Component({
   selector: 'app-lent',
@@ -16,6 +17,7 @@ export class LentPage implements OnInit {
   viewPage: string;
   lentItems: LendItem[];
   pendingItems: LendItem[];
+  feedbackItems: UnfeedbackedItem[];
   toolbarBadgeLent: number;
   toolbarBadgePending: number;
   toolbarBadgeFeedback: number;
@@ -34,12 +36,11 @@ export class LentPage implements OnInit {
   }
 
   ngOnInit() {
-    this.refreshAll();
-    this.refreshLentList();
     this.events.subscribe('refresh-lent', () => {
       this.refreshLentList();
       this.refreshPendingList();
     });
+    this.refreshAll();
   }
 
   resetToolbarBadges() {
@@ -102,10 +103,12 @@ export class LentPage implements OnInit {
   }
 
   refreshFeedbackList() {
-    // this.extra.getListLent(this.wbma.getMyUserID()).subscribe(res => {
-    //   this.pendingItems = res;
-    // });
-    // TODO
+    this.toolbarBadgeFeedback = 0;
+    this.extra.getUnfeedbackedItems(this.wbma.getMyUserID(), true).subscribe(res => {
+      this.toolbarBadgeFeedback = res.length;
+      this.feedbackItems = res;
+      this.wbma.dataMerge(this.feedbackItems);
+    })
   }
 
   refershCurrentView() {
@@ -159,8 +162,6 @@ export class LentPage implements OnInit {
       header: 'Request Operations',
       buttons: buttons
     });
-
-
 
     await actionSheet.present();
   }

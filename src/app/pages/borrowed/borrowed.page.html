@@ -1,31 +1,103 @@
 <ion-header>
+
+    <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-button (click)="refershCurrentView()" color="dark">Refresh</ion-button>
+        </ion-buttons>
+      <ion-title>
+        Borrowed
+      </ion-title>
+    </ion-toolbar>
+    
   <ion-toolbar>
-    <ion-title>
-      Borrowed
-    </ion-title>
-  </ion-toolbar>
-  <ion-toolbar>
-    <ion-segment [(ngModel)]="viewPage">
-      <ion-segment-button value="all">Borrowed</ion-segment-button>
-      <ion-segment-button value="confirmed">Pending</ion-segment-button>
-      <ion-segment-button value="pending">Feedback</ion-segment-button>
+    <ion-segment [(ngModel)]="viewPage" color="dark">
+      <ion-segment-button value="borrowed">
+        <div class="oneRow">
+          <div class="left">Borrowed</div>
+          <div *ngIf="toolbarBadgeBorrowed!=0" class="segment-badge">{{ toolbarBadgeBorrowed }}</div>
+        </div>
+      </ion-segment-button>
+      <ion-segment-button value="pending">
+          <div class="oneRow">
+            <div class="left">Pending</div>
+            <div *ngIf="toolbarBadgePending!=0" class="segment-badge">{{ toolbarBadgePending }}</div>
+          </div>
+      </ion-segment-button>
+      <ion-segment-button value="feedback">
+          <div class="oneRow">
+            <div class="left">Feedback</div>
+            <div *ngIf="toolbarBadgeFeedback!=0" class="segment-badge">{{ toolbarBadgeFeedback }}</div>
+          </div>
+      </ion-segment-button>
     </ion-segment>
-  </ion-toolbar>  
-</ion-header>
-
-<ion-content>
-
-  <ion-list>
-    <ion-item-sliding>
-      <ion-item>
-        <ion-label>BMW 325i -91</ion-label>
+  </ion-toolbar>
+  
+  </ion-header>
+  
+  <ion-content padding>
+  
+    <ion-list *ngIf="viewPage === 'borrowed'" lines="full">
+  
+      <div class="list-item" [ngClass]="item.readed === false && item.status === 'accepted' ? 'list-item-success' : ''" *ngFor="let item of borrowedItems" (click)="itemClick(item)">
+          <ion-item color="transparent">
+  
+          <ion-thumbnail class="lender-thumbnail" slot="start">
+            <img class="img-thumbnail" *ngIf="item.item_thumb" [src]="item.item_thumb">
+          </ion-thumbnail>    
+  
+          <ion-label>
+            <h3>{{ item.item_title }}</h3>
+            <p class="starts"><ion-icon name="return-right"></ion-icon> {{ item.starts }}</p>
+            <p class="ends"><ion-icon name="return-left"></ion-icon> {{ item.ends }}</p>
+          </ion-label>
+  
+          <ion-badge slot="end" class="lender-badge" [ngClass]="'status-' + item.status">{{item.status}}</ion-badge>
+  
       </ion-item>
-      <ion-item-options side="end">
-        <ion-item-option color="warning" (click)="favorite(item)">Re-Borrow</ion-item-option>
-        <ion-item-option color="success" (click)="unread(item)"><ion-icon name="chatboxes"></ion-icon></ion-item-option>
-        <ion-item-option color="danger" (click)="unread(item)"><ion-icon name="trash"></ion-icon></ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-
-</ion-content>
+      </div>
+  
+    </ion-list>
+  
+    <ion-list *ngIf="viewPage === 'pending'" lines="full">
+  
+      <div class="list-item" *ngFor="let item of pendingItems" (click)="itemClick(item)">
+          <ion-item color="transparent">
+          <ion-thumbnail class="lender-thumbnail" slot="start">
+              <img class="img-thumbnail" *ngIf="item.item_thumb" [src]="item.item_thumb">
+            </ion-thumbnail>
+  
+            <ion-label>
+              <h3>{{ item.item_title }}</h3>
+              <p class="starts"><ion-icon name="return-right"></ion-icon> {{ item.starts }}</p>
+              <p class="ends"><ion-icon name="return-left"></ion-icon> {{ item.ends }}</p>
+            </ion-label>
+  
+          <ion-badge slot="end" class="lender-badge status-{{item.status}}">{{item.status}}</ion-badge>  
+        </ion-item>
+      </div>
+  
+    </ion-list>
+  
+    <ion-list *ngIf="viewPage === 'feedback'" lines="full">
+  
+        <div class="list-item" *ngFor="let item of feedbackItems">
+            <ion-item color="transparent">
+            <ion-thumbnail class="lender-thumbnail" slot="start">
+              <img class="img-thumbnail" *ngIf="item.item_thumb" [src]="item.item_thumb">
+            </ion-thumbnail>
+    
+              <ion-label>
+                <span class="give-feedback">Please, give feedback!</span>
+                <h3>{{ item.item_title }}</h3>
+                <p class="starts"><ion-icon name="return-right"></ion-icon> {{ item.starts }}</p>
+                <p class="ends"><ion-icon name="return-left"></ion-icon> {{ item.ends }}</p>
+              </ion-label>
+    
+            <ion-badge slot="end" class="lender-badge status-{{item.status}}">{{item.status}}</ion-badge>  
+          </ion-item>
+        </div>
+    
+      </ion-list>
+  
+  </ion-content>
+  

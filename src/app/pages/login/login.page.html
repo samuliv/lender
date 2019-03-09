@@ -6,7 +6,7 @@
     <div *ngIf="!creatingAccount" class="container">
 
 
-        <ion-input class="lender-input" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Username" type="text" [(ngModel)]="username"></ion-input>
+        <ion-input class="lender-input" autofocus="true" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Username" type="text" [(ngModel)]="username"></ion-input>
         <div class="error-div" *ngIf="errorWithUsername !== ''">{{ errorWithUsername }}</div>
         <ion-input class="lender-input" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Password" type="password" [(ngModel)]="password"></ion-input>
         <div class="error-div" *ngIf="errorWithPassword !== ''">{{ errorWithPassword }}</div>

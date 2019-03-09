@@ -93,12 +93,12 @@ export class GlobalService {
   }
 
   focusSiteElementById(elementId: string) {
-    const delay = setTimeout( () => {
+    setTimeout( () => {
       const nick = document.getElementById(elementId);
       nick.focus();
     }, 250);
   }
-
+  
   async messagePrompt(headerText: string, messageText: string, fun?: any) {
     const alert = await this.alertController.create({
       header: headerText,
