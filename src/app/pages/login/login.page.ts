@@ -16,11 +16,20 @@ import { GlobalService } from 'src/app/services/global/global.service';
 })
 export class LoginPage implements OnInit {
 
-  username: string;
-  password: string;
-  email: string;
-  full_name: string;
+  username = '';
+  password = '';
+  email = ''
+  full_name = '';
   creatingAccount = false;
+
+  errorWithUsername = '';
+  errorWithPassword = '';
+  errorWithEmail = '';
+  errorWithFullName = '';
+
+  loginFormValidated = false;
+  registerFormValidated = false;
+  refreshTimer: any;
 
   constructor(
     private wbma: WbmaService,
@@ -30,6 +39,62 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     console.log('login.page.ts : ngOnInit()');
+  }
+
+  someParameterChanged() {
+    this.errorWithUsername = '';
+    this.errorWithPassword = '';
+    this.errorWithEmail = '';
+    this.errorWithFullName = '';
+    clearTimeout(this.refreshTimer);
+    this.refreshTimer = setTimeout( () => {
+      this.validate();
+    }, 250);
+  }
+
+  validate() {
+    let validationErrors = false;
+    if (this.username === '') {
+      validationErrors = true;
+    } else {
+      if (this.username.length < 3) {
+        this.errorWithUsername = 'Username must be longer.';
+      }
+    }
+    if (this.password === '') {
+      validationErrors = true;
+    } else {
+      if (this.password.length < 3) {
+        this.errorWithUsername = 'Password must be longer.';
+      }
+    }
+    if (!validationErrors) {
+      this.loginFormValidated = true;
+    }
+    if (this.email === '') {
+      validationErrors = true;
+    } else {
+      if (!this.glb.isEmailValid(this.email)) {
+        this.errorWithEmail = 'Email is not valid.';
+      }
+    }
+    if (this.full_name !== '') {
+      if (this.full_name.length < 3) {
+        this.errorWithFullName = 'Full name must be longer';
+      }
+    }
+    this.wbma.checkIfUserExists(this.username).subscribe((thisUsernameIs) => {
+      if (thisUsernameIs.available) {
+        if ( !validationErrors &&
+             this.errorWithEmail === '' && this.errorWithFullName === '' &&
+             this.errorWithPassword === '' && this.errorWithUsername === '' )
+               {
+                 this.registerFormValidated = true;
+               }
+      } else {
+        this.errorWithUsername = 'Username is already taken.';
+      }
+    });
   }
 
   loginButtonClick() {
