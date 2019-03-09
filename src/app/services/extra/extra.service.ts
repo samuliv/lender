@@ -8,6 +8,7 @@ import { UserInfo } from '../../interfaces/user-info';
 import { MediaItem } from 'src/app/interfaces/mediaitem';
 import { AvailabilityResponse } from 'src/app/interfaces/availabilityresponse';
 import { Status } from 'src/app/interfaces/status';
+import { Category } from 'src/app/interfaces/category';
 
 @Injectable({
   providedIn: 'root'
@@ -78,7 +79,7 @@ export class ExtraService {
   }
 
   public getCategoryNameById(id: number) {
-    return this.http.get<Success>(this.extraURL + '?operation=get-category-byid&id=' + id);
+    return this.http.get<Category>(this.extraURL + '?operation=get-category-byid&id=' + id);
   }
 
   public requestLend(item_id: number, time_from: string, time_to: string, requester: number, owner: number) {

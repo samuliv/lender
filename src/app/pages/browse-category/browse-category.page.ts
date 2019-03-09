@@ -28,10 +28,18 @@ export class BrowseCategoryPage implements OnInit {
       this.noAll = false;
       this.selectedCategory = 0;
       this.source = splitted[0];
-      if ( this.source === 'add-lendable-item' ) {
+      if (this.source === 'add-lendable-item') {
         this.noAll = true; // Hide All Button
         this.selectedCategory = -1;
         this.allSelected = false;
+      }
+      if (this.source === 'browse') {
+        if (localStorage.getItem('selected-category')) {
+          this.selectedCategory = parseInt(localStorage.getItem('selected-category'), 10);
+        }
+      }
+      if(splitted.length > 1) {
+        this.selectedCategory = parseInt(splitted[2]);
       }
       if ( splitted.length > 1 ) {
         this.subParameters = splitted[1];
@@ -48,7 +56,21 @@ export class BrowseCategoryPage implements OnInit {
   ngOnInit() {
     this.extraService.getCategories().subscribe((res) => {
       this.categories = res;
-    })
+      if (this.selectedCategory !== 0) {
+        this.selectCategory(this.selectedCategory);
+      }
+    });
+  }
+
+  selectCategory(id: number) {
+    if (this.selectedCategory !== 0) {
+      this.categories.forEach(i => {
+        if (i.id === id) {
+          this.itemClick(i);
+          return;
+        }
+      });
+    }
   }
 
   arrayMatch(a1: string[], a2: string[]) {

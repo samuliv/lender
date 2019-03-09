@@ -68,13 +68,34 @@ export class BrowsePage implements OnInit{
         this.selectedCategoryID = id;
         this.selectedCategoryName = categroyname;
         this.selectedCategoryContains = contains;
+        this.selectCatgory(id);
         this.someParameterChanged();
       });
+  }
+
+  selectCatgory(id: number) {
+    localStorage.setItem('selected-category', id.toString());
+    this.selectedCategoryID = id;
+    if (id === 0) {
+      this.selectedCategoryName = 'All';
+    } else {
+      this.selectedCategoryName = '';
+      this.extra.getCategoryNameById(id).subscribe((req) => {
+        if (req.success) {
+          this.selectedCategoryContains = req.contains;
+          this.selectedCategoryName = req.response;
+        }
+      });
+    }
   }
 
   ngOnInit() {
     this.refreshLocationData();
     this.time.getLenderTimeString('now');
+    if (localStorage.getItem('selected-category')) {
+      console.log(localStorage.getItem('selected-category'));
+      this.selectCatgory(parseInt(localStorage.getItem('selected-category'), 10));
+    }
   }
 
   moreSearchOptionsToggle() {

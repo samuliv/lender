@@ -85,7 +85,7 @@ export class AddLendableItemPage implements OnInit {
   }
 
   chooseCategory() {
-    this.router.navigate(['/browse-category/add-lendable-item_' + this.source]);
+    this.router.navigate(['/browse-category/add-lendable-item_' + this.source + '_' + this.itemCategoryID.toString()]);
   }
 
   parsePrice(price: string): number {
