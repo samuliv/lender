@@ -10,6 +10,7 @@ import { Address } from 'src/app/interfaces/address';
 export class OpenStreetMapService {
 
   apiUrl = 'https://nominatim.openstreetmap.org/search?format=json&polygon=0&addressdetails=1';
+  
   constructor(private http: HttpClient, private router: Router) {
   }
 

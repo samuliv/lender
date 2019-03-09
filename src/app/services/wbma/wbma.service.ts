@@ -9,6 +9,8 @@ import {SearchFilteringOptions} from 'src/app/interfaces/searchfilteringoptions'
 import {Success} from 'src/app/interfaces/success';
 import {LendItem} from 'src/app/interfaces/lenditem';
 import {User} from 'src/app/interfaces/user';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 /*
   WBMA-api Communication Service
@@ -104,25 +106,32 @@ export class WbmaService {
     }
 
     login(username: string, password: string) {
-        const formData = {'username': username, 'password': password};
-        this.loginPost(formData).subscribe(res => {
-            if (res.message === 'Logged in successfully') {
-                console.log('SUCCESS: Login OK.');
-                localStorage.setItem('token', res.token);
-                localStorage.setItem('user_id', res.user.user_id.toString());
-                this.setLoginStatus(true);
-                this.router.navigate(['tabs/browse']);
-            } else {
-                console.log('ERROR: ' + res.message);
-            }
-          });
-        }
+        return new Promise((resolve, reject) => {
+            const formData = {'username': username, 'password': password};
+            this.loginPost(formData)
+            .pipe(catchError(err => {
+                reject(err.error.message);
+                return throwError(err);
+            }))
+            .subscribe(res => {
+                if (res.message === 'Logged in successfully') {
+                    console.log('SUCCESS: Login OK.');
+                    localStorage.setItem('token', res.token);
+                    localStorage.setItem('user_id', res.user.user_id.toString());
+                    this.setLoginStatus(true);
+                    this.router.navigate(['tabs/browse']);
+                    resolve('');
+                } else {
+                    console.log('ERROR: ' + res.message);
+                    reject(res.message);
+                }
+            });
+        });
+    }
 
     register(username: string, password: string, email: string, full_name: string) {
         const formData = {'username': username, 'password': password, 'email': email, 'full_name': full_name};
-        this.registerPost(formData).subscribe(res => {
-            console.log(res);
-        });
+        return this.http.post<RegisterNewUserInfo>(this.apiUrl + 'users', formData);
     }
 
     registerPost(formData: any) {

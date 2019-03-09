@@ -5,6 +5,9 @@ import { AlertController } from '@ionic/angular';
 import { ExtraService } from 'src/app/services/extra/extra.service';
 import { UsernameAvailable } from 'src/app/interfaces/usernameavailable';
 import { LoginInfo } from 'src/app/interfaces/logininfo';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-login',
@@ -19,25 +22,38 @@ export class LoginPage implements OnInit {
   full_name: string;
   creatingAccount = false;
 
-  constructor(private wbma: WbmaService, private extra: ExtraService, private alertController: AlertController) { }
+  constructor(
+    private wbma: WbmaService,
+    private extra: ExtraService,
+    private glb: GlobalService
+    ) { }
 
   ngOnInit() {
     console.log('login.page.ts : ngOnInit()');
   }
 
   loginButtonClick() {
-    this.wbma.login(this.username, this.password);
-    this.username = '';
-    this.password = '';
+    this.wbma.login(this.username, this.password).then((res) => {
+      this.username = '';
+      this.password = '';
+    }).catch((err) => {
+      this.glb.messagePrompt('Login Error', err);
+    });
   }
 
   registerButtonClick() {
-    this.wbma.register(this.username, this.password, this.email, this.full_name);
-    this.username = '';
-    this.password = '';
-    this.email = '';
-    this.full_name = '';
-    this.creatingAccount = false;
+    this.wbma.register(this.username, this.password, this.email, this.full_name)
+      .pipe(catchError(err => {
+        this.glb.messagePrompt('Could not register', err.error.error);
+        return throwError(err);
+      }))
+      .subscribe((res) => {
+        this.username = '';
+        this.password = '';
+        this.email = '';
+        this.full_name = '';
+        this.creatingAccount = false;  
+      });
   }
 
   createAccount() {

@@ -36,7 +36,6 @@ export class GpsPositionService {
   }
 
   tryToFetchCurrentGPSCoordinates() {
-    
     console.log('tryToFetchCurrentGPSCoordinates()');
     this.geolocation.getCurrentPosition().then((res) => {
       console.log('tryToFetchCurrentGPSCoordinates(): Success! ' + res.coords.latitude + ' ' + res.coords.longitude);
