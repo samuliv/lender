@@ -3,8 +3,7 @@
         <img class="logo" src="../../../assets/imgs/lendertest2.png">
         <img class="logotext" src="../../../assets/imgs/Lender.png">
     </div>
-    <div id="container">
-
+    <div *ngIf="!creatingAccount" class="container">
         <ion-list inset>
             <ion-item class="rounded">
                 <ion-input placeholder="Username" type="text" [(ngModel)]="username"></ion-input>
@@ -17,6 +16,26 @@
             <ion-button id="crtAccnt" expand="block" fill="outline" color="light" (click)="createAccount()" size="small">Create Account</ion-button>
         </ion-list>
         
+    </div>
+    <div *ngIf="creatingAccount" class="container">
+        <ion-list inset>
+            <ion-item class="rounded">
+                <ion-input placeholder="Username" type="text" [minlength]="3" [(ngModel)]="username"></ion-input>
+            </ion-item>
+            <ion-item class="rounded">
+                <ion-input placeholder="Password" type="password" [minlength]="3" [(ngModel)]="password"></ion-input>
+            </ion-item>
+            <ion-item class="rounded">
+                <ion-input placeholder="Email" type="text" [(ngModel)]="email"></ion-input>
+            </ion-item>
+            <ion-item class="rounded">
+                <ion-input placeholder="Full name" type="text" [(ngModel)]="full_name"></ion-input>
+            </ion-item>
+            <br>
+            <ion-button id="registerBtn" expand="block" size="large" color="dark" (click)="registerButtonClick()">Register</ion-button>
+            <ion-button id="signIn" expand="block" fill="outline" color="light" (click)="createAccount()" size="small">Already signed up?</ion-button>
+        </ion-list>
+
     </div>
 
 </ion-content>
