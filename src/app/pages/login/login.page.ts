@@ -15,6 +15,9 @@ export class LoginPage implements OnInit {
 
   username: string;
   password: string;
+  email: string;
+  full_name: string;
+  creatingAccount = false;
 
   constructor(private wbma: WbmaService, private extra: ExtraService, private alertController: AlertController) { }
 
@@ -26,6 +29,19 @@ export class LoginPage implements OnInit {
     this.wbma.login(this.username, this.password);
     this.username = '';
     this.password = '';
+  }
+
+  registerButtonClick() {
+    this.wbma.register(this.username, this.password, this.email, this.full_name);
+    this.username = '';
+    this.password = '';
+    this.email = '';
+    this.full_name = '';
+    this.creatingAccount = false;
+  }
+
+  createAccount() {
+    this.creatingAccount = !this.creatingAccount;
   }
 
 }
