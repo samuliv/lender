@@ -65,11 +65,14 @@ export class LoginPage implements OnInit {
       validationErrors = true;
     } else {
       if (this.password.length < 3) {
-        this.errorWithUsername = 'Password must be longer.';
+        this.errorWithPassword = 'Password must be longer.';
       }
     }
     if (!validationErrors) {
       this.loginFormValidated = true;
+    }
+    if (!this.creatingAccount) {
+      return;
     }
     if (this.email === '') {
       validationErrors = true;
@@ -83,18 +86,20 @@ export class LoginPage implements OnInit {
         this.errorWithFullName = 'Full name must be longer';
       }
     }
-    this.wbma.checkIfUserExists(this.username).subscribe((thisUsernameIs) => {
-      if (thisUsernameIs.available) {
-        if ( !validationErrors &&
-             this.errorWithEmail === '' && this.errorWithFullName === '' &&
-             this.errorWithPassword === '' && this.errorWithUsername === '' )
-               {
-                 this.registerFormValidated = true;
-               }
-      } else {
-        this.errorWithUsername = 'Username is already taken.';
-      }
-    });
+    if (this.username !== '' && this.errorWithUsername === '') {
+      this.wbma.checkIfUserExists(this.username).subscribe((thisUsernameIs) => {
+        if (thisUsernameIs.available) {
+          if ( !validationErrors &&
+              this.errorWithEmail === '' && this.errorWithFullName === '' &&
+              this.errorWithPassword === '' && this.errorWithUsername === '' )
+                {
+                  this.registerFormValidated = true;
+                }
+        } else {
+          this.errorWithUsername = 'Username is already taken.';
+        }
+      });
+    }
   }
 
   loginButtonClick() {
@@ -123,6 +128,7 @@ export class LoginPage implements OnInit {
 
   createAccount() {
     this.creatingAccount = !this.creatingAccount;
+    this.someParameterChanged();
   }
 
 }

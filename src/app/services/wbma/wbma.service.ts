@@ -13,7 +13,7 @@ import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 /*
-  WBMA-api Communication Service
+  Metropolia WBMA-api Communication Service
  */
 @Injectable({
     providedIn: 'root'
@@ -115,7 +115,6 @@ export class WbmaService {
             }))
             .subscribe(res => {
                 if (res.message === 'Logged in successfully') {
-                    console.log('SUCCESS: Login OK.');
                     localStorage.setItem('token', res.token);
                     localStorage.setItem('user_id', res.user.user_id.toString());
                     this.setLoginStatus(true);

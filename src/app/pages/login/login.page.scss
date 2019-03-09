@@ -1,15 +1,14 @@
 ion-content{
-
   --ion-background-color:#4c8dff;
 }
 
-.container {
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  width: 75%;
-  top: 35%;
-}
+// .container {
+//   position: relative;
+//   margin-left: auto;
+//   margin-right: auto;
+//   width: 75%;
+//   top: 35%;
+// }
 
 ion-button {
   width: 75%;
@@ -20,23 +19,49 @@ ion-button {
 ion-input {
   background-color: #CBD1FF;
   padding: 0px 15px 0px 15px !important;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 4px;
+  width: 80%;
   border: none !important;
   outline: none !important;
   text-decoration: none;
   border-radius: 4px;
   font-weight: bold;
 }
-
-#logos {
-  width: 100px;
-  height: 100px;
-  position: relative;
-  top:25%;
-  bottom: 0;
-  left: 0;
-  right: 0;
-
-  margin: auto;
+/* this type is defined ing global.scss just size/position adjustment for this page:*/
+.error-div {
+  display: block;
+  width: 80% !important;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 4px;
+}
+.logos {
+  display: block;
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.logo-icon, .logo-text {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.logo-icon {
+  height: 60px;
+  margin-bottom: 10px;
+  transition:width 300ms ease-in-out, height 300ms ease-in-out;
+}
+.logo-text {
+  height: 40px;
+  transition:width 300ms ease-in-out, height 300ms ease-in-out;
 }
 
+.mini .logo-icon {
+  height: 35px;
+}
+.mini .logo-text {
+  height: 20px;
+}
 

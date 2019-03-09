@@ -40,13 +40,23 @@ export class TimeService {
 
   getLenderTimeString(timeString: string) {
     const current = new Date();
-    switch (timeString) {
+    switch (timeString.toLowerCase()) {
+
       case 'now':
-        //2019-03-09T01:21:03.644Z
+      case 'immediately':
+      case '2h':
         console.log(current.toISOString());
-        current.setTime(current.getTime() + 1000 * 60 * 16); // shift 16 minutes forward
+        let shiftMinutes = 16;
+        if ( timeString === '+2h' ) {
+          shiftMinutes = 180;
+        }
+        current.setTime(current.getTime() + 1000 * 60 * shiftMinutes); // shift 16 minutes forward
         return this.toNextFixed15(current.toISOString());
-        break;
+
+      case 'tmrrw-m':
+      case 'tmrrw-e':
+        current.setDate(current.getDate()+1);
+        return (current.toISOString().substring(0,11) + (timeString === 'tmrrw-m' ? '09' : '17') + ':00:00.000Z');
     }
   }
 

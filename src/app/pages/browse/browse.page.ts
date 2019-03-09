@@ -57,17 +57,7 @@ export class BrowsePage implements OnInit{
       this.setDateRange = false;
       this.searchText = '';
       this.currentLocationName = '(none)';
-
-
-//      const currentTime = new Date();
-      // currentTime.setTime(currentTime.getTime() + (1 * 60 * 60 * 1000));
-      // this.startTime = currentTime.toISOString();
-      // currentTime.setTime(currentTime.getTime() + (1 * 60 * 60 * 1000));
-      // this.endTime  = currentTime.toISOString();
-
       this.startTime = this.time.getLenderTimeString('now');
-
-      
 
       this.events.subscribe('location-changed', () => {
         this.refreshLocationData();
@@ -216,8 +206,6 @@ export class BrowsePage implements OnInit{
             (this.startTime === '' || this.endTime === '' ? '1.1.1987 00:00:00' : this.startTime),
             (this.startTime === '' || this.endTime === '' ? '1.1.1987 00:00:01' : this.endTime)
             ).subscribe((avlbl) => {
-              console.log(':) ');
-              console.log(avlbl);
             if (avlbl.available) {
               this.tempItems[i].user_score = avlbl.feedback;
               this.tempItems[i].user_feedback_negative = avlbl.feedback_negative;
@@ -233,7 +221,6 @@ export class BrowsePage implements OnInit{
           });
         }
       }
-      //this.borrowableItems = this.tempItems;
     });
   }
 
@@ -242,9 +229,10 @@ export class BrowsePage implements OnInit{
     this.selectedCategoryName = '';
     this.maxPrice = parseInt(args[1], 10);
     this.maxDistance = parseInt(args[2], 10);
-    const neededAt = args[3];
-    const neededFor = args[4];
-    this.extra.getCategoryNameById(this.selectedCategoryID).subscribe((res) => {870
+    this.startTime = this.time.getLenderTimeString(args[3]);
+    console.log(this.startTime);
+    this.endTime = this.time.getTimeAfter(this.startTime, parseInt(args[4], 10) * 3600);
+      this.extra.getCategoryNameById(this.selectedCategoryID).subscribe((res) => {
       if (res.success) {
         this.selectedCategoryName = res.response;
         // @ts-ignore
