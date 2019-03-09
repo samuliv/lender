@@ -36,19 +36,18 @@ export class GpsPositionService {
   }
 
   tryToFetchCurrentGPSCoordinates() {
-    // TODO
-    console.log('***TRY TO FETCH CURRENT GPS COORDINATES***');
-    console.log('*** TO DO ***');
+    
+    console.log('tryToFetchCurrentGPSCoordinates()');
     this.geolocation.getCurrentPosition().then((res) => {
-      console.log('WE GOT GPS DATA!');
-      console.log('GPS lat:' + res.coords.latitude);
-      console.log('GPS lon:' + res.coords.longitude);
+      console.log('tryToFetchCurrentGPSCoordinates(): Success! ' + res.coords.latitude + ' ' + res.coords.longitude);
       this.latitude = res.coords.latitude;
       this.longitude = res.coords.longitude;
       this.locationByGPS = true;
+      const coords: Coordinates = { latitude: res.coords.latitude, longitude: res.coords.longitude };
+      this.events.publish('gps-coordinates', coords);
       this.openStreetMap.describeCoordinates(this.latitude, this.longitude).then((location) => {
         this.currentCity = location.toString();
-        console.log('WE LOCATED YOU AT: ' + location.toString());
+        console.log('tryToFetchCurrentGPSCoordinates(): location = ' + location.toString());
         localStorage.setItem('CurrentLat', this.latitude.toString());
         localStorage.setItem('CurrentLon', this.longitude.toString());
         localStorage.setItem('CurrentCity', location.toString());

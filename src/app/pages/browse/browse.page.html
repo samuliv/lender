@@ -46,7 +46,8 @@
       <ion-label>
         Location
       </ion-label>
-      <ion-icon *ngIf="useGpsLocation" name="navigate" color="primary" slot="end"></ion-icon>
+      <ion-icon *ngIf="useGpsLocation && !currentLocationByGPS" name="navigate" color="danger" slot="end"></ion-icon>
+      <ion-icon *ngIf="useGpsLocation && currentLocationByGPS" name="navigate" color="success" slot="end"></ion-icon>
       <ion-badge slot="end" color="primary">{{ currentLocationName }}</ion-badge>  
     </ion-item>
     
@@ -68,7 +69,7 @@
       
   </ion-list>
 
-  <ion-button *ngIf="!browseItems" expand="block" (click)="browseItemsButtonClick()">Browse {{ borrowableItems.length }} items</ion-button>
+  <ion-button *ngIf="!browseItems" [disabled]="borrowableItems.length === 0 ? true : false" expand="block" (click)="browseItemsButtonClick()">Browse {{ borrowableItems.length }} items</ion-button>
 
   <div *ngIf="browseItems">
 

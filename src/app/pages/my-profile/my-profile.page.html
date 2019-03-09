@@ -11,10 +11,16 @@
 
   <img id="avatar" class="profile-picture" src="https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png">
 
-  <div class="user-nickname">{{ userName }}</div>
-  <div class="user-fullname" *ngIf="userFullname" >{{ userFullName }}</div>
-  <div class="user-email">{{ userEmail }}</div>
+  <div *ngIf="!editingProfile">
+    <div class="user-nickname" (click)="editProfile()">{{ userName }}</div>
+    <div class="user-email" (click)="editProfile()">{{ userEmail }}</div>
+  </div>
   
+  <input (blur)="someParameterChanged()" (keyup)="someParameterChanged()" id="nick" *ngIf="editingProfile" type="text" class="center-input user-nickname" [(ngModel)]="userNameEdit" type="text" placeholder="type username...">
+  <div *ngIf="editingProfile && errorWithUsername!==''" class="error-div">{{ errorWithUsername }}</div>
+  <input (change)="someParameterChanged()" (keyup)="someParameterChanged()" *ngIf="editingProfile" type="text" class="center-input user-email" [(ngModel)]="userEmailEdit" type="text" palceholder="type@email.com">
+  <div *ngIf="editingProfile && errorWithEmail!==''" class="error-div">{{ errorWithEmail }}</div>
+
   <div class="user-stats" *ngIf="userInfo">
     <table>
       <tr>
@@ -38,10 +44,14 @@
     </table>
   </div>
 
-  <ion-button expand="block" (click)="viewMyProfile()">Edit Information</ion-button>
-  <ion-button expand="block" (click)="viewMyProfile()">Change Password</ion-button>
-  <ion-button expand="block" (click)="viewMyProfile()">Change Profile Picture</ion-button>
-  <ion-button expand="block" (click)="viewMyProfile()">My Default Location</ion-button>
+  <br *ngIf="editingProfile">
+  <ion-button *ngIf="editingProfile" [disabled]="!formChecked" expand="block" size="large" color="success" (click)="saveChanges()">Save Changes</ion-button>
+  <ion-button *ngIf="editingProfile" expand="block" color="white" (click)="dismissChanges()">Cancel</ion-button>
+
+  <ion-button *ngIf="!editingProfile" expand="block" (click)="editProfile()">Edit Information</ion-button>
+  <ion-button *ngIf="!editingProfile" expand="block" (click)="changePassword()">Change Password</ion-button>
+  <ion-button *ngIf="!editingProfile" expand="block" (click)="chaneProfilePicture()">Change Profile Picture</ion-button>
+  <ion-button *ngIf="!editingProfile" expand="block" (click)="changeMyDefaultLocation()">My Default Location</ion-button>
 
   <!--
   <ion-list-header>

@@ -39,6 +39,11 @@ export class RequestItemPage implements OnInit {
     }
 
   someParameterChanged() {
+    if (this.startTime !== ''){
+      if (this.endTime === '' || this.time.calculateTimeDifference(this.startTime, this.endTime) === -1 ) {
+        this.endTime = this.time.getTimeAfter(this.startTime, 3600);
+      }
+    }
     this.calculateTotalCost();
   }
 

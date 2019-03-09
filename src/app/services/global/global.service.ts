@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Events } from '@ionic/angular';
+import { Events, AlertController } from '@ionic/angular';
 import { ExtraService } from '../extra/extra.service';
 import { WbmaService } from '../wbma/wbma.service';
 import { NotifyService } from '../notify/notify.service';
@@ -20,6 +20,7 @@ export class GlobalService {
     private extra: ExtraService,
     private wbma: WbmaService,
     private notify: NotifyService,
+    private alertController: AlertController,
   ) {
     this.checkStatus();
     this.backgroundRefreshStart();
@@ -90,5 +91,31 @@ export class GlobalService {
   getBadgeTabBarMessages() {
     return this.badgeTabBarMessages;
   }
+
+  focusSiteElementById(elementId: string) {
+    const delay = setTimeout( () => {
+      const nick = document.getElementById(elementId);
+      nick.focus();
+    }, 250);
+  }
+
+  async messagePrompt(headerText: string, messageText: string, fun?: any) {
+    const alert = await this.alertController.create({
+      header: headerText,
+      message: messageText,
+      buttons: [
+        {
+          text: 'OK',
+          handler: fun
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  isEmailValid(email: string) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
 
 }

@@ -7,6 +7,8 @@ import { MediaItem } from 'src/app/interfaces/mediaitem';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
 import { GpsDistanceService } from 'src/app/services/gps-distance/gps-distance.service';
 import { OpenStreetMapService } from 'src/app/services/openstreetmap/openstreetmap.service';
+import { TimeService } from 'src/app/services/time/time.service';
+import { timeout } from 'q';
 
 @Component({
   selector: 'app-browse',
@@ -22,9 +24,10 @@ export class BrowsePage implements OnInit{
   maxPrice: number;
   currentLocationName: string;
   searchText: string;
+  currentLocationByGPS = false;
 
-  startTime: string;
-  endTime: string;
+  startTime = '';
+  endTime = '';
 
   selectedCategoryID = 0;
   selectedCategoryName = 'All';
@@ -46,6 +49,7 @@ export class BrowsePage implements OnInit{
     private gpsDistance: GpsDistanceService,
     private openStreetMap: OpenStreetMapService,
     private wbma: WbmaService,
+    private time: TimeService,
     private events: Events) {
       this.maxDistance = 20;
       this.useGpsLocation = true;
@@ -55,14 +59,19 @@ export class BrowsePage implements OnInit{
       this.currentLocationName = '(none)';
 
 
-      const currentTime = new Date();
-      currentTime.setTime(currentTime.getTime() + (1 * 60 * 60 * 1000));
-      this.startTime = currentTime.toISOString();
-      currentTime.setTime(currentTime.getTime() + (1 * 60 * 60 * 1000));
-      this.endTime  = currentTime.toISOString();
+//      const currentTime = new Date();
+      // currentTime.setTime(currentTime.getTime() + (1 * 60 * 60 * 1000));
+      // this.startTime = currentTime.toISOString();
+      // currentTime.setTime(currentTime.getTime() + (1 * 60 * 60 * 1000));
+      // this.endTime  = currentTime.toISOString();
+
+      this.startTime = this.time.getLenderTimeString('now');
+
+      
 
       this.events.subscribe('location-changed', () => {
         this.refreshLocationData();
+        this.someParameterChanged();
       });
 
       this.events.subscribe('category-clicked-browse', (id, categroyname, contains) => {
@@ -75,6 +84,7 @@ export class BrowsePage implements OnInit{
 
   ngOnInit() {
     this.refreshLocationData();
+    this.time.getLenderTimeString('now');
   }
 
   moreSearchOptionsToggle() {
@@ -101,6 +111,9 @@ export class BrowsePage implements OnInit{
   refreshLocationData() {
     if (!this.gpsPositionService.getIsLocationByGPS()) {
       this.useGpsLocation = false;
+      this.currentLocationByGPS = false;
+    } else {
+      this.currentLocationByGPS = true;
     }
     this.currentLocationName = this.gpsPositionService.getCurrentLocationName();
     this.someParameterChanged();
@@ -126,6 +139,11 @@ export class BrowsePage implements OnInit{
   }
 
   someParameterChanged() {
+    if (this.startTime !== ''){
+      if (this.endTime === '' || this.time.calculateTimeDifference(this.startTime, this.endTime) === -1 ) {
+        this.endTime = this.time.getTimeAfter(this.startTime, 3600);
+      }
+    }
     clearTimeout(this.refreshTimer);
     this.refreshTimer = setTimeout( () => {
       this.refreshBrowseItems();
@@ -195,9 +213,11 @@ export class BrowsePage implements OnInit{
         for (let i = 0; i < this.tempItems.length; i++) {
           this.extra.availabilityCheck(
             this.tempItems[i],
-            (this.startTime === '' ? '1.1.1980' : this.startTime),
-            (this.endTime === '' ? '1.1.2199' : this.endTime)
+            (this.startTime === '' || this.endTime === '' ? '1.1.1987 00:00:00' : this.startTime),
+            (this.startTime === '' || this.endTime === '' ? '1.1.1987 00:00:01' : this.endTime)
             ).subscribe((avlbl) => {
+              console.log(':) ');
+              console.log(avlbl);
             if (avlbl.available) {
               this.tempItems[i].user_score = avlbl.feedback;
               this.tempItems[i].user_feedback_negative = avlbl.feedback_negative;
@@ -241,8 +261,8 @@ export class BrowsePage implements OnInit{
       args = [];
     }
     const steps = `Please, select a category; Cars: 2; Power Tools: 28; Musical Instruments: 47; Accommodation: 34
-                   How much it can cost per hour?; Nothing: 0; 1e/h: 1; 5e/h: 5; 10e/h: 10; 50e/h: 50; No limit: 201
-                   How near it has to be located?; 2km : 2; 5km : 5; 20km : 20; No limit: 201
+                   How much it can cost per hour?; Nothing: 0; 1 € /hour: 1; 5 € /hour: 5; 10 € /hour: 10; 50 € /hour: 50; No limit: 201
+                   How near it has to be located?; less than 2 km : 2; less than 5 km : 5; less than 20 km : 20; No limit: 201
                    When do you need it?; Immediately: immediately; After 2 hours: 2h; Tomorrow morning: tmrrw-m; Tomorrow evening: tmrrw-e
                    How long do you need it?; for 1 hour: 1; for 2 hours: 2; for 8 hours: 8; whole day: 24; two days: 48`;
 

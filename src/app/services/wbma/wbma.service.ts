@@ -126,7 +126,7 @@ export class WbmaService {
     return this.http.post<any>(this.apiUrl + 'tags', formData, this.accessTokenHeaderWithJSON());
   }
 
-  updateMyProfile(formData: FormData) {
+  updateMyProfile(formData: any) {
     return this.http.put<any>(this.apiUrl + 'users', formData, this.accessTokenHeaderWithJSON());
   }
 
