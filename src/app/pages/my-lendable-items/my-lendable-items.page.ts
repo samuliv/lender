@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ActionSheetController, AlertController } from '@ionic/angular';
+import { NavController, ActionSheetController, AlertController, Events } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
 import { MediaItem } from 'src/app/interfaces/mediaitem';
@@ -22,9 +22,13 @@ export class MyLendableItemsPage implements OnInit {
     private wbma: WbmaService,
     private extra: ExtraService,
     private router: Router,
+    private eveents: Events,
     private actionSheetController: ActionSheetController,
     private alertController: AlertController) {
       this.source = this.activatedRoute.snapshot.paramMap.get('source');
+      this.eveents.subscribe('refresh-my-items', () => {
+        this.refreshList();
+      });
     }
 
   ngOnInit() {
@@ -51,7 +55,7 @@ export class MyLendableItemsPage implements OnInit {
                 this.myLendableItems.splice(this.myLendableItems.indexOf(item), 1);
                 this.extra.itemDeleted(item_id).subscribe((r) => {
                   if ( r.success ) {
-                    console.log('Item deletion passed to ExtraService Server Successfully.');
+                    this.refreshList();
                   }
                 });
               }

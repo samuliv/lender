@@ -6,6 +6,7 @@ import { UserInfo } from 'src/app/interfaces/user-info';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-profile',
@@ -33,6 +34,7 @@ export class MyProfilePage implements OnInit {
     private wbma: WbmaService,
     private extra: ExtraService,
     private glb: GlobalService,
+    private router: Router,
     ) { }
 
   ngOnInit() {
@@ -124,6 +126,10 @@ export class MyProfilePage implements OnInit {
 
   dismissChanges() {
     this.editingProfile = false;
+  }
+
+  changePassword() {
+    this.router.navigate(['/change-password']);
   }
 
   goBack() {

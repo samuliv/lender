@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-settings',
@@ -10,7 +11,12 @@ import { WbmaService } from 'src/app/services/wbma/wbma.service';
 })
 export class SettingsPage {
 
-  constructor (private router: Router, private alertController: AlertController, private wbma: WbmaService) {
+  constructor (
+    private router: Router,
+    private alertController: AlertController,
+    private wbma: WbmaService,
+    private glb: GlobalService,
+    ) {
   }
 
   viewMyProfile () {
@@ -34,7 +40,7 @@ export class SettingsPage {
         {
           text: 'Delete',
           handler: () => {
-            console.log('TODO: DELETE ACCOUNT');
+            this.glb.messagePrompt('Sorry', 'Metropolia´s WBMA-api only provides user deletion for ADMINS =(');
           }
         }, {
           text: 'Cancel',

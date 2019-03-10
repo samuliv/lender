@@ -165,6 +165,7 @@ export class AddLendableItemPage implements OnInit {
             if ( res.message === 'File uploaded' ) {
               this.wbma.addTagToFile(parseInt(res.file_id, 10), this.wbma.getAppTag()).subscribe((tag) => {
                 if ( tag.message === 'Tag added' ) {
+                  this.events.publish('refresh-my-items');
                   setTimeout(() => {
                     loading.dismiss();
                     this.goBack();
@@ -183,6 +184,7 @@ export class AddLendableItemPage implements OnInit {
         // Editing existing file
         this.wbma.updateMediaItem(this.editItemID, this.itemTitle, jsonString).subscribe((res) => {
           if (res.message === 'File info updated') {
+            this.events.publish('refresh-my-items');
             loading.dismiss();
             this.goBack();
           }
