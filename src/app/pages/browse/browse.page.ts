@@ -251,6 +251,7 @@ export class BrowsePage implements OnInit{
     this.maxPrice = parseInt(args[1], 10);
     this.maxDistance = parseInt(args[2], 10);
     this.startTime = this.time.getLenderTimeString(args[3]);
+    this.searchText = '';
     console.log(this.startTime);
     this.endTime = this.time.getTimeAfter(this.startTime, parseInt(args[4], 10) * 3600);
       this.extra.getCategoryNameById(this.selectedCategoryID).subscribe((res) => {
