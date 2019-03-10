@@ -53,7 +53,7 @@ export class SettingsPage {
       message: 'Are you sure you want to log out?',
       buttons: [
         {
-          text: 'OK',
+          text: 'Logout',
           handler: () => {
             this.wbma.logout();
             this.router.navigate(['/login']);

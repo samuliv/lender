@@ -22,7 +22,10 @@ const routes: Routes = [
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
   { path: 'add-lendable-item/:source', loadChildren: './pages/add-lendable-item/add-lendable-item.module#AddLendableItemPageModule', canActivate: [AuthGuard]},
   { path: 'view-media/:id', loadChildren: './pages/view-media/view-media.module#ViewMediaPageModule', canActivate: [AuthGuard] },
-  { path: 'request-item/:id', loadChildren: './pages/request-item/request-item.module#RequestItemPageModule', canActivate: [AuthGuard] }
+  { path: 'request-item/:id', loadChildren: './pages/request-item/request-item.module#RequestItemPageModule', canActivate: [AuthGuard] },
+  { path: 'give-feedback', loadChildren: './pages/giveFeedback/give-feedback/give-feedback.module#GiveFeedbackPageModule' },
+  { path: 'give-feedback', loadChildren: './pages/give-feedback/give-feedback.module#GiveFeedbackPageModule' },
+  { path: 'change-password', loadChildren: './pages/change-password/change-password.module#ChangePasswordPageModule' }
 ];
 @NgModule({
   imports: [

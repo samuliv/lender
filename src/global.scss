@@ -143,6 +143,10 @@ $color-fore-dark: #222;
     background: #eee linear-gradient(#bfff7e, #a6e26a);
     border: 1px solid #a6e26a;
 }
+.list-item-pending {
+    background: #eee linear-gradient(#ffd37e, #e4bb6b);
+    border: 1px solid #e4bb6b;
+}
 .list-item-danger {
     background: #eee linear-gradient(#ff7a7a, #db6464);
     border: 1px solid #db6464;
