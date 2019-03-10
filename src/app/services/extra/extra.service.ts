@@ -10,6 +10,7 @@ import { AvailabilityResponse } from 'src/app/interfaces/availabilityresponse';
 import { Status } from 'src/app/interfaces/status';
 import { Category } from 'src/app/interfaces/category';
 import { UnfeedbackedItem } from '../../interfaces/unfeedbacked-item';
+import { WbmaService } from '../wbma/wbma.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class ExtraService {
 
   extraURL = 'https://tucloud.fi/metropolia/lender/';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private wbma: WbmaService) {
   }
 
   private serialize (obj: any) {
@@ -77,6 +78,10 @@ export class ExtraService {
 
   public getFeedback(user_id: number) {
     return this.http.get<Feedback[]>(this.extraURL + '?operation=feedback&user_id=' + user_id);
+  }
+
+  public giveFeedback(lend_id: number, feedback: number, text: string) {
+    return this.http.get<Success>(this.extraURL + '?operation=givefeedback&lend_id=' + lend_id + '&feedback=' + feedback + '&text=' + text + '&user_id=' + this.wbma.getMyUserID());
   }
 
   public markBorrowedItemAsReaded(item_id: number) {

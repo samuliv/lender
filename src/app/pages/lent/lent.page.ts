@@ -40,6 +40,11 @@ export class LentPage implements OnInit {
       this.refreshLentList();
       this.refreshPendingList();
     });
+    this.events.subscribe('feedback-given', (source, id) => {
+      if (source === 'lent') {
+        this.refreshFeedbackList();
+      }
+    });
     this.refreshAll();
   }
 
@@ -127,6 +132,10 @@ export class LentPage implements OnInit {
 
   ionViewDidEnter() {
     console.log('lent.page.ts : ionViewDidEnter()');
+  }
+
+  giveFeedback(item: UnfeedbackedItem) {
+    this.router.navigate(['/give-feedback/lent-' + item.item_id]);
   }
 
   async itemClick(item: LendItem) {

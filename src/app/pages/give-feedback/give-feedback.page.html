@@ -1,9 +1,29 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>GiveFeedback</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" color="dark"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
+    </ion-buttons>
+    <ion-title>
+      Give Feedback
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+
+  <ion-badge color="light">Choose:</ion-badge>
+  &nbsp;
+  <ion-badge [color]="feedback === 1 ? 'success' : 'dark'" (click)="choose(1)">Positive</ion-badge>
+  &nbsp;
+  <ion-badge [color]="feedback === -1 ? 'danger' : 'dark'" (click)="choose(-1)">Negative</ion-badge>
+
+  <br><br>
+
+  <ion-badge color="light">Feedback:</ion-badge>
+  <br>
+
+  <ion-textarea rows="5" maxlength="255" autofocus="true" placeholder="Type your feedback here..." [(ngModel)]="feedbackText"></ion-textarea>
+  
+  <ion-button expand="block" [disabled]="feedback === 0 || feedbackText === ''" (click)="giveFeedback()">Give Feedback</ion-button>
 
 </ion-content>
