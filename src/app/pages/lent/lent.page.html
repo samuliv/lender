@@ -41,12 +41,12 @@
 
   <ion-list *ngIf="viewPage === 'lent'" lines="full">
 
-    <div class="list-item" *ngFor="let item of lentItems" (click)="itemClick(item)">
+    <div class="list-item" *ngFor="let item of lentItems" [ngClass]="item.status === 'pending' ? 'list-item-secondary' : ''" (click)="itemClick(item)">
         <ion-item color="transparent">
 
         <ion-thumbnail class="lender-thumbnail" slot="start">
           <img class="img-thumbnail" *ngIf="item.item_thumb" [src]="item.item_thumb">
-        </ion-thumbnail>    
+        </ion-thumbnail>
 
         <ion-label>
           <h3>{{ item.item_title }}</h3>
