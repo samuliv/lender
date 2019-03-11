@@ -140,7 +140,7 @@ export class BorrowedPage implements OnInit {
     }, {
       text: 'View User Profile',
       handler: () => {
-        console.log('TODO');
+        this.router.navigate(['/view-user-profile/' + item.user_id + '_' + 'borroed']);
       }
     }, {
       text: 'View Item Info',

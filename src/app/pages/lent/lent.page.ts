@@ -153,7 +153,7 @@ export class LentPage implements OnInit {
     }, {
       text: 'View User Profile',
       handler: () => {
-        console.log('TODO');
+        this.router.navigate(['/view-user-profile/' + item.user_id + '_' + 'lent']);
       }
     }, {
       text: 'View Item Info',

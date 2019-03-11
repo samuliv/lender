@@ -21,7 +21,10 @@
 <ion-content padding>
   
   <ion-badge color="light">From:</ion-badge>
-  <ion-badge color="dark">{{ messageSenderName }}</ion-badge>
+  <ion-badge color="dark" (click)="viewSenderUserProfile()">{{ messageSenderName }}</ion-badge>
+  <br>
+  <ion-badge color="light">To:</ion-badge>
+  <ion-badge color="dark" (click)="viewRecipientUserProfile()">{{ messageRecipientName }}</ion-badge>
   <br>
   <ion-badge color="light">Time:</ion-badge>
   <ion-badge color="dark">{{ messageTime }}</ion-badge>

@@ -11,6 +11,7 @@ import { TimeService } from 'src/app/services/time/time.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { WelcomeService } from 'src/app/services/welcome/welcome.service';
 import { MemoryService } from 'src/app/services/memory/memory.service';
+import { LendItem } from 'src/app/interfaces/lenditem';
 
 @Component({
   selector: 'app-browse',
@@ -142,6 +143,10 @@ export class BrowsePage implements OnInit{
 
   chooseLocationManually() {
     this.router.navigate(['/choose-location/browse']);
+  }
+
+  viewUserProfile(item: LendItem) {
+    this.router.navigate(['/view-user-profile/' + item.user_id + '_' + 'browse']);
   }
 
   viewMedia(media_id: number) {
