@@ -15,19 +15,30 @@ import { Router } from '@angular/router';
 })
 export class MyProfilePage implements OnInit {
 
-  userName = '';
-  userEmail = '';
+  userName = 'username';
+  userEmail = 'user@';
   userNameEdit = '';
   userEmailEdit = '';
 
   userInfo: UserInfo;
-  lendableStuff: string;
   editingProfile = false;
+
+  lent = 0;
+  borrowed = 0;
+  rating = 0;
+  feedbackPositive = 0;
+  feedbackNegative = 0;
+  lendableStuff = 0;
+  lendableStuffAmount = 0;
 
   errorWithUsername = '';
   errorWithEmail = '';
   formChecked = false;
   refreshTimer: any;
+  rollPosition = 0;
+  rollInterval: any;
+
+  fetched = 0;
 
   constructor(
     private navController: NavController,
@@ -41,14 +52,23 @@ export class MyProfilePage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.wbma.getUserInformation(this.wbma.getMyUserID()).subscribe((res) => {
-      this.userName = res.username;
-      this.userEmail = res.email;
-    });
-    this.extra.getUserInfo(this.wbma.getMyUserID()).subscribe((res) => {
-      this.userInfo = res;
-    });
-    this.getUserData();
+    /* Timeout for not to broke the sliding animation */
+    setTimeout( () => {
+      this.wbma.getUserInformation(this.wbma.getMyUserID()).subscribe((res) => {
+        this.userName = res.username;
+        this.userEmail = res.email;
+      });
+      this.extra.getUserInfo(this.wbma.getMyUserID()).subscribe((res) => {
+        this.userInfo = res;
+        this.fetched++;
+        this.beginRoll();
+      });
+      this.getUserData();
+    }, 500);
+  }
+
+  ionViewDidLeave () {
+    this.rollPosition = 99;
   }
 
   getUserData() {
@@ -61,9 +81,36 @@ export class MyProfilePage implements OnInit {
             myItems++;
           }
         }
-        this.lendableStuff = myItems.toString();
+        this.lendableStuffAmount = myItems;
+        this.fetched++;
+        this.beginRoll();
       }
     });
+  }
+
+  beginRoll() {
+    if(this.fetched === 2) {
+      console.log('Starting roll...');
+      this.roll();
+    }
+  }
+
+  roll() {
+    this.rollPosition++;
+    this.lent = Math.round(this.userInfo.lent * (this.rollPosition / 100));
+    this.borrowed = Math.round(this.userInfo.borrowed * (this.rollPosition / 100));
+    this.feedbackNegative = Math.round(this.userInfo.feedback_negative * (this.rollPosition / 100));
+    this.feedbackPositive = Math.round(this.userInfo.feedback_positive * (this.rollPosition / 100));
+    this.lendableStuff = Math.round(this.lendableStuffAmount * (this.rollPosition / 100));
+    this.rating = Math.round(this.userInfo.rating * (this.rollPosition / 100));
+    if (this.rollPosition === 100) {
+      clearInterval(this.rollInterval);
+      console.log('Rolling finished.');
+    } else {
+      setTimeout( () => {
+        this.roll();
+      }, 10 + Math.round(this.rollPosition / 3)); // slow-down effect
+    }
   }
 
   editProfile() {
@@ -144,6 +191,7 @@ export class MyProfilePage implements OnInit {
   }
 
   goBack() {
+    this.rollPosition = 99;
     this.navController.navigateBack('/tabs/settings');
   }
 

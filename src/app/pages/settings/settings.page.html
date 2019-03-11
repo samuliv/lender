@@ -3,13 +3,16 @@
     <ion-title>
       Settings
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="devToolsHiddenMenuStep1" (click)="devToolsHiddenClick(1)" color="dark">&nbsp;&nbsp;&nbsp;</ion-button>
+    </ion-buttons>     
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
 
     <div class="logos">
-        <img class="logo-icon" src="../../../assets/imgs/lendertest2.png">
+        <img class="logo-icon" src="../../../assets/imgs/lendertest2.png" (click)="devToolsHiddenClick(0)">
         <img class="logo-text" src="../../../assets/imgs/Lender.png">
     </div>
 
@@ -17,8 +20,8 @@
       <ion-button expand="block" size="large" (click)="viewMyProfile()">My Profile</ion-button>
       <ion-button expand="block" (click)="viewMyLendableItems()">My Lendable Items</ion-button>
       <ion-button expand="block" (click)="viewAboutLender()">About Lender</ion-button>
-      <div class="spacer"></div>
-      <ion-button expand="block" color="danger" size="small" (click)="deleteAccount()">Delete Account</ion-button>
+      <div *ngIf="showDevTools" class="spacer"></div>
+      <ion-button *ngIf="showDevTools" expand="block" color="secondary" size="small" (click)="devTools()">Dev Tools</ion-button>
       <div class="spacer"></div>
       <ion-button expand="block" color="danger" (click)="logOut()">Log Out</ion-button>
     </div>

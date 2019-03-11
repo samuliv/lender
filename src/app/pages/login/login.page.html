@@ -11,8 +11,11 @@
         <ion-input class="lender-input" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Password" type="password" [(ngModel)]="password"></ion-input>
         <div class="error-div" *ngIf="errorWithPassword !== ''">{{ errorWithPassword }}</div>
         <br>
-        <ion-button [disabled]="!loginFormValidated" id="loginBtn" expand="block" size="large" color="dark" (click)="loginButtonClick()">Login</ion-button>
-        <ion-button id="crtAccnt" expand="block" fill="outline" color="light" (click)="createAccount()" size="small">Create Account</ion-button>
+        <div *ngIf="showLoading" class="spinner-container">
+            <ion-spinner name="dots"></ion-spinner>
+        </div>
+        <ion-button *ngIf="!showLoading" [disabled]="!loginFormValidated" id="loginBtn" expand="block" size="large" color="dark" (click)="loginButtonClick()">Login</ion-button>
+        <ion-button *ngIf="!showLoading" id="crtAccnt" expand="block" fill="outline" color="light" (click)="createAccount()" size="small">Create Account</ion-button>
 
         
     </div>
@@ -27,8 +30,11 @@
         <ion-input class="lender-input" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Full name" type="text" [(ngModel)]="full_name"></ion-input>
         <div class="error-div" *ngIf="errorWithFullName !== ''">{{ errorWithFullName }}</div>
         <br>
-        <ion-button [disabled]="!registerFormValidated" id="registerBtn" expand="block" size="large" color="dark" (click)="registerButtonClick()">Register</ion-button>
-        <ion-button id="signIn" expand="block" fill="outline" color="light" (click)="createAccount()" size="small">Already signed up?</ion-button>
+        <div *ngIf="showLoading" class="spinner-container">
+            <ion-spinner name="dots"></ion-spinner>
+        </div>
+        <ion-button *ngIf="!showLoading" [disabled]="!registerFormValidated" id="registerBtn" expand="block" size="large" color="dark" (click)="registerButtonClick()">Register</ion-button>
+        <ion-button *ngIf="!showLoading" id="signIn" expand="block" fill="outline" color="light" (click)="createAccount()" size="small">Already signed up?</ion-button>
 
     </div>
 

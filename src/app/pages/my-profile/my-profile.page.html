@@ -21,25 +21,25 @@
   <input (change)="someParameterChanged()" (keyup)="someParameterChanged()" *ngIf="editingProfile" type="text" class="center-input user-email" [(ngModel)]="userEmailEdit" type="text" palceholder="type@email.com">
   <div *ngIf="editingProfile && errorWithEmail!==''" class="error-div">{{ errorWithEmail }}</div>
 
-  <div class="user-stats" *ngIf="userInfo">
+  <div class="user-stats">
     <table>
       <tr>
         <td>lent</td>
-        <td>{{ userInfo.lent }}</td>
+        <td>{{ lent }}</td>
         <td>borrowed</td>
-        <td>{{ userInfo.borrowed }}</td>
+        <td>{{ borrowed }}</td>
       </tr>
       <tr>
         <td>lendable stuff</td>
         <td>{{ lendableStuff }}</td>
         <td><ion-icon name="star"></ion-icon> rating</td>
-        <td>{{ userInfo.rating }}</td>
+        <td>{{ rating }}</td>
       </tr>
       <tr>
         <td><ion-icon name="thumbs-up"></ion-icon> feedback</td>
-        <td>{{ userInfo.feedback_positive }} %</td>
+        <td>{{ feedbackPositive }} %</td>
         <td><ion-icon name="thumbs-down"></ion-icon> feedback</td>
-        <td>{{ userInfo.feedback_negative }} %</td>
+        <td>{{ feedbackNegative }} %</td>
       </tr>
     </table>
   </div>

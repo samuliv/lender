@@ -10,6 +10,7 @@ import { OpenStreetMapService } from 'src/app/services/openstreetmap/openstreetm
 import { TimeService } from 'src/app/services/time/time.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { WelcomeService } from 'src/app/services/welcome/welcome.service';
+import { MemoryService } from 'src/app/services/memory/memory.service';
 
 @Component({
   selector: 'app-browse',
@@ -37,7 +38,7 @@ export class BrowsePage implements OnInit{
 
   refreshTimer: any;
   browseItems = false;
-  moreSearchOptions = false;
+  moreSearchOptions = (this.memory.memReadString('lender-serach-more-options', '0') === '1' ? true : false);
   myUserID = -1;
 
   borrowableItems: MediaItem[] = [];
@@ -54,15 +55,15 @@ export class BrowsePage implements OnInit{
     private wbma: WbmaService,
     private time: TimeService,
     private welcome: WelcomeService,
+    private memory: MemoryService,
     private events: Events) {
-      this.maxDistance = 20;
-      this.useGpsLocation = true;
-      this.maxPrice = 20;
+      this.maxDistance = this.memory.memReadNumber('lender-serach-max-dist', 20);
+      this.useGpsLocation = (this.memory.memReadString('lender-serach-use-gps', '1') ? true : false);
+      this.maxPrice = this.memory.memReadNumber('lender-serach-max-price', 20);
       this.setDateRange = false;
       this.minUserRating = 0;
       this.currentLocationName = '(none)';
       this.startTime = this.time.getLenderTimeString('now');
-
       this.events.subscribe('location-changed', () => {
         this.refreshLocationData();
         this.someParameterChanged();
@@ -100,6 +101,9 @@ export class BrowsePage implements OnInit{
       console.log(localStorage.getItem('selected-category'));
       this.selectCatgory(parseInt(localStorage.getItem('selected-category'), 10));
     }
+    if (this.useGpsLocation) {
+      this.gpsPositionService.tryToFetchCurrentGPSCoordinates();
+    }
     setTimeout(() => {
       this.welcome.doWelcomeThings();
     }, 1000);
@@ -107,11 +111,7 @@ export class BrowsePage implements OnInit{
 
   moreSearchOptionsToggle() {
     this.moreSearchOptions = !this.moreSearchOptions;
-    if (this.searchText !== '') {
-      this.someParameterChanged();
-    } else {
-      // We do not need refresh if the search text is empty
-    }
+    this.someParameterChanged();
   }
 
   browseItemsButtonClick() {
@@ -128,7 +128,6 @@ export class BrowsePage implements OnInit{
 
   refreshLocationData() {
     if (!this.gpsPositionService.getIsLocationByGPS()) {
-      this.useGpsLocation = false;
       this.currentLocationByGPS = false;
     } else {
       this.currentLocationByGPS = true;
@@ -170,6 +169,12 @@ export class BrowsePage implements OnInit{
       if (this.endTime === '' || this.time.calculateTimeDifference(this.startTime, this.endTime) === -1 ) {
         this.endTime = this.time.getTimeAfter(this.startTime, 3600);
       }
+      localStorage.setItem('lender-serach-max-dist', this.maxDistance.toString());
+      localStorage.setItem('lender-serach-max-price', this.maxPrice.toString());
+      localStorage.setItem('lender-serach-min-rating', this.minUserRating.toString());
+      localStorage.setItem('lender-serach-more-options', (this.moreSearchOptions === true ? '1' : '0'));
+      localStorage.setItem('lender-serach-text', this.searchText);
+      localStorage.setItem('lender-serach-use-gps-location', (this.useGpsLocation === true ? '1' : '0'));
     }
     clearTimeout(this.refreshTimer);
     this.refreshTimer = setTimeout( () => {
@@ -294,8 +299,8 @@ export class BrowsePage implements OnInit{
       args = [];
     }
     const steps = `Please, select a category; Cars: 2; Power Tools: 28; Musical Instruments: 47; Accommodation: 34
-                   How much it can cost per hour?; Nothing: 0; 1 € /hour: 1; 5 € /hour: 5; 10 € /hour: 10; 50 € /hour: 50; No limit: 201
-                   How near it has to be located?; less than 2 km : 2; less than 5 km : 5; less than 20 km : 20; No limit: 201
+                   How much it can cost per hour?; Nothing: 0; max 1 € /hour: 1; max 5 € /hour: 5; max 10 € /hour: 10; max 50 € /hour: 50; No limit: 201
+                   How near it has to be located?; 2 km or less : 2; 5 km or less : 5; 20 km or less : 20; No limit: 201
                    When do you need it?; Immediately: immediately; After 2 hours: 2h; Tomorrow morning: tmrrw-m; Tomorrow evening: tmrrw-e
                    How long do you need it?; for 1 hour: 1; for 2 hours: 2; for 8 hours: 8; whole day: 24; two days: 48`;
 

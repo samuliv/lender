@@ -36,7 +36,11 @@
 }
 .user-stats table td:nth-child(2n) {
     font-weight: bold;
+    width: 15%;
     color: #222;
+}
+.user-stats table td:nth-child(2n+1) {
+    width: 30%;
 }
 
 .center-input {

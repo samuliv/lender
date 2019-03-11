@@ -21,6 +21,7 @@ export class LoginPage implements OnInit {
   email = ''
   full_name = '';
   creatingAccount = false;
+  showLoading = false;
 
   errorWithUsername = '';
   errorWithPassword = '';
@@ -103,10 +104,13 @@ export class LoginPage implements OnInit {
   }
 
   loginButtonClick() {
+    this.showLoading = true;
     this.wbma.login(this.username, this.password).then((res) => {
       this.username = '';
       this.password = '';
+      this.showLoading = false;
     }).catch((err) => {
+      this.showLoading = true;
       this.glb.messagePrompt('Login Error', err);
     });
   }
@@ -114,10 +118,12 @@ export class LoginPage implements OnInit {
   registerButtonClick() {
     this.wbma.register(this.username, this.password, this.email, this.full_name)
       .pipe(catchError(err => {
+        this.showLoading = true;
         this.glb.messagePrompt('Could not register', err.error.error);
         return throwError(err);
       }))
       .subscribe((res) => {
+        this.showLoading = true;
         this.username = '';
         this.password = '';
         this.email = '';
