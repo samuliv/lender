@@ -11,7 +11,7 @@
     </ion-title>
     <ion-buttons slot="end">
       <ion-button *ngIf="!browseItems" (click)="moreSearchOptionsToggle()" color="dark">{{ moreSearchOptions ? 'Less Options' : 'More Options' }}</ion-button>
-      <ion-button *ngIf="browseItems" (click)="viewMap()" color="dark">View Map</ion-button>
+      <ion-button *ngIf="browseItems" (click)="viewMap()" color="dark">All on Map</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -56,6 +56,16 @@
       <ion-label class="slider-label">Distance</ion-label>
       <ion-range min="1" max="201" color="primary" [(ngModel)]="maxDistance" (ionChange)="someParameterChanged()"></ion-range>
       <ion-badge slot="end" color="primary" class="fixed-width">{{ maxDistance === 201 ? 'Anywhere' : "max " + maxDistance + " km" }}</ion-badge>
+    </ion-item>
+
+    <ion-item *ngIf="moreSearchOptions">
+      <ion-label class="slider-label">Rating</ion-label>
+      <ion-range min="0" max="25" color="primary" [(ngModel)]="minUserRating" (ionChange)="someParameterChanged()"></ion-range>
+      <ion-badge slot="end" color="primary" class="fixed-width">
+        {{ minUserRating === 0 ? 'no min ' : 'min '}}
+        <ion-icon name="star"></ion-icon>
+        {{ minUserRating === 0 ? '' : minUserRating}}
+      </ion-badge>
     </ion-item>
 
     <ion-item>
@@ -109,8 +119,11 @@
           </tr>
         </table>
      </div>
+     <div class="lender-card-footer-map" (click)="viewItemOnMap(item)" *ngIf="item.user_id !== myUserID">
+        View on Map
+     </div>
      <div class="lender-card-footer-request" (click)="requestLendNow(item)" *ngIf="item.user_id !== myUserID">
-        Borrow item now
+        Borrow Item Now
      </div>
     </div>
 

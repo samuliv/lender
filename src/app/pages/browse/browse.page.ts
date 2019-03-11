@@ -24,7 +24,8 @@ export class BrowsePage implements OnInit{
   maxDistance: number;
   maxPrice: number;
   currentLocationName: string;
-  searchText: string;
+  searchText = '';
+  minUserRating: number;
   currentLocationByGPS = false;
 
   startTime = '';
@@ -58,7 +59,7 @@ export class BrowsePage implements OnInit{
       this.useGpsLocation = true;
       this.maxPrice = 20;
       this.setDateRange = false;
-      this.searchText = '';
+      this.minUserRating = 0;
       this.currentLocationName = '(none)';
       this.startTime = this.time.getLenderTimeString('now');
 
@@ -243,16 +244,23 @@ export class BrowsePage implements OnInit{
             (this.startTime === '' || this.endTime === '' ? '1.1.1987 00:00:01' : this.endTime)
             ).subscribe((avlbl) => {
             if (avlbl.available) {
-              this.tempItems[i].user_score = avlbl.feedback;
-              this.tempItems[i].user_feedback_negative = avlbl.feedback_negative;
-              this.tempItems[i].user_feedback_positive = avlbl.feedback_positive;
-              this.borrowableItems.push(this.tempItems[i]);
-              this.wbma.getUserInformation(this.tempItems[i].user_id).subscribe((user) => {
-                this.tempItems[i].user_name = user.username;
-              })
-              this.openStreetMap.describeCoordinates(this.tempItems[i].media_data.lat, this.tempItems[i].media_data.lon).then((location: string) => {
-                this.tempItems[i].location = location;
-              })
+              let showItem = true;
+              if (this.moreSearchOptions && (this.minUserRating > avlbl.feedback)) {
+                // this user does not have required amount of star score
+                showItem = false;
+              }
+              if (showItem) {
+                this.tempItems[i].user_score = avlbl.feedback;
+                this.tempItems[i].user_feedback_negative = avlbl.feedback_negative;
+                this.tempItems[i].user_feedback_positive = avlbl.feedback_positive;
+                this.borrowableItems.push(this.tempItems[i]);
+                this.wbma.getUserInformation(this.tempItems[i].user_id).subscribe((user) => {
+                  this.tempItems[i].user_name = user.username;
+                })
+                this.openStreetMap.describeCoordinates(this.tempItems[i].media_data.lat, this.tempItems[i].media_data.lon).then((location: string) => {
+                  this.tempItems[i].location = location;
+                })
+              }
             }
           });
         }
