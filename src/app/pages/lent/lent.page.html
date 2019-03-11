@@ -42,7 +42,7 @@
   <ion-list *ngIf="viewPage === 'lent'" lines="full">
 
     <div class="list-item" *ngFor="let item of lentItems" [ngClass]="item.status === 'pending' ? 'list-item-pending' : ''" (click)="itemClick(item)">
-        <ion-item color="transparent">
+      <ion-item color="transparent">
 
         <ion-thumbnail class="lender-thumbnail" slot="start">
           <img class="img-thumbnail" *ngIf="item.item_thumb" [src]="item.item_thumb">
@@ -56,10 +56,12 @@
 
         <ion-badge slot="end" class="lender-badge" [ngClass]="'status-' + item.status">{{item.status}}</ion-badge>
 
-    </ion-item>
+      </ion-item>
     </div>
 
   </ion-list>
+
+  <div *ngIf="(viewPage === 'lent' && lentItems.length === 0)" class="no-items">No lent items.</div>
 
   <ion-list *ngIf="viewPage === 'pending'" lines="full">
 
@@ -81,25 +83,29 @@
 
   </ion-list>
 
+  <div *ngIf="(viewPage === 'pending' && pendingItems.length === 0)" class="no-items">No pending items.</div>
+
   <ion-list *ngIf="viewPage === 'feedback'" lines="full">
 
-      <div class="list-item" *ngFor="let item of feedbackItems" (click)="giveFeedback(item)">
-          <ion-item color="transparent">
-          <ion-thumbnail class="lender-thumbnail" slot="start">
-            <img class="img-thumbnail" *ngIf="item.item_thumb" [src]="item.item_thumb">
-          </ion-thumbnail>
-  
-            <ion-label>
-              <span class="give-feedback">Please, give feedback!</span>
-              <h3>{{ item.item_title }}</h3>
-              <p class="starts"><ion-icon name="return-right"></ion-icon> {{ item.starts }}</p>
-              <p class="ends"><ion-icon name="return-left"></ion-icon> {{ item.ends }}</p>
-            </ion-label>
-  
-          <ion-badge slot="end" class="lender-badge status-{{item.status}}">{{item.status}}</ion-badge>  
-        </ion-item>
-      </div>
-  
-    </ion-list>
+    <div class="list-item" *ngFor="let item of feedbackItems" (click)="giveFeedback(item)">
+        <ion-item color="transparent">
+        <ion-thumbnail class="lender-thumbnail" slot="start">
+          <img class="img-thumbnail" *ngIf="item.item_thumb" [src]="item.item_thumb">
+        </ion-thumbnail>
+
+        <ion-label>
+          <span class="give-feedback">Please, give feedback!</span>
+          <h3>{{ item.item_title }}</h3>
+          <p class="starts"><ion-icon name="return-right"></ion-icon> {{ item.starts }}</p>
+          <p class="ends"><ion-icon name="return-left"></ion-icon> {{ item.ends }}</p>
+        </ion-label>
+
+        <ion-badge slot="end" class="lender-badge status-{{item.status}}">{{item.status}}</ion-badge>  
+      </ion-item>
+    </div>
+
+  </ion-list>
+
+  <div *ngIf="(viewPage === 'feedback' && feedbackItems.length === 0)" class="no-items">No lent items to give feedback to.</div>
 
 </ion-content>

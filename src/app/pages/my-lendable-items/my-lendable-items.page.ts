@@ -12,7 +12,7 @@ import { ExtraService } from 'src/app/services/extra/extra.service';
 })
 export class MyLendableItemsPage implements OnInit {
 
-  myLendableItems: MediaItem[];
+  myLendableItems: MediaItem[] = [];
   showNoItemsAddedMessage: boolean;
   source: string;
 

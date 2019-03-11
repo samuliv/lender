@@ -15,9 +15,9 @@ import { UnfeedbackedItem } from 'src/app/interfaces/unfeedbacked-item';
 export class BorrowedPage implements OnInit {
 
   viewPage: string;
-  borrowedItems: LendItem[];
-  pendingItems: LendItem[];
-  feedbackItems: UnfeedbackedItem[];
+  borrowedItems: LendItem[] = [];
+  pendingItems: LendItem[] = [];
+  feedbackItems: UnfeedbackedItem[] = [];
   toolbarBadgeBorrowed: number;
   toolbarBadgePending: number;
   toolbarBadgeFeedback: number;

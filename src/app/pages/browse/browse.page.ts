@@ -8,7 +8,8 @@ import { WbmaService } from 'src/app/services/wbma/wbma.service';
 import { GpsDistanceService } from 'src/app/services/gps-distance/gps-distance.service';
 import { OpenStreetMapService } from 'src/app/services/openstreetmap/openstreetmap.service';
 import { TimeService } from 'src/app/services/time/time.service';
-import { timeout } from 'q';
+import { GlobalService } from 'src/app/services/global/global.service';
+import { WelcomeService } from 'src/app/services/welcome/welcome.service';
 
 @Component({
   selector: 'app-browse',
@@ -48,12 +49,14 @@ export class BrowsePage implements OnInit{
     private gpsPositionService: GpsPositionService,
     private gpsDistance: GpsDistanceService,
     private openStreetMap: OpenStreetMapService,
+    private glb: GlobalService,
     private wbma: WbmaService,
     private time: TimeService,
+    private welcome: WelcomeService,
     private events: Events) {
       this.maxDistance = 20;
       this.useGpsLocation = true;
-      this.maxPrice = 5;
+      this.maxPrice = 20;
       this.setDateRange = false;
       this.searchText = '';
       this.currentLocationName = '(none)';
@@ -96,6 +99,9 @@ export class BrowsePage implements OnInit{
       console.log(localStorage.getItem('selected-category'));
       this.selectCatgory(parseInt(localStorage.getItem('selected-category'), 10));
     }
+    setTimeout(() => {
+      this.welcome.doWelcomeThings();
+    }, 1000);
   }
 
   moreSearchOptionsToggle() {
@@ -140,6 +146,11 @@ export class BrowsePage implements OnInit{
 
   viewMedia(media_id: number) {
     this.router.navigate(['/view-media/' + media_id.toString()]);
+  }
+
+  viewMap() {
+    this.glb.mediaItemsChaceSet(this.borrowableItems);
+    this.router.navigate(['/browse-map']);
   }
 
   gpsLocationClick() {

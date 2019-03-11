@@ -15,13 +15,12 @@ import { UnfeedbackedItem } from 'src/app/interfaces/unfeedbacked-item';
 export class LentPage implements OnInit {
 
   viewPage: string;
-  lentItems: LendItem[];
-  pendingItems: LendItem[];
-  feedbackItems: UnfeedbackedItem[];
+  lentItems: LendItem[] = [];
+  pendingItems: LendItem[] = [];
+  feedbackItems: UnfeedbackedItem[] = [];
   toolbarBadgeLent: number;
   toolbarBadgePending: number;
   toolbarBadgeFeedback: number;
-
 
   constructor(
     private extra: ExtraService,
@@ -44,6 +43,12 @@ export class LentPage implements OnInit {
       if (source === 'lent') {
         this.refreshFeedbackList();
       }
+    });
+    this.events.subscribe('tour-lent-feedback', (source, id) => {
+      this.viewPage = 'feedback';
+    });
+    this.events.subscribe('tour-lent-feedback-reset', (source, id) => {
+      this.viewPage = 'lent';
     });
     this.refreshAll();
   }

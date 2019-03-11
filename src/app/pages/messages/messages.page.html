@@ -47,6 +47,8 @@
     </div>
   </ion-list>
 
+  <div *ngIf="(viewPage === 'inbox' && inbox.length === 0)" class="no-items">No messages in Inbox.</div>
+
   <ion-list lines="full" *ngIf="viewPage === 'sent'">
     <div class="list-item" [ngClass]="!message.readed ? '' : 'list-item-secondary'" *ngFor="let message of outbox" (click)="readOutboxMessage(message.id)">
       <ion-item color="transparent">
@@ -61,6 +63,8 @@
       </ion-item>
     </div>
   </ion-list>
+
+  <div *ngIf="(viewPage === 'sent' && outbox.length === 0)" class="no-items">No messages in outbox.</div>
 
   <ion-list lines="full" *ngIf="viewPage === 'feedback'">
     <div class="list-item" [ngClass]="item.feedback === 1 ? 'list-item-success' : 'list-item-danger'" *ngFor="let item of feedback">
@@ -80,5 +84,7 @@
       </ion-item>
     </div>
   </ion-list>
+
+  <div *ngIf="(viewPage === 'feedback' && feedback.length === 0)" class="no-items">You have not received any feedback yet.</div>
 
 </ion-content>

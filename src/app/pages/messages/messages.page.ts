@@ -15,9 +15,9 @@ import { Events } from '@ionic/angular';
 export class MessagesPage implements OnInit {
 
   viewPage: string;
-  inbox: Message[];
-  outbox: Message[];
-  feedback: Feedback[];
+  inbox: Message[] = [];
+  outbox: Message[] = [];
+  feedback: Feedback[] = [];
   badgeInbox = 0;
 
   constructor(
@@ -35,6 +35,13 @@ export class MessagesPage implements OnInit {
     this.events.subscribe('refresh-messages', () => {
       this.refreshInbox();
     });
+    this.events.subscribe('tour-messages-feedback', (source, id) => {
+      this.viewPage = 'feedback';
+    });
+    this.events.subscribe('tour-messages-feedback-reset', (source, id) => {
+      this.viewPage = 'inbox';
+    });
+
   }
 
   getUserNames(arr: Message[], sent: boolean) {

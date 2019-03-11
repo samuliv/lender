@@ -11,6 +11,7 @@
     </ion-title>
     <ion-buttons slot="end">
       <ion-button *ngIf="!browseItems" (click)="moreSearchOptionsToggle()" color="dark">{{ moreSearchOptions ? 'Less Options' : 'More Options' }}</ion-button>
+      <ion-button *ngIf="browseItems" (click)="viewMap()" color="dark">View Map</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -32,7 +33,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label class="slider-label">Price</ion-label>
+      <ion-label class="slider-label">Price /h</ion-label>
       <ion-range min="0" max="201" color="primary" [(ngModel)]="maxPrice" (ionChange)="someParameterChanged()"></ion-range>
       <ion-badge slot="end" color="primary" class="fixed-width">{{ maxPrice === 0 ? 'Only Free' : maxPrice === 201 ? 'Any price' : 'max ' + maxPrice + ' €' }}</ion-badge>
     </ion-item>
@@ -109,7 +110,7 @@
         </table>
      </div>
      <div class="lender-card-footer-request" (click)="requestLendNow(item)" *ngIf="item.user_id !== myUserID">
-        Request Lend Now
+        Borrow item now
      </div>
     </div>
 

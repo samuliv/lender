@@ -3,6 +3,7 @@ import { Events, AlertController } from '@ionic/angular';
 import { ExtraService } from '../extra/extra.service';
 import { WbmaService } from '../wbma/wbma.service';
 import { NotifyService } from '../notify/notify.service';
+import { MediaItem } from 'src/app/interfaces/mediaitem';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class GlobalService {
   badgeTabBarMessages = 0;
   backgroundRefresh: any;
   backgroundRefreshRunning = false;
+  mediaItemsChace: MediaItem[] = [];
 
   constructor(
     private events: Events,
@@ -116,6 +118,16 @@ export class GlobalService {
   isEmailValid(email: string) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
+  }
+
+  mediaItemsChaceSet(value: MediaItem[]) {
+    this.mediaItemsChace = value;
+  }
+  mediaItemsChaceClear() {
+    this.mediaItemsChace = [];
+  }
+  mediaItemsChaceGet() {
+    return this.mediaItemsChace;
   }
 
 }

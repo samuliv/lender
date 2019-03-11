@@ -198,6 +198,10 @@ export class WbmaService {
     }
 
     readSingleMediaData(mediaItem: MediaItem) {
+        //986
+        if(mediaItem.file_id === 986) {
+            console.log(mediaItem);
+        }
         mediaItem.media_data = JSON.parse(mediaItem.description);
         mediaItem.media_data.thumb = this.getApiUploadsUrl() + mediaItem.filename.split('.').slice(0, -1).join('.') + '-tn160.png';
     }

@@ -11,25 +11,33 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-list lines="full">
+  <ion-list lines="full">
 
-        <div class="list-item" *ngFor="let item of myLendableItems" (click)="itemClick(item)">
-    
-          <ion-item color="transparent">
-    
-            <ion-thumbnail slot="start" class="lender-thumbnail">
-              <img src="{{ item.media_data.thumb }}">
-            </ion-thumbnail>    
-    
-            <ion-label>
-              <h3>{{ item.title }}</h3>
-              <p class="starts">{{ item.media_data.description }}</p>
-              <p class="starts">Price: {{ item.media_data.price }} &euro;/h</p>
-            </ion-label>
-    
-          </ion-item>
-          
-        </div>
-    
-      </ion-list>
+    <div class="list-item" *ngFor="let item of myLendableItems" (click)="itemClick(item)">
+
+      <ion-item color="transparent">
+
+        <ion-thumbnail slot="start" class="lender-thumbnail">
+          <img src="{{ item.media_data.thumb }}">
+        </ion-thumbnail>    
+
+        <ion-label>
+          <h3>{{ item.title }}</h3>
+          <p class="starts">{{ item.media_data.description }}</p>
+          <p class="starts">Price: {{ item.media_data.price }} &euro;/h</p>
+        </ion-label>
+
+      </ion-item>
+      
+    </div>
+
+  </ion-list>
+
+  <div *ngIf="myLendableItems.length === 0" class="no-items">
+    <p style="float: right; font-size: 16pt;"><ion-icon name="arrow-round-up"></ion-icon></p>
+      No added items.
+    <br><br>
+    Add new item by tapping the <b>Add item</b> button in the right top corner of this page.
+  </div>
+
 </ion-content>
