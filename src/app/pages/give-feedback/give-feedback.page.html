@@ -22,7 +22,7 @@
   <ion-badge color="light">Feedback:</ion-badge>
   <br>
 
-  <ion-textarea rows="5" maxlength="255" autofocus="true" placeholder="Type your feedback here..." [(ngModel)]="feedbackText"></ion-textarea>
+  <ion-textarea rows="5" maxlength="255" placeholder="Type your feedback here..." [(ngModel)]="feedbackText"></ion-textarea>
   
   <ion-button expand="block" [disabled]="feedback === 0 || feedbackText === ''" (click)="giveFeedback()">Give Feedback</ion-button>
 

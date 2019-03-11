@@ -9,7 +9,6 @@ import { GpsDistanceService } from 'src/app/services/gps-distance/gps-distance.s
 import { OpenStreetMapService } from 'src/app/services/openstreetmap/openstreetmap.service';
 import { TimeService } from 'src/app/services/time/time.service';
 import { GlobalService } from 'src/app/services/global/global.service';
-import { WelcomeService } from 'src/app/services/welcome/welcome.service';
 import { MemoryService } from 'src/app/services/memory/memory.service';
 import { LendItem } from 'src/app/interfaces/lenditem';
 
@@ -55,7 +54,6 @@ export class BrowsePage implements OnInit{
     private glb: GlobalService,
     private wbma: WbmaService,
     private time: TimeService,
-    private welcome: WelcomeService,
     private memory: MemoryService,
     private events: Events) {
       this.maxDistance = this.memory.memReadNumber('lender-serach-max-dist', 20);
@@ -105,9 +103,6 @@ export class BrowsePage implements OnInit{
     if (this.useGpsLocation) {
       this.gpsPositionService.tryToFetchCurrentGPSCoordinates();
     }
-    setTimeout(() => {
-      this.welcome.doWelcomeThings();
-    }, 1000);
   }
 
   moreSearchOptionsToggle() {

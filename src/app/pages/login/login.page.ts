@@ -110,20 +110,21 @@ export class LoginPage implements OnInit {
       this.password = '';
       this.showLoading = false;
     }).catch((err) => {
-      this.showLoading = true;
+      this.showLoading = false;
       this.glb.messagePrompt('Login Error', err);
     });
   }
 
   registerButtonClick() {
+    this.showLoading = true;
     this.wbma.register(this.username, this.password, this.email, this.full_name)
       .pipe(catchError(err => {
-        this.showLoading = true;
+        this.showLoading = false;
         this.glb.messagePrompt('Could not register', err.error.error);
         return throwError(err);
       }))
       .subscribe((res) => {
-        this.showLoading = true;
+        this.showLoading = false;
         this.username = '';
         this.password = '';
         this.email = '';

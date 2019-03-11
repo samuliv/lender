@@ -4,6 +4,7 @@ import { ExtraService } from '../extra/extra.service';
 import { WbmaService } from '../wbma/wbma.service';
 import { NotifyService } from '../notify/notify.service';
 import { MediaItem } from 'src/app/interfaces/mediaitem';
+import { Network } from '@ionic-native/network/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class GlobalService {
   backgroundRefresh: any;
   backgroundRefreshRunning = false;
   mediaItemsChace: MediaItem[] = [];
+  networkStatus = true;
 
   constructor(
     private events: Events,
@@ -23,9 +25,28 @@ export class GlobalService {
     private wbma: WbmaService,
     private notify: NotifyService,
     private alertController: AlertController,
+    private network: Network,
   ) {
     this.checkStatus();
     this.backgroundRefreshStart();
+    this.startNetworkStatusSubscribtion();
+  }
+
+  /* Monitor the network Online/Offline Status */
+  startNetworkStatusSubscribtion() {
+    let disconnect = this.network.onDisconnect().subscribe(() => {
+      if (this.networkStatus === false) {
+        this.networkStatus = true;
+        this.events.publish('network-status-changed', true);
+      }
+    });
+    let connect = this.network.onConnect().subscribe(() => {
+      if (this.networkStatus === false) {
+        this.networkStatus = true;
+        this.events.publish('network-status-changed', false);
+        this.events.publish('network-went-to-offline');
+      }
+    });
   }
 
   backgroundRefreshStart() {
