@@ -1,3 +1,5 @@
+/* Browse Search filtering options */
+
 export interface SearchFilteringOptions {
     filterby_distance: boolean;
     filterby_string: boolean;

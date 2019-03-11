@@ -1,3 +1,5 @@
+/* EXTRA api UserInfo response */
+
 export interface UserInfo {
     feedback_positive: number;
     feedback_negative: number;

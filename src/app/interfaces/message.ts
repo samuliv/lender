@@ -1,3 +1,5 @@
+/* EXTRA api message response interface */
+
 export interface Message {
   id: number;
   message: string;

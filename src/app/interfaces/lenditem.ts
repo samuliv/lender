@@ -1,3 +1,5 @@
+/* EXTRA api lendItem response with merging */
+
 import { WbmaMergableItem } from "./wbma-mergable-item";
 
 export interface LendItem extends WbmaMergableItem {

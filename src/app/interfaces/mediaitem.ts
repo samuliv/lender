@@ -1,3 +1,5 @@
+/* WBMA api MediaData item Interface + Thumbnail */
+
 import { MediaData } from './mediadata';
 
 export interface Thumbnails {

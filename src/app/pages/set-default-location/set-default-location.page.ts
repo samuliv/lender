@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-set-default-location',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SetDefaultLocationPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private navController: NavController,
+  ) { }
 
   ngOnInit() {
   }
 
+  goBack() {
+    this.navController.navigateBack('/tabs/browse');
+  }
 }

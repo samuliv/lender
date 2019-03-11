@@ -136,8 +136,24 @@ export class BorrowedPage implements OnInit {
       text: 'Send Messsage to User',
       handler: () => {
         this.sendMessage(item);
+      },
+    }, {
+      text: 'View User Profile',
+      handler: () => {
+        console.log('TODO');
       }
-    }];
+    }, {
+      text: 'View Item Info',
+      handler: () => {
+        console.log('TODO');
+      }
+    }, {
+      text: 'View Location on Map',
+      handler: () => {
+        console.log('TODO');
+      }
+    }
+  ];
 
     if ( item.cancellable ) {
       buttons.push({text: 'Cancel Request', role: 'destructive', handler: () => {

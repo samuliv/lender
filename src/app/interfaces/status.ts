@@ -1,3 +1,5 @@
+/* Extra API Status reponse */
+
 export interface Status {
     success: boolean;
     unreaded_messages: number,

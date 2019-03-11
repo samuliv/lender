@@ -1,3 +1,5 @@
+/* EXTRA api availability check response interface */
+
 export interface AvailabilityResponse {
     available: boolean;
     feedback: number;

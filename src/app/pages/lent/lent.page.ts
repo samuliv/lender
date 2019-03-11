@@ -150,6 +150,16 @@ export class LentPage implements OnInit {
       handler: () => {
         this.sendMessage(item);
       }
+    }, {
+      text: 'View User Profile',
+      handler: () => {
+        console.log('TODO');
+      }
+    }, {
+      text: 'View Item Info',
+      handler: () => {
+        console.log('TODO');
+      }
     }];
 
     if ( item.rejectable ) {

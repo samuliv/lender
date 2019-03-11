@@ -1,3 +1,5 @@
+/* OpenStreetMapService repsponse interfaces */
+
 export interface OpenStreetMapResponse {
     place_id: string;
     lat: string;

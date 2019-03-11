@@ -1,3 +1,5 @@
+/* WBMA api User response */
+
 export interface User {
     user_id: number;
     username: string;

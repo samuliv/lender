@@ -1,3 +1,5 @@
+/* EXTRA api feedback item interface */
+
 export interface Feedback {
   message: string;
   user_id: number;

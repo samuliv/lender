@@ -1,3 +1,5 @@
+/* Extra API unfeedbacked lend/borrow item response */
+
 import { WbmaMergableItem } from "./wbma-mergable-item";
 
 export interface UnfeedbackedItem extends WbmaMergableItem {

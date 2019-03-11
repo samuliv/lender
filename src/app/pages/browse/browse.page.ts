@@ -152,6 +152,10 @@ export class BrowsePage implements OnInit{
     this.glb.mediaItemsChaceSet(this.borrowableItems);
     this.router.navigate(['/browse-map']);
   }
+  
+  viewItemOnMap(item: MediaItem) {
+    console.log('TODO');
+  }
 
   gpsLocationClick() {
     if (this.useGpsLocation) {

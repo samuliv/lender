@@ -1,3 +1,5 @@
+/* WBMA login info response interface */
+
 import { User } from '../interfaces/user';
 
 export interface LoginInfo {

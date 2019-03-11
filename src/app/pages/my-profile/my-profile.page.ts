@@ -38,6 +38,9 @@ export class MyProfilePage implements OnInit {
     ) { }
 
   ngOnInit() {
+  }
+
+  ionViewDidEnter() {
     this.wbma.getUserInformation(this.wbma.getMyUserID()).subscribe((res) => {
       this.userName = res.username;
       this.userEmail = res.email;
@@ -45,6 +48,10 @@ export class MyProfilePage implements OnInit {
     this.extra.getUserInfo(this.wbma.getMyUserID()).subscribe((res) => {
       this.userInfo = res;
     });
+    this.getUserData();
+  }
+
+  getUserData() {
     this.wbma.getLendableItems().subscribe((res) => {
       let myItems = 0;
       const myUserID = this.wbma.getMyUserID();
@@ -130,6 +137,10 @@ export class MyProfilePage implements OnInit {
 
   changePassword() {
     this.router.navigate(['/change-password']);
+  }
+
+  changeMyDefaultLocation() {
+    this.router.navigate(['/set-default-location']);
   }
 
   goBack() {

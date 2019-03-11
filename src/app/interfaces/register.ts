@@ -1,3 +1,5 @@
+/* WBMA user registration form interface */
+
 export interface Register {
     username: string;
     password: string;

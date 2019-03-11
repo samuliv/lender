@@ -6,8 +6,6 @@ import {UsernameAvailable} from 'src/app/interfaces/usernameavailable';
 import {RegisterNewUserInfo} from 'src/app/interfaces/registernewuserinfo';
 import {Router} from '@angular/router';
 import {SearchFilteringOptions} from 'src/app/interfaces/searchfilteringoptions';
-import {Success} from 'src/app/interfaces/success';
-import {LendItem} from 'src/app/interfaces/lenditem';
 import {User} from 'src/app/interfaces/user';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -36,7 +34,6 @@ export class WbmaService {
         console.log('setLoginStatus: [' + status + ']');
         if (this.loggedIn !== status) {
             this.loggedIn = status;
-            // this.events.publish('loginstatuschange'); TODO
         }
     }
 

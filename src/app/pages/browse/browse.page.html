@@ -92,20 +92,20 @@
         <table>
           <tr>
             <td class="td-left">Price: <span class="highlight">{{ item.media_data.price === 0 ? 'FREE' : item.media_data.price + ' &euro;/h' }} </span></td>
-            <td class="td-right">Distance: <span class="highlight">{{ item.distance }} away</span></td>
+            <td class="td-right" (click)="viewUserProfile(item)">User: <b>{{ item.user_name }}</b></td>
           </tr>
           <tr>
-              <td class="td-left">User: <b>{{ item.user_name }}</b></td>
-              <td class="td-right">
-                <span class="highlight">
-                    <ion-icon name="star"></ion-icon> {{ !item.user_score ? 0 : item.user_score }}
-                  <ion-icon name="thumbs-up" *ngIf="item.user_feedback_positive"></ion-icon> {{ !item.user_feedback_positive || item.user_feedback_positive === 0 ? '' : item.user_feedback_positive + ' %' }}
-                  <ion-icon name="thumbs-down" *ngIf="item.user_feedback_negative"></ion-icon> {{ !item.user_feedback_negative || item.user_feedback_negative === 0 ? '' : item.user_feedback_negative + ' %' }}
-                </span>
-              </td>
-            </tr>
-            <tr>
-            <td colspan="2">Location: {{ item.location }}</td>
+            <td class="td-left" (click)="viewItemOnMap(item)">Distance: <span class="highlight">{{ item.distance }} away</span></td>
+            <td class="td-right">
+              <span class="highlight" (click)="viewUserProfile(item)">
+                  <ion-icon name="star"></ion-icon> {{ !item.user_score ? 0 : item.user_score }}
+                <ion-icon name="thumbs-up" *ngIf="item.user_feedback_positive"></ion-icon> {{ !item.user_feedback_positive || item.user_feedback_positive === 0 ? '' : item.user_feedback_positive + ' %' }}
+                <ion-icon name="thumbs-down" *ngIf="item.user_feedback_negative"></ion-icon> {{ !item.user_feedback_negative || item.user_feedback_negative === 0 ? '' : item.user_feedback_negative + ' %' }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" (click)="viewItemOnMap(item)">Location: {{ item.location }}</td>
           </tr>
         </table>
      </div>
