@@ -24,7 +24,7 @@
 
 .lender-card {
   overflow: hidden;
-  background-color: #8bb2ff;
+  background-color: var(--ion-color-primary);
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -73,7 +73,7 @@
   padding: 10px;
   font-size: 11px;
   font-weight: bold;
-  background: #4b87ff;
+  background: var(--ion-toolbar-background);
   color: #fff;
   width: 100%;
 }
