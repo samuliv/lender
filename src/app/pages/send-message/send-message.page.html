@@ -20,7 +20,7 @@
 
   <br>
 
-  <ion-textarea rows="5" (change)="checkIsMessageLongEnough()" (keyup)="checkIsMessageLongEnough()" [(ngModel)]="messageText" maxlength="255" autofocus="true" placeholder="Type your message here..."></ion-textarea>
+  <ion-textarea rows="5" (change)="checkIsMessageLongEnough()" (keyup)="checkIsMessageLongEnough()" [(ngModel)]="messageText" maxlength="255" placeholder="Type your message here..."></ion-textarea>
   
   <ion-button expand="block" [disabled]="!messageIsLongEnough" (click)="sendMessageButtonClick()">Send Message</ion-button>
 
