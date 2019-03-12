@@ -7,6 +7,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { MemoryService } from 'src/app/services/memory/memory.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -15,8 +16,8 @@ import { Router } from '@angular/router';
 })
 export class MyProfilePage implements OnInit {
 
-  userName = 'username';
-  userEmail = 'user@';
+  userName = '';
+  userEmail = '';
   userNameEdit = '';
   userEmailEdit = '';
 
@@ -46,9 +47,12 @@ export class MyProfilePage implements OnInit {
     private extra: ExtraService,
     private glb: GlobalService,
     private router: Router,
+    private memory: MemoryService,
     ) { }
 
   ngOnInit() {
+    this.userEmail = this.memory.memReadString('lender-my-email');
+    this.userName = this.memory.memReadString('lender-my-username');
   }
 
   ionViewDidEnter() {

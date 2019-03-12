@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import { WbmaService } from 'src/app/services/wbma/wbma.service';
+import { ExtraService } from 'src/app/services/extra/extra.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
@@ -11,14 +13,40 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class SendMessagePage implements OnInit {
 
   goBackTo: string;
-  userId: number;
+  recipientID: number;
+  messageIsLongEnough = false;
+  messageText = '';
+  recipientName = '';
 
-  constructor(private navController: NavController, private activatedRoute: ActivatedRoute, private glb: GlobalService) { }
+  constructor(
+    private navController: NavController,
+    private activatedRoute: ActivatedRoute,
+    private extra: ExtraService,
+    private wbma: WbmaService,
+    private glb: GlobalService,
+    ) { }
 
   ngOnInit() {
     const items = this.activatedRoute.snapshot.paramMap.get('source').split('-');
     this.goBackTo = items[0];
-    this.userId = parseInt(items[1], 10);    
+    this.recipientID = parseInt(items[1], 10);
+    this.wbma.getUserInformation(this.recipientID).subscribe((user) => {
+      this.recipientName = user.username;
+    });
+  }
+
+  checkIsMessageLongEnough() {
+    this.messageIsLongEnough = (this.messageText.length > 2);
+  }
+
+  sendMessageButtonClick() {
+    this.extra.sendMessage(this.wbma.getMyUserID(), this.recipientID, this.messageText).subscribe((messageSent) => {
+      if (messageSent.success) {
+        this.goBack();
+      } else {
+        this.glb.messagePrompt('Error', 'Sending a message failed.');
+      }
+    })
   }
 
   goBack() {

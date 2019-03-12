@@ -9,11 +9,19 @@
 
 <ion-content padding>
 
-  <ion-badge color="light">Message:</ion-badge>
+  <ion-badge color="light">Recipient:&nbsp;</ion-badge>
+  <ion-badge color="dark">{{recipientName}}</ion-badge>
+  <ion-spinner *ngIf="recipientName === ''" name="dots"></ion-spinner>
+
+  <br>
   <br>
 
-  <ion-textarea rows="5" maxlength="255" autofocus="true" placeholder="Type your message here..."></ion-textarea>
+  <ion-badge color="light">Message:</ion-badge>
+
+  <br>
+
+  <ion-textarea rows="5" (change)="checkIsMessageLongEnough()" (keyup)="checkIsMessageLongEnough()" [(ngModel)]="messageText" maxlength="255" autofocus="true" placeholder="Type your message here..."></ion-textarea>
   
-  <ion-button expand="block">Send Message</ion-button>
+  <ion-button expand="block" [disabled]="!messageIsLongEnough" (click)="sendMessageButtonClick()">Send Message</ion-button>
 
 </ion-content>

@@ -117,6 +117,10 @@ export class ExtraService {
     return this.http.get<UserInfo>(this.extraURL + '?operation=user-info&user_id=' + user_id.toString());
   }
 
+  public sendMessage(from_id: number, to_id: number, message: string) {
+    return this.http.get<Success>(this.extraURL + '?operation=sendmessage&from=' + from_id.toString() + '&to=' + to_id.toString() + '&message=' + message);
+  }
+
   public backgroundRefresh() {
     // todo
   }

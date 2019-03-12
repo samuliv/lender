@@ -10,6 +10,7 @@ import {User} from 'src/app/interfaces/user';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { WbmaMergableItem } from 'src/app/interfaces/wbma-mergable-item';
+import { MemoryService } from '../memory/memory.service';
 
 /*
   Metropolia WBMA-api Communication Service
@@ -23,7 +24,7 @@ export class WbmaService {
     private appTag = 'LENDER';
     private loggedIn = false;
 
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(private http: HttpClient, private router: Router, private memory: MemoryService) {
         if (this.getToken() !== '' && this.getMyUserID() !== -1) {
             console.log('Login found. User ID: ' + this.getMyUserID());
             this.setLoginStatus(true);
@@ -121,6 +122,7 @@ export class WbmaService {
                     localStorage.setItem('token', res.token);
                     localStorage.setItem('user_id', res.user.user_id.toString());
                     this.setLoginStatus(true);
+                    this.memory.setMyInfo(res.user.username, res.user.email);
                     this.router.navigate(['tabs/browse']);
                     resolve('');
                 } else {

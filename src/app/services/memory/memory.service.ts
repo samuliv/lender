@@ -7,6 +7,11 @@ export class MemoryService {
 
   constructor() { }
 
+  setMyInfo(username: string, email: string) {
+    localStorage.setItem('lender-my-username', username);
+    localStorage.setItem('lender-my-email', email);
+  }
+
   memReadString(param: string, defValue?: string) {
     const ret = localStorage.getItem(param);
     if (ret === null) {
