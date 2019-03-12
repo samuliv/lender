@@ -194,6 +194,10 @@ export class MyProfilePage implements OnInit {
     this.router.navigate(['/set-default-location']);
   }
 
+  chaneProfilePicture() {
+    this.router.navigate(['/change-profile-picture']);
+  }
+
   goBack() {
     this.rollPosition = 99;
     this.navController.navigateBack('/tabs/settings');
