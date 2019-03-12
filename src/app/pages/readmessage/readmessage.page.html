@@ -20,28 +20,23 @@
 
 <ion-content padding>
   
-  <ion-badge color="light">From:</ion-badge>
-  <ion-badge color="dark" (click)="viewSenderUserProfile()">{{ messageSenderName }}</ion-badge>
+  <table class="top-table">
+    <tr>
+      <td>From: </td>
+      <td><ion-badge color="dark" (click)="viewSenderUserProfile()">{{ messageSenderName }}</ion-badge></td>
+    </tr>
+    <tr>
+      <td>To: </td>
+      <td><ion-badge color="dark" (click)="viewRecipientUserProfile()">{{ messageRecipientName }}</ion-badge></td>
+    </tr>
+    <tr>
+      <td>Time: </td>
+      <td class="message-time">{{ messageTime }}</td>
+    </tr>
+  </table>
 
-  <br>
-
-  <ion-badge color="light">To:</ion-badge>
-  <ion-badge color="dark" (click)="viewRecipientUserProfile()">{{ messageRecipientName }}</ion-badge>
-
-  <br>
-
-  <ion-badge color="light">Time:</ion-badge>
-  <ion-badge color="dark">{{ messageTime }}</ion-badge>
-
-  <br><br>
-  
-  <ion-badge color="light">Message:</ion-badge>
-
-  <br>
   <div id="messageField">
-  <p >
     {{ message }}
-  </p>
   </div>
 
 </ion-content>

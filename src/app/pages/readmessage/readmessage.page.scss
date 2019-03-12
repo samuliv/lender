@@ -1,8 +1,17 @@
 #messageField {
+  margin-top: 20px;
   background: var(--ion-color-tertiary);
   border-radius: 4px;
-  margin: 1px 2px 1px 2px;
-  padding: 1px 4px 0 4px;
-  font-size: large;
+  padding: 10px;
+  font-size: 13pt;
   min-height: 30%;
+}
+
+.top-table td {
+  color: #222;
+  font-size: 11px;
+  padding: 2px;
+}
+.message-time {
+  font-weight: bold;
 }
