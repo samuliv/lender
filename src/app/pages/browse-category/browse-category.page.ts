@@ -88,7 +88,11 @@ export class BrowseCategoryPage implements OnInit {
     return false;
   }
 
-  itemClickAll() {
+  itemClickAll(byMouse?: boolean) {
+    if (this.selectedCategory === 0) {
+      this.goBack();
+      return;
+    }
     this.clearSelections();
     this.allSelected = true;
     this.selectedCategory = 0;
@@ -105,8 +109,12 @@ export class BrowseCategoryPage implements OnInit {
     }
   }
 
-  itemClick(item: any) {
+  itemClick(item: any, byMouse?: boolean) {
     console.log('Selected Category:' + item.id + ' (' + item.name + ')');
+    if (this.selectedCategory === item.id && byMouse) {
+      this.goBack();
+      return;
+    }
     this.events.publish('category-clicked-' + this.source, item.id, item.name, item.contains);
     this.selectedCategory = item.id;
     this.allSelected = false;

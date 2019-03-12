@@ -10,8 +10,8 @@
 <ion-content padding>
 
 <ul class="itemList">
-  <li (click)="itemClickAll()" (dblclick)="goBack()" *ngIf="!noAll" class="list-item level0{{ allSelected ? ' selectedItem' : ''}}">All</li>
-  <li (click)="itemClick(item)" (dblclick)="goBack()" *ngFor="let item of categories" class="list-item level{{ item.level }} {{item.display === true ? '' : 'hide' }} {{item.selected ? 'selectedItem' : ''}}">{{ item.name }}</li>
+  <li (click)="itemClickAll(true)" *ngIf="!noAll" class="list-item level0{{ allSelected ? ' selectedItem' : ''}}">All</li>
+  <li (click)="itemClick(item, true)" *ngFor="let item of categories" class="list-item level{{ item.level }} {{item.display === true ? '' : 'hide' }} {{item.selected ? 'selectedItem' : ''}}">{{ item.name }}</li>
 </ul>
 
 </ion-content>
