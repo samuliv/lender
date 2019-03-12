@@ -40,6 +40,11 @@ export class BorrowedPage implements OnInit {
       this.refreshBorrowedList();
       this.refreshPendingList();
     });
+    this.events.subscribe('feedback-given', (source, id) => {
+      if (source === 'borrowed') {
+        this.refreshFeedbackList();
+      }
+    });
     this.refreshAll();
   }
 
@@ -180,6 +185,10 @@ export class BorrowedPage implements OnInit {
 
   sendMessage(item: LendItem) {
     this.router.navigate(['/send-message/borrowed-' + item.user_id]);
+  }
+
+  giveFeedback(item: UnfeedbackedItem) {
+    this.router.navigate(['/give-feedback/borrowed-' + item.lend_id]);
   }
 
   negativeRefresh() {

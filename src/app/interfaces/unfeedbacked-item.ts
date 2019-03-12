@@ -4,7 +4,7 @@ import { WbmaMergableItem } from "./wbma-mergable-item";
 import { WbmaMergableUserItem } from "./wbma-mergable-useritem";
 
 export interface UnfeedbackedItem extends WbmaMergableItem, WbmaMergableUserItem {
-    item: number;
+    item_id: number;
     lend_id: number;
     user_id: number;
     starts: string;

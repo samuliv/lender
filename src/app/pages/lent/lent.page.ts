@@ -44,12 +44,6 @@ export class LentPage implements OnInit {
         this.refreshFeedbackList();
       }
     });
-    this.events.subscribe('tour-lent-feedback', (source, id) => {
-      this.viewPage = 'feedback';
-    });
-    this.events.subscribe('tour-lent-feedback-reset', (source, id) => {
-      this.viewPage = 'lent';
-    });
     this.refreshAll();
   }
 
@@ -143,7 +137,7 @@ export class LentPage implements OnInit {
   }
 
   giveFeedback(item: UnfeedbackedItem) {
-    this.router.navigate(['/give-feedback/lent-' + item.item_id]);
+    this.router.navigate(['/give-feedback/lent-' + item.lend_id]);
   }
 
   async itemClick(item: LendItem) {
