@@ -154,7 +154,8 @@ export class BrowsePage implements OnInit{
   }
   
   viewItemOnMap(item: MediaItem) {
-    console.log('TODO');
+    this.glb.mediaItemsChaceSet([item]);
+    this.router.navigate(['/browse-map']);
   }
 
   gpsLocationClick() {

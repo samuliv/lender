@@ -12,7 +12,6 @@ import { GlobalService } from 'src/app/services/global/global.service';
 })
 export class BrowseMapPage implements OnInit {
 
-
   map: L.map;
   constructor(
     private navController: NavController,
@@ -27,12 +26,24 @@ export class BrowseMapPage implements OnInit {
   }
 
   loadMap() {
+
+    const borrowableItems = this.glb.mediaItemsChaceGet();
+    let zoomValue = 12;
     let coords: Coordinates = { latitude: 60.221096, longitude: 24.807696};
-    if (this.gpsPosition.isLocationAvailable()) {
-      coords = this.gpsPosition.getGPSCoordinates();
+
+    if (borrowableItems.length === 1) {
+      // Only one item, so now we'll use item location instead of user location
+      coords.latitude = borrowableItems[0].media_data.lat;
+      coords.longitude = borrowableItems[0].media_data.lon;
+      zoomValue = 14;
+    } else {
+      // Fetch the current location based on user set location or gps
+      if (this.gpsPosition.isLocationAvailable()) {
+        coords = this.gpsPosition.getGPSCoordinates();
+      }
     }
 
-    this.map = L.map('map').setView([coords.latitude, coords.longitude], 12);
+    this.map = L.map('map').setView([coords.latitude, coords.longitude], zoomValue);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
       attribution: 'Lender',
@@ -44,7 +55,6 @@ export class BrowseMapPage implements OnInit {
       iconSize: [32, 32]
     });
 
-    const borrowableItems = this.glb.mediaItemsChaceGet();
     if (borrowableItems.length > 0) {
       for (let i = 0; i < borrowableItems.length; i++) {
         const popupData = `
