@@ -26,7 +26,7 @@ span.badge-time {
     background: none;
 }
 .message-sender-name {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: bold;
 }
 .message-text {
@@ -40,4 +40,15 @@ span.big-number {
 span.username {
     font-size: 10px;
     font-weight: bold;
+}
+.message-item {
+    background: #8bb2ff linear-gradient(#8bb2ff, #7ea2e9);
+    width: 100%;
+    border: 1px solid #6086d1;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    overflow: hidden;
+}
+ion-label {
+    margin: 4px 4px 4px 0;
 }
