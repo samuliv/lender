@@ -10,4 +10,12 @@
 
 <ion-content padding>
 
+  <ion-item (click)="choosePicture()">
+    <ion-label position="stacked">Item Image/Video</ion-label>
+    <ion-img id="uploadedImage" src="https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png"></ion-img>
+  </ion-item>
+
+  <br>
+  <ion-button [disabled]="!fileIsUploaded" expand="block" (click)="uploadFile()" color="primary">Upload Picture</ion-button>
+
 </ion-content>
