@@ -91,6 +91,7 @@ $color-fore-dark: #222;
     box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.37);
 }
 
+
 /* global theming */
 :root {
     --ion-color-primary: #fed772;
@@ -109,6 +110,8 @@ $color-fore-dark: #222;
     --ion-color-success: #bfff7e;
     --ion-color-success-shade: #9edd5e;
     --ion-color-success-contrast: #222;
+
+    --background-checked: #dddddd;
 
     // Tab bar
     --ion-tab-bar-color: rgba(31,31,31, 0.4); // non-active forecolor text
