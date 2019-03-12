@@ -17,6 +17,7 @@ export class SendMessagePage implements OnInit {
   messageIsLongEnough = false;
   messageText = '';
   recipientName = '';
+  extraParams = '';
 
   constructor(
     private navController: NavController,
@@ -30,6 +31,9 @@ export class SendMessagePage implements OnInit {
     const items = this.activatedRoute.snapshot.paramMap.get('source').split('-');
     this.goBackTo = items[0];
     this.recipientID = parseInt(items[1], 10);
+    if (items.length === 3) {
+      this.extraParams = items[2];
+    }
     this.wbma.getUserInformation(this.recipientID).subscribe((user) => {
       this.recipientName = user.username;
     });
@@ -56,6 +60,9 @@ export class SendMessagePage implements OnInit {
         break;
       case 'messages':
         this.navController.navigateBack('/tabs/messages');
+        break;
+      case 'readmessage':
+        this.navController.navigateBack('/readmessage/'  + this.extraParams);
         break;
       default:
         this.navController.navigateBack('/tabs/borrowed');

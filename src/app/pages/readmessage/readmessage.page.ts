@@ -56,7 +56,13 @@ export class ReadMessagePage implements OnInit {
   }
 
   reply() {
-    console.log('TODO');
+    let recipient = 0;
+    if (this.messageSenderID === this.wbma.getMyUserID()) {
+      recipient = this.messageRecipientID;
+    } else {
+      recipient = this.messageSenderID;
+    }
+    this.router.navigate(['/send-message/readmessage-' + recipient + '-' + this.messageID]);
   }
 
 }
