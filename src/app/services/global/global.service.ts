@@ -5,6 +5,7 @@ import { WbmaService } from '../wbma/wbma.service';
 import { NotifyService } from '../notify/notify.service';
 import { MediaItem } from 'src/app/interfaces/mediaitem';
 import { Network } from '@ionic-native/network/ngx';
+import { Badge } from '@ionic-native/badge/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class GlobalService {
   badgeTabBarLent = 0;
   badgeTabBarBorrowed = 0;
   badgeTabBarMessages = 0;
+  currentAppBadge = 0;
   backgroundRefresh: any;
   backgroundRefreshRunning = false;
   mediaItemsChace: MediaItem[] = [];
@@ -27,6 +29,7 @@ export class GlobalService {
     private alertController: AlertController,
     private network: Network,
     private tosastController: ToastController,
+    private badge: Badge,
   ) {
     this.checkStatus();
     this.backgroundRefreshStart();
@@ -84,10 +87,23 @@ export class GlobalService {
       clearInterval(this.backgroundRefresh);
     }
   }
-  
 
   tabBarIconsNeedRefreshing() {
     this.checkStatus();
+  }
+
+  refreshAppBadge() {
+    const badgeNumberToBe = this.badgeTabBarBorrowed + this.badgeTabBarLent + this.badgeTabBarMessages;
+    if (this.currentAppBadge != badgeNumberToBe) {
+      // Update app badge number
+      if (badgeNumberToBe === 0) {
+        this.badge.clear();
+        this.currentAppBadge = 0;
+      } else {
+        this.badge.set(badgeNumberToBe);
+        this.currentAppBadge = badgeNumberToBe;
+      }
+    }
   }
 
   checkStatus() {
@@ -115,6 +131,7 @@ export class GlobalService {
           if (tabBarNeedsRefreshing) {
             this.events.publish('refresh-tab-badges');
           }
+          this.refreshAppBadge();
         }
       });
     } else {

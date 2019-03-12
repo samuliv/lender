@@ -50,16 +50,20 @@ export class RequestItemPage implements OnInit {
   }
 
   sendRequest(mediaItem: MediaItem) {
-    if (this.startTime && this.endTime && (this.startTime > this.endTime)) {
-      this.extra.requestLend(mediaItem.file_id, this.startTime, this.endTime, this.wbma.getMyUserID(), mediaItem.user_id).subscribe((res) => {
-        if (res.success) {
-          this.successMessage();
-        } else {
-          this.errorMessage(res.error);
-        }
-      });
-    } else {
-      this.glb.messagePrompt('Start & End Times', 'Please check your time range!');
+    if (this.startTime && this.endTime) {
+      const start = new Date(this.startTime);
+      const end = new Date(this.endTime);
+      if (start.getTime() < end.getTime()) {
+        this.extra.requestLend(mediaItem.file_id, this.startTime, this.endTime, this.wbma.getMyUserID(), mediaItem.user_id).subscribe((res) => {
+          if (res.success) {
+            this.successMessage();
+          } else {
+            this.errorMessage(res.error);
+          }
+        });
+      } else {
+        this.glb.messagePrompt('Start & End Times', 'Please check your time range!');
+      }
     }
   }
 
