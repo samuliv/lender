@@ -13,12 +13,12 @@
 
 /* oneRow for displaying span with ion-segment in one row */
 .oneRow {
-    .left { 
-        float :left; 
+    .left {
+        float :left;
     }
-    .segment-badge { 
-        float: right; 
-        color:#222; 
+    .segment-badge {
+        float: right;
+        color:#222;
         font-weight:bold;
         background: #fff;
         border-radius: 50%;
@@ -27,7 +27,7 @@
     }
 }
 /* with IOS display segment number with white background when selected */
-.sc-ion-segment-ios-h .segment-button-checked .oneRow .right, 
+.sc-ion-segment-ios-h .segment-button-checked .oneRow .right,
 .sc-ion-segment-ios-s .segment-button-checked .oneRow .right {
     background: #fff; color: #3880ff;
 }
@@ -93,10 +93,10 @@ $color-fore-dark: #222;
 
 /* global theming */
 :root {
-    --ion-color-primary: #8bb2ff;
-    --ion-color-primary-shade: #6185ce;
+    --ion-color-primary: #fed772;
+    --ion-color-primary-shade: #a1d0f9;
     --ion-color-primary-contrast: #000;
-    --ion-color-tertiary: #CBD1FF;
+    --ion-color-tertiary: #FCB6D2;
 
     --ion-color-secondary: #ffd37e;
     --ion-color-secondary-shade: #dbae53;
@@ -109,15 +109,15 @@ $color-fore-dark: #222;
     --ion-color-success: #bfff7e;
     --ion-color-success-shade: #9edd5e;
     --ion-color-success-contrast: #222;
-    
+
     // Tab bar
     --ion-tab-bar-color: rgba(31,31,31, 0.4); // non-active forecolor text
     --ion-tab-bar-color-activated: #222; // tab bar active forecolor text
-    --ion-tab-bar-background: #4b87ff; //tab bar bg color
+    --ion-tab-bar-background: #69a1b8; //tab bar bg color
     --ion-tab-bar-border-color: #fff;
 
     // Tollbar
-    --ion-toolbar-background: #4b87ff; // Toolbar Background Color
+    --ion-toolbar-background: #69a1b8; // Toolbar Background Color
     --ion-toolbar-color: #222; // Toolbar Foreground Color
 }
 
@@ -129,9 +129,9 @@ $color-fore-dark: #222;
 }
 
 .list-item {
-    background: var(--ion-color-primary) linear-gradient(#8bb2ff, #7ea2e9);
+    background: var(--ion-color-primary) linear-gradient(#FEF0C1, #fef1ae);
     width: 100%;
-    border: 1px solid #6086d1;
+    border: 1px solid #8d7f63;
     border-radius: 8px;
     margin-bottom: 4px;
     overflow: hidden;
