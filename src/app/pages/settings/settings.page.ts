@@ -90,6 +90,7 @@ export class SettingsPage implements OnInit{
       header: 'Log Out',
       subHeader: '',
       message: 'Are you sure you want to log out?',
+      cssClass: 'Alert',
       buttons: [
         {
           text: 'Logout',

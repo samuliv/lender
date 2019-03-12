@@ -338,6 +338,7 @@ export class BrowsePage implements OnInit{
     const actionSheet = await this.actionSheetController.create({
       header: dataItems[0],
       buttons: buttons,
+      cssClass: 'action',
     });
     await actionSheet.present();
   }
