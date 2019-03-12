@@ -43,18 +43,18 @@ span.username {
 }
 .received-item {
     background: var(--ion-color-primary);
-    width: 100%;
     border: 1px solid var(--ion-color-primary-contrast);
     border-radius: 4px;
     overflow: hidden;
 }
 .sent-item {
     background: var(--ion-color-primary-shade);
-    width: 100%;
     border: 1px solid var(--ion-color-primary-contrast);
     border-radius: 4px;
     overflow: hidden;
 }
+.received-item.readed,
+.sent-item.readed { opacity: 0.6; }
 ion-label {
     margin: 3px 3px 3px 0;
 }
