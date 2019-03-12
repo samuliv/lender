@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MediaItem } from 'src/app/interfaces/mediaitem';
 import { TimeService } from 'src/app/services/time/time.service';
 import { ExtraService } from 'src/app/services/extra/extra.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-request-item',
@@ -31,6 +32,7 @@ export class RequestItemPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private time: TimeService,
     private alertController: AlertController,
+    private glb: GlobalService,
     ) {
       const chunks = this.activatedRoute.snapshot.paramMap.get('id').split('_');
       this.mediaID = parseInt(chunks[0], 10);
@@ -48,13 +50,17 @@ export class RequestItemPage implements OnInit {
   }
 
   sendRequest(mediaItem: MediaItem) {
-    this.extra.requestLend(mediaItem.file_id, this.startTime, this.endTime, this.wbma.getMyUserID(), mediaItem.user_id).subscribe((res) => {
-      if (res.success) {
-        this.successMessage();
-      } else {
-        this.errorMessage(res.error);
-      }
-    })
+    if (this.startTime && this.endTime && (this.startTime > this.endTime)) {
+      this.extra.requestLend(mediaItem.file_id, this.startTime, this.endTime, this.wbma.getMyUserID(), mediaItem.user_id).subscribe((res) => {
+        if (res.success) {
+          this.successMessage();
+        } else {
+          this.errorMessage(res.error);
+        }
+      });
+    } else {
+      this.glb.messagePrompt('Start & End Times', 'Please check your time range!');
+    }
   }
 
   async sendRequestButtonClick() {
