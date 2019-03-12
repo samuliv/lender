@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'request-item/:id', loadChildren: './pages/request-item/request-item.module#RequestItemPageModule', canActivate: [AuthGuard] },
   { path: 'give-feedback/:source', loadChildren: './pages/give-feedback/give-feedback.module#GiveFeedbackPageModule', canActivate: [AuthGuard] },
   { path: 'change-password', loadChildren: './pages/change-password/change-password.module#ChangePasswordPageModule', canActivate: [AuthGuard] },
-  { path: 'browse-map', loadChildren: './pages/browse-map/browse-map.module#BrowseMapPageModule', canActivate: [AuthGuard] },
+  { path: 'browse-map/:params', loadChildren: './pages/browse-map/browse-map.module#BrowseMapPageModule', canActivate: [AuthGuard] },
   { path: 'set-default-location', loadChildren: './pages/set-default-location/set-default-location.module#SetDefaultLocationPageModule', canActivate: [AuthGuard] },
   { path: 'view-user-profile/:params', loadChildren: './pages/view-user-profile/view-user-profile.module#ViewUserProfilePageModule', canActivate: [AuthGuard] }
 ];

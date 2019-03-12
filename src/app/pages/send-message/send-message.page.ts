@@ -18,7 +18,7 @@ export class SendMessagePage implements OnInit {
   messageText = '';
   recipientName = '';
   extraParams = '';
-
+  items: string[] = [];
   constructor(
     private navController: NavController,
     private activatedRoute: ActivatedRoute,
@@ -28,11 +28,11 @@ export class SendMessagePage implements OnInit {
     ) { }
 
   ngOnInit() {
-    const items = this.activatedRoute.snapshot.paramMap.get('source').split('-');
-    this.goBackTo = items[0];
-    this.recipientID = parseInt(items[1], 10);
-    if (items.length === 3) {
-      this.extraParams = items[2];
+    this.items = this.activatedRoute.snapshot.paramMap.get('source').split('-');
+    this.goBackTo = this.items[0];
+    this.recipientID = parseInt(this.items[1], 10);
+    if (this.items.length === 3) {
+      this.extraParams = this.items[2];
     }
     this.wbma.getUserInformation(this.recipientID).subscribe((user) => {
       this.recipientName = user.username;
@@ -55,6 +55,9 @@ export class SendMessagePage implements OnInit {
 
   goBack() {
     switch (this.goBackTo) {
+      case 'viewuserprofile':
+      this.navController.navigateBack('/view-user-profile/' + this.extraParams);
+        break;
       case 'lent':
         this.navController.navigateBack('/tabs/lent');
         break;
@@ -62,7 +65,7 @@ export class SendMessagePage implements OnInit {
         this.navController.navigateBack('/tabs/messages');
         break;
       case 'readmessage':
-        this.navController.navigateBack('/readmessage/'  + this.extraParams);
+        this.navController.navigateBack('/readmessage/' + this.extraParams);
         break;
       default:
         this.navController.navigateBack('/tabs/borrowed');

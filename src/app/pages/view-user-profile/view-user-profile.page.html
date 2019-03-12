@@ -3,7 +3,10 @@
       <ion-buttons slot="start">
         <ion-button (click)="goBack()" color="dark"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
       </ion-buttons> 
-      <ion-title>##USER##</ion-title>
+      <ion-title> {{userName}} </ion-title>
+      <ion-buttons slot="end">
+        <ion-button *ngIf="myUserID !== userID" (click)="sendMessageTouser()" color="dark">Send Message</ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 <ion-content padding>

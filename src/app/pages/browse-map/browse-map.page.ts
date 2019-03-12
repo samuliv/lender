@@ -4,6 +4,7 @@ import * as L from 'leaflet';
 import { GpsPositionService } from 'src/app/services/gps-position/gps-position.service';
 import { Coordinates } from 'src/app/interfaces/coordinates';
 import { GlobalService } from 'src/app/services/global/global.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-browse-map',
@@ -13,12 +14,15 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class BrowseMapPage implements OnInit {
 
   map: L.map;
+  params: string;
   constructor(
     private navController: NavController,
     private gpsPosition: GpsPositionService,
-    private glb: GlobalService) { }
+    private glb: GlobalService,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.params = this.activatedRoute.snapshot.paramMap.get('params');
   }
 
   ionViewDidEnter() {
@@ -26,7 +30,6 @@ export class BrowseMapPage implements OnInit {
   }
 
   loadMap() {
-
     const borrowableItems = this.glb.mediaItemsChaceGet();
     let zoomValue = 12;
     let coords: Coordinates = { latitude: 60.221096, longitude: 24.807696};
@@ -66,15 +69,14 @@ export class BrowseMapPage implements OnInit {
         .bindPopup(popupData);
       }
     }
-    
-  }
-
-  borrowItem() {
-    console.log('TODO');
   }
 
   goBack() {
-    this.navController.navigateBack('/tabs/browse');
+    if (this.params === 'borrowed') {
+      this.navController.navigateBack('/tabs/borrowed');
+    } else {
+      this.navController.navigateBack('/tabs/browse');
+    }
   }
 
 }

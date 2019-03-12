@@ -81,6 +81,7 @@ export class BorrowedPage implements OnInit {
     this.extra.getListBorrowed(this.wbma.getMyUserID()).subscribe(res => {
       this.borrowedItems = res;
       this.wbma.dataMerge(this.borrowedItems);
+      this.wbma.usernameMerge(this.borrowedItems);
       this.refreshBorrowedListBadge();
     });
   }
@@ -90,6 +91,7 @@ export class BorrowedPage implements OnInit {
     this.extra.getListBorrowedPending(this.wbma.getMyUserID()).subscribe(res => {
       this.pendingItems = res;
       this.wbma.dataMerge(this.pendingItems);
+      this.wbma.usernameMerge(this.pendingItems);
       this.refreshPendingListBadge();
     });
   }
@@ -100,6 +102,7 @@ export class BorrowedPage implements OnInit {
       this.toolbarBadgeFeedback = res.length;
       this.feedbackItems = res;
       this.wbma.dataMerge(this.feedbackItems);
+      this.wbma.usernameMerge(this.feedbackItems);
     })
   }
 
@@ -150,7 +153,11 @@ export class BorrowedPage implements OnInit {
     }, {
       text: 'View Location on Map',
       handler: () => {
-        console.log('TODO');
+        this.wbma.getSingleMedia(item.item_id).subscribe((mediaItem) => {
+          this.wbma.readSingleMediaData(mediaItem);
+          this.glb.mediaItemsChaceSet([mediaItem]);
+          this.router.navigate(['/browse-map/borrowed']);
+        });
       }
     }
   ];
