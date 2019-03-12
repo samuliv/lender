@@ -214,7 +214,9 @@ $color-fore-dark: #222;
 }
 
 
-.sc-ion-action-sheet-ios {
+.sc-ion-action-sheet-ios,
+.sc-ion-alert-ios,
+.sc-ion-picker-ios {
     color: #222 !important;
 }
 
