@@ -5,34 +5,34 @@
     </div>
     <div *ngIf="!creatingAccount" class="container">
 
-
-        <ion-input class="lender-input" autofocus="true" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Username" type="text" [(ngModel)]="username"></ion-input>
-        <div class="error-div" *ngIf="errorWithUsername !== ''">{{ errorWithUsername }}</div>
-        <ion-input class="lender-input" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Password" type="password" [(ngModel)]="password"></ion-input>
-        <div class="error-div" *ngIf="errorWithPassword !== ''">{{ errorWithPassword }}</div>
+        <ion-input class="lender-input" [color]="errorWithUsername === '' ? '' : 'danger'" autofocus="true" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Username" type="text" [(ngModel)]="username"></ion-input>
+        <ion-input class="lender-input" [color]="errorWithPassword === '' ? '' : 'danger'" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Password" type="password" [(ngModel)]="password"></ion-input>
         <br>
         <div *ngIf="showLoading" class="spinner-container">
             <ion-spinner name="dots"></ion-spinner>
         </div>
+
+        <div class="error-div" *ngIf="errorWithUsername !== ''">{{ errorWithUsername }}</div>
+        <div class="error-div" *ngIf="errorWithPassword !== ''">{{ errorWithPassword }}</div>
+
         <ion-button *ngIf="!showLoading" [disabled]="!loginFormValidated" id="loginBtn" expand="block" size="large" color="dark" (click)="loginButtonClick()">Login</ion-button>
         <ion-button *ngIf="!showLoading" id="crtAccnt" expand="block" fill="outline" color="light" (click)="createAccount()" size="small">Create Account</ion-button>
 
-        
     </div>
     <div *ngIf="creatingAccount" class="container">
 
-        <ion-input class="lender-input" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Username" type="text" [minlength]="3" [(ngModel)]="username"></ion-input>
-        <div class="error-div" *ngIf="errorWithUsername !== ''">{{ errorWithUsername }}</div>
-        <ion-input class="lender-input" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Password" type="password" [minlength]="3" [(ngModel)]="password"></ion-input>
-        <div class="error-div" *ngIf="errorWithPassword !== ''">{{ errorWithPassword }}</div>
-        <ion-input class="lender-input" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Email" type="text" [(ngModel)]="email"></ion-input>
-        <div class="error-div" *ngIf="errorWithEmail !== ''">{{ errorWithEmail }}</div>        
-        <ion-input class="lender-input" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Full name" type="text" [(ngModel)]="full_name"></ion-input>
-        <div class="error-div" *ngIf="errorWithFullName !== ''">{{ errorWithFullName }}</div>
+        <ion-input class="lender-input" [color]="errorWithUsername === '' ? '' : 'danger'"(change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Username" type="text" [minlength]="3" [(ngModel)]="username"></ion-input>
+        <ion-input class="lender-input" [color]="errorWithPassword === '' ? '' : 'danger'" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Password" type="password" [minlength]="3" [(ngModel)]="password"></ion-input>
+        <ion-input class="lender-input" [color]="errorWithEmail === '' ? '' : 'danger'" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Email" type="text" [(ngModel)]="email"></ion-input>
+        <ion-input class="lender-input" [color]="errorWithFullName === '' ? '' : 'danger'" (change)="someParameterChanged()" (keyup)="someParameterChanged()" placeholder="Full name" type="text" [(ngModel)]="full_name"></ion-input>
         <br>
         <div *ngIf="showLoading" class="spinner-container">
             <ion-spinner name="dots"></ion-spinner>
         </div>
+        <div class="error-div" *ngIf="errorWithUsername !== ''">{{ errorWithUsername }}</div>
+        <div class="error-div" *ngIf="errorWithPassword !== ''">{{ errorWithPassword }}</div>
+        <div class="error-div" *ngIf="errorWithEmail !== ''">{{ errorWithEmail }}</div>        
+        <div class="error-div" *ngIf="errorWithFullName !== ''">{{ errorWithFullName }}</div>
         <ion-button *ngIf="!showLoading" [disabled]="!registerFormValidated" id="registerBtn" expand="block" size="large" color="dark" (click)="registerButtonClick()">Register</ion-button>
         <ion-button *ngIf="!showLoading" id="signIn" expand="block" fill="outline" color="light" (click)="createAccount()" size="small">Already signed up?</ion-button>
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Events, AlertController } from '@ionic/angular';
+import { Events, AlertController, ToastController } from '@ionic/angular';
 import { ExtraService } from '../extra/extra.service';
 import { WbmaService } from '../wbma/wbma.service';
 import { NotifyService } from '../notify/notify.service';
@@ -17,7 +17,7 @@ export class GlobalService {
   backgroundRefresh: any;
   backgroundRefreshRunning = false;
   mediaItemsChace: MediaItem[] = [];
-  networkStatus = true;
+  ntwrkStatus = true;
 
   constructor(
     private events: Events,
@@ -26,27 +26,46 @@ export class GlobalService {
     private notify: NotifyService,
     private alertController: AlertController,
     private network: Network,
+    private tosastController: ToastController,
   ) {
     this.checkStatus();
     this.backgroundRefreshStart();
     this.startNetworkStatusSubscribtion();
   }
 
+  getNetworkStatus() {
+    return this.ntwrkStatus;
+  }
+
   /* Monitor the network Online/Offline Status */
   startNetworkStatusSubscribtion() {
     let disconnect = this.network.onDisconnect().subscribe(() => {
-      if (this.networkStatus === false) {
-        this.networkStatus = true;
+      if (this.ntwrkStatus === true) {
+        this.ntwrkStatus = false;
         this.events.publish('network-status-changed', true);
+        this.presentToast('Network Offline'), 'danger';
       }
     });
     let connect = this.network.onConnect().subscribe(() => {
-      if (this.networkStatus === false) {
-        this.networkStatus = true;
+      if (this.ntwrkStatus === false) {
+        this.ntwrkStatus = true;
         this.events.publish('network-status-changed', false);
         this.events.publish('network-went-to-offline');
+        this.presentToast('Network Online');
       }
     });
+  }
+
+  async presentToast(text: string, color?: string) {
+    if (!color) {
+      color = '';
+    }
+    const toast = await this.tosastController.create({
+      message: text,
+      position: 'top',
+      duration: 3000
+    });
+    toast.present();
   }
 
   backgroundRefreshStart() {

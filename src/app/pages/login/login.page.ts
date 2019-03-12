@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, Events } from '@ionic/angular';
 import { ExtraService } from 'src/app/services/extra/extra.service';
 import { UsernameAvailable } from 'src/app/interfaces/usernameavailable';
 import { LoginInfo } from 'src/app/interfaces/logininfo';
@@ -31,15 +31,21 @@ export class LoginPage implements OnInit {
   loginFormValidated = false;
   registerFormValidated = false;
   refreshTimer: any;
+  isNetworkConnection = false;
 
   constructor(
     private wbma: WbmaService,
     private extra: ExtraService,
-    private glb: GlobalService
+    private glb: GlobalService,
+    private events: Events,
     ) { }
 
   ngOnInit() {
     console.log('login.page.ts : ngOnInit()');
+    this.isNetworkConnection = this.glb.getNetworkStatus();
+    this.events.subscribe(('network-status-changed'), () => {
+      this.isNetworkConnection = this.glb.getNetworkStatus();
+    });
   }
 
   someParameterChanged() {
@@ -50,7 +56,7 @@ export class LoginPage implements OnInit {
     clearTimeout(this.refreshTimer);
     this.refreshTimer = setTimeout( () => {
       this.validate();
-    }, 250);
+    }, 400);
   }
 
   validate() {
