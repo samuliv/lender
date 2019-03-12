@@ -1,8 +1,9 @@
 /* EXTRA api lendItem response with merging */
 
 import { WbmaMergableItem } from "./wbma-mergable-item";
+import { WbmaMergableUserItem } from "./wbma-mergable-useritem";
 
-export interface LendItem extends WbmaMergableItem {
+export interface LendItem extends WbmaMergableItem, WbmaMergableUserItem {
     starts: string;
     ends: string;
     acceptable: boolean;
@@ -11,6 +12,7 @@ export interface LendItem extends WbmaMergableItem {
     item_id: number;
     lend_id: number;
     user_id: number;
+    user_name?: string;
     status: string;
     item_title?: string;
     item_description?: string;

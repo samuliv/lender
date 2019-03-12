@@ -99,6 +99,7 @@ export class LentPage implements OnInit {
     this.extra.getListLent(this.wbma.getMyUserID()).subscribe(res => {
       this.lentItems = res;
       this.wbma.dataMerge(this.lentItems);
+      this.wbma.usernameMerge(this.lentItems);
       this.refreshLentListBadge();
     });
   }
@@ -108,6 +109,7 @@ export class LentPage implements OnInit {
     this.extra.getListLentPending(this.wbma.getMyUserID()).subscribe(res => {
       this.pendingItems = res;
       this.wbma.dataMerge(this.pendingItems);
+      this.wbma.usernameMerge(this.pendingItems);
       this.refreshPendingListBadge();
     });
   }
@@ -118,6 +120,7 @@ export class LentPage implements OnInit {
       this.toolbarBadgeFeedback = res.length;
       this.feedbackItems = res;
       this.wbma.dataMerge(this.feedbackItems);
+      this.wbma.usernameMerge(this.feedbackItems);
     })
   }
 

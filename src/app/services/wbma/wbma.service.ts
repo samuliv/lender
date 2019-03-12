@@ -11,6 +11,8 @@ import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { WbmaMergableItem } from 'src/app/interfaces/wbma-mergable-item';
 import { MemoryService } from '../memory/memory.service';
+import { LendItem } from 'src/app/interfaces/lenditem';
+import { WbmaMergableUserItem } from 'src/app/interfaces/wbma-mergable-useritem';
 
 /*
   Metropolia WBMA-api Communication Service
@@ -179,6 +181,16 @@ export class WbmaService {
                     if (res.hasOwnProperty('thumbnails') && res.thumbnails.hasOwnProperty('w160')) {
                         arr[i].item_thumb = this.getApiUploadsUrl() + res.thumbnails.w160;
                     }
+                });
+            }
+        }
+    }
+
+    usernameMerge(arr: WbmaMergableUserItem[]) {
+        if (arr.length > 0) {
+            for (let i = 0; i < arr.length; i++) {
+                this.getUserInformation(arr[i].user_id).subscribe((userInfo) => {
+                    arr[i].user_name = userInfo.username;
                 });
             }
         }
