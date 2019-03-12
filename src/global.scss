@@ -212,3 +212,12 @@ $color-fore-dark: #222;
     border: 1px solid #ddd;
     border-radius: 8px;
 }
+
+
+.sc-ion-action-sheet-ios {
+    color: #222 !important;
+}
+
+.action-sheet-destructive .sc-ion-action-sheet-ios {
+    color: #ff0000 !important;
+}

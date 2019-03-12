@@ -173,7 +173,7 @@ export class BorrowedPage implements OnInit {
       }});
     }
 
-    buttons.push({text: 'Close'});
+    buttons.push({text: 'Close', role: 'cancel'});
 
     const actionSheet = await this.actionSheetController.create({
       header: 'Request Operations',
