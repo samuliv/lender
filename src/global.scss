@@ -96,6 +96,7 @@ $color-fore-dark: #222;
     --ion-color-primary: #8bb2ff;
     --ion-color-primary-shade: #6185ce;
     --ion-color-primary-contrast: #000;
+    --ion-color-tertiary: #CBD1FF;
 
     --ion-color-secondary: #ffd37e;
     --ion-color-secondary-shade: #dbae53;
@@ -128,7 +129,7 @@ $color-fore-dark: #222;
 }
 
 .list-item {
-    background: #8bb2ff linear-gradient(#8bb2ff, #7ea2e9);
+    background: var(--ion-color-primary) linear-gradient(#8bb2ff, #7ea2e9);
     width: 100%;
     border: 1px solid #6086d1;
     border-radius: 8px;

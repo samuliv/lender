@@ -30,7 +30,7 @@
 }  
 
 .itemList li.selectedItem {
-  background: #4b87ff;
+  background: var(--ion-toolbar-background);
   color: #fff;
   font-weight: bold;
 }

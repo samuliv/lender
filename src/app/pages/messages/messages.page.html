@@ -33,7 +33,7 @@
   </ion-refresher>
 
   <ion-list lines="full" *ngIf="viewPage === 'inbox'">
-    <div class="list-item" [ngClass]="!message.readed ? '' : 'list-item-secondary'" *ngFor="let message of inbox" (click)="readInboxMessage(message.id, message.readed, message)">
+    <div class="received-item" [ngClass]="!message.readed ? '' : 'list-item-secondary'" *ngFor="let message of inbox" (click)="readInboxMessage(message.id, message.readed, message)">
       <ion-item color="transparent">
         <ion-label>
           <div class="span-container">
@@ -50,7 +50,7 @@
   <div *ngIf="(viewPage === 'inbox' && inbox.length === 0)" class="no-items">No messages in Inbox.</div>
 
   <ion-list lines="full" *ngIf="viewPage === 'sent'">
-    <div class="list-item" [ngClass]="!message.readed ? '' : 'list-item-secondary'" *ngFor="let message of outbox" (click)="readOutboxMessage(message.id)">
+    <div class="sent-item" [ngClass]="!message.readed ? '' : 'list-item-secondary'" *ngFor="let message of outbox" (click)="readOutboxMessage(message.id)">
       <ion-item color="transparent">
         <ion-label>
           <div class="span-container">
