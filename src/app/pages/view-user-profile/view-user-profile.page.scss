@@ -1,0 +1,20 @@
+.profile-picture {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 120px;
+    max-width: 250px;
+}
+
+.user-fullname, .user-nickname, .user-email, .user-stats {
+    text-align: center !important;
+}
+.user-nickname {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.user-fullname, .user-email {
+    font-size: 13px;
+}

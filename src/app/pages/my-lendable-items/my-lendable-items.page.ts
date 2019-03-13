@@ -97,6 +97,7 @@ export class MyLendableItemsPage implements OnInit {
 
   refreshList() {
     this.wbma.getLendableItems().subscribe((res) => {
+      this.wbma.preFilter(res);
       if (res.length > 0) {
         // remove other's media
         for (let i=res.length-1; i>-1; i--) {

@@ -11,7 +11,6 @@ import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { WbmaMergableItem } from 'src/app/interfaces/wbma-mergable-item';
 import { MemoryService } from '../memory/memory.service';
-import { LendItem } from 'src/app/interfaces/lenditem';
 import { WbmaMergableUserItem } from 'src/app/interfaces/wbma-mergable-useritem';
 
 /*
@@ -94,6 +93,10 @@ export class WbmaService {
         return this.http.get<MediaItem[]>(this.apiUrl + 'tags/' + this.appTag);
     }
 
+    getAllMediaByUserID(user_id: number) {
+        return this.http.get<MediaItem[]>(this.apiUrl + 'media/user/' + user_id);
+    }
+
     getUserInformation(user_id: number) {
         return this.http.get<User>(this.apiUrl + 'users/' + user_id.toString(), this.accessTokenHeader());
     }
@@ -130,6 +133,26 @@ export class WbmaService {
                 } else {
                     console.log('ERROR: ' + res.message);
                     reject(res.message);
+                }
+            });
+        });
+    }
+
+    getTempProfilePic() {
+        return 'https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png';
+    }
+
+    getUserProfilePicture(user_id: number) {
+        return new Promise((resolve, reject) => {
+            this.getAllMediaByUserID(user_id).subscribe((userMedia) => {
+                let profilePic = '';
+                for (let i = 0; i < userMedia.length; i++) {
+                    if ( userMedia[i].description === 'lender-profile-picture' && userMedia[i].title === 'lender-profile-picture' ) {
+                        profilePic = this.getApiUploadsUrl() + userMedia[i].filename;
+                    }
+                }
+                if (profilePic !== '') {
+                    resolve(profilePic);
                 }
             });
         });
@@ -217,9 +240,22 @@ export class WbmaService {
         mediaItem.media_data.thumb = this.getApiUploadsUrl() + mediaItem.filename.split('.').slice(0, -1).join('.') + '-tn160.png';
     }
 
+    /* Prefilter data because not fully working WBMA Backend =( */
+    preFilter(mediaItem: MediaItem[]) {
+        if (mediaItem.length > 0) {
+            for (let i = mediaItem.length-1; i>=0; i--) {
+              if (mediaItem[i].description === 'lender-profile-picture') {
+                mediaItem.splice(i,1);
+              }
+            }
+          }
+    }
+
     readMediaData(mediaItem: MediaItem[]) {
         mediaItem.forEach((i) => {
-            this.readSingleMediaData(i);
+            if (i.description !== 'lender-profile-picture') {
+                this.readSingleMediaData(i);
+            }
         });
         return mediaItem;
     }

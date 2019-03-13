@@ -200,7 +200,10 @@ export class BrowsePage implements OnInit{
           this.gpsPositionService.longitude,
           arr[i].media_data.lat,
           arr[i].media_data.lon);
-        if (this.selectedCategoryID !== 0) {
+        if (arr[i].description === 'lender-profile-picture') {
+          hideItem = true;
+        }
+        if (hideItem !== true && this.selectedCategoryID !== 0) {
           if(this.selectedCategoryContains.indexOf(arr[i].media_data.category) === -1) {
             hideItem = true;
           }
@@ -240,6 +243,7 @@ export class BrowsePage implements OnInit{
   refreshBrowseItems() {
     this.borrowableItems = [];
     this.wbma.getAllMediaByAppTagAsMediaItem().subscribe((res) => {
+      this.wbma.preFilter(res);
       this.tempItems = this.wbma.readMediaData(res);
       this.applyFiltering(this.tempItems);
       if (this.tempItems.length > 0) {

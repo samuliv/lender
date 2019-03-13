@@ -12,9 +12,11 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class ViewUserProfilePage implements OnInit {
 
   userName = '';
+  userEmail = '';
   userID = 0;
   myUserID = 0;
   params: string[] = [];
+  profilePic = this.wbma.getTempProfilePic();
   constructor(
     private navController: NavController,
     private activatedRoute: ActivatedRoute,
@@ -30,7 +32,11 @@ export class ViewUserProfilePage implements OnInit {
       this.myUserID = this.wbma.getMyUserID();
       this.userID = userInfo.user_id;
       this.userName = userInfo.username;
+      this.userEmail = userInfo.email;
     });
+    this.wbma.getUserProfilePicture(this.userID).then((res: string) => {
+      this.profilePic = res;
+    }).catch((e) => { console.log(e); });
   }
 
   sendMessageTouser () {

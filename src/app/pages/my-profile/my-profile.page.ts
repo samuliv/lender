@@ -20,6 +20,7 @@ export class MyProfilePage implements OnInit {
   userEmail = '';
   userNameEdit = '';
   userEmailEdit = '';
+  profilePic = this.wbma.getTempProfilePic();
 
   userInfo: UserInfo;
   editingProfile = false;
@@ -67,6 +68,9 @@ export class MyProfilePage implements OnInit {
         this.fetched++;
         this.beginRoll();
       });
+      this.wbma.getUserProfilePicture(this.wbma.getMyUserID()).then((res: string) => {
+        this.profilePic = res;
+      }).catch((e) => { console.log(e); });
       this.getUserData();
     }, 500);
   }

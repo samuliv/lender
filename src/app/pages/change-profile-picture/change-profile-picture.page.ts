@@ -55,17 +55,10 @@ export class ChangeProfilePicturePage implements OnInit {
     this.wbma.uploadFile(formData)
     .subscribe((res: any) => {
       if ( res.message === 'File uploaded' ) {
-        this.wbma.addTagToFile(parseInt(res.file_id, 10), this.wbma.getAppTag()).subscribe((tag) => {
-          if ( tag.message === 'Tag added' ) {
-            setTimeout(() => {
-              loading.dismiss();
-              this.goBack();
-             }, 2000); // 2000ms delay for thumbnail-creation ;)
-          } else {
-            loading.dismiss();
-            this.glb.messagePrompt('Media upload failed', 'Tag adding failed');
-          }
-        });
+        setTimeout(() => {
+          loading.dismiss();
+          this.goBack();
+          }, 2000); // 2000ms delay for thumbnail-creation ;)
       } else {
         loading.dismiss();
         this.glb.messagePrompt('Media upload failed', 'File upload failed.');
