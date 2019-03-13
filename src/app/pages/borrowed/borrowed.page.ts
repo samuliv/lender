@@ -153,7 +153,7 @@ export class BorrowedPage implements OnInit {
     }, {
       text: 'View Item Info',
       handler: () => {
-        console.log('TODO');
+        this.router.navigate(['/view-item/borrowed-' + item.item_id]);
       }
     }, {
       text: 'View Location on Map',

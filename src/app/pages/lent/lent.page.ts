@@ -155,7 +155,7 @@ export class LentPage implements OnInit {
     }, {
       text: 'View Item Info',
       handler: () => {
-        console.log('TODO');
+        this.router.navigate(['/view-item/lent-' + item.item_id]);
       }
     }];
 

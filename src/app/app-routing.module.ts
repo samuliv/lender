@@ -28,7 +28,8 @@ const routes: Routes = [
   { path: 'browse-map/:params', loadChildren: './pages/browse-map/browse-map.module#BrowseMapPageModule', canActivate: [AuthGuard] },
   { path: 'set-default-location/:params', loadChildren: './pages/set-default-location/set-default-location.module#SetDefaultLocationPageModule', canActivate: [AuthGuard] },
   { path: 'view-user-profile/:params', loadChildren: './pages/view-user-profile/view-user-profile.module#ViewUserProfilePageModule', canActivate: [AuthGuard] },
-  { path: 'change-profile-picture', loadChildren: './pages/change-profile-picture/change-profile-picture.module#ChangeProfilePicturePageModule', canActivate: [AuthGuard] }
+  { path: 'change-profile-picture', loadChildren: './pages/change-profile-picture/change-profile-picture.module#ChangeProfilePicturePageModule', canActivate: [AuthGuard] },
+  { path: 'view-item/:params', loadChildren: './pages/view-item/view-item.module#ViewItemPageModule', canActivate: [AuthGuard] }
 ];
 @NgModule({
   imports: [

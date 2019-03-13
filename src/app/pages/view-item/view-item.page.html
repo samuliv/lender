@@ -1,0 +1,22 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="goBack()" color="dark"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
+      </ion-buttons>
+      <ion-title>
+        View Item
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+<ion-content padding>
+  <div class="image-container">
+    <img [src]="mediaURL">
+  </div>
+  <div class="item-title">{{title}}</div>
+  <div class="item-description">{{description}}</div>
+  <div class="item-price">{{price}}</div>
+  <div class="item-distance">{{distance}}</div>
+
+</ion-content>
