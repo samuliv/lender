@@ -19,4 +19,47 @@
   <div class="user-nickname">{{ userName }}</div>
   <div class="user-email">{{ userEmail }}</div>
 
+  <div class="user-stats">
+    <table>
+      <tr>
+        <td>lent</td>
+        <td>{{ lent }}</td>
+        <td>borrowed</td>
+        <td>{{ borrowed }}</td>
+      </tr>
+      <tr>
+        <td>lendable stuff</td>
+        <td>{{ lendableStuff }}</td>
+        <td><ion-icon name="star"></ion-icon> rating</td>
+        <td>{{ rating }}</td>
+      </tr>
+      <tr>
+        <td><ion-icon name="thumbs-up"></ion-icon> feedback</td>
+        <td>{{ feedbackPositive }} %</td>
+        <td><ion-icon name="thumbs-down"></ion-icon> feedback</td>
+        <td>{{ feedbackNegative }} %</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="feedback">Feedback</div>
+
+  <div style="width:100%;text-align:center;" *ngIf="loading">
+    <ion-spinner name="dots"></ion-spinner>
+  </div>
+
+  <div class="no-items" *ngIf="loading === false && feedback.length === 0">No feedback.</div>
+
+  <div *ngFor="let f of feedback" class="feedback-block" [ngClass]="f.feedback === 1 ? 'feedback-positive' : 'feedback-negative'">
+    <div class="feedback-icon">
+      <ion-icon name="{{ f.feedback === 1 ? 'thumbs-up' : 'thumbs-down' }}"></ion-icon>
+    </div>
+    <div class="feedback-data">
+      {{ f.message }}
+      <br>
+      <span class="feedback-by-user">{{ f.user_name }}</span>
+      <span class="feedback-time">{{ f.ago }}</span>
+    </div>
+  </div>
+
 </ion-content>

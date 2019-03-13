@@ -58,6 +58,10 @@ export class AddLendableItemPage implements OnInit {
           this.itemCustomLocationLon = json.lon;
           this.itemCustomLocationSet = true;
           this.itemUseDefaultLocation = false;
+
+          const uploadedImage: any = document.getElementById('uploadedImage');
+          uploadedImage.src = this.wbma.getApiUploadsUrl() + res.thumbnails.w160;
+
           this.openstreetmap.describeCoordinates(json.lat, json.lon).then((location: string) => {
             this.itemLocation = location;
           });
