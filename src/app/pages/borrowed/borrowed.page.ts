@@ -183,6 +183,11 @@ export class BorrowedPage implements OnInit {
     await actionSheet.present();
   }
 
+  doRefresh(event) {
+    this.refershCurrentView();
+    event.target.complete();
+  }
+
   sendMessage(item: LendItem) {
     this.router.navigate(['/send-message/borrowed-' + item.user_id]);
   }

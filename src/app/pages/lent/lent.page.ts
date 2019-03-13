@@ -132,6 +132,11 @@ export class LentPage implements OnInit {
     }
   }
 
+  doRefresh(event) {
+    this.refershCurrentView();
+    event.target.complete();
+  }
+
   ionViewDidEnter() {
     console.log('lent.page.ts : ionViewDidEnter()');
   }

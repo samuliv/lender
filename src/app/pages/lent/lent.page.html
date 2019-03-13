@@ -39,6 +39,10 @@
 
 <ion-content padding>
 
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="Pull to Refresh" refreshingText="Refreshing..."></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list *ngIf="viewPage === 'lent'" lines="full">
 
     <div class="list-item" *ngFor="let item of lentItems" [ngClass]="item.status === 'pending' ? 'list-item-pending' : ''" (click)="itemClick(item)">

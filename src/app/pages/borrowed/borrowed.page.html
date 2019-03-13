@@ -35,6 +35,10 @@
   </ion-header>
   
   <ion-content padding>
+
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content pullingText="Pull to Refresh" refreshingText="Refreshing..."></ion-refresher-content>
+    </ion-refresher>
   
     <ion-list *ngIf="viewPage === 'borrowed'" lines="full">
   
