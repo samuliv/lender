@@ -6,6 +6,8 @@ import { Chooser } from '@ionic-native/chooser/ngx'
 import { MediaData } from 'src/app/interfaces/mediadata';
 import { OpenStreetMapService } from 'src/app/services/openstreetmap/openstreetmap.service';
 import { ExtraService } from 'src/app/services/extra/extra.service';
+import { MemoryService } from 'src/app/services/memory/memory.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-add-lendable-item',
@@ -41,6 +43,8 @@ export class AddLendableItemPage implements OnInit {
     private extra: ExtraService,
     private alertController: AlertController,
     private loadingController: LoadingController,
+    private memory: MemoryService,
+    private glb: GlobalService
     ) {
       this.source = this.activatedRoute.snapshot.paramMap.get('source');
       this.editItemID = parseInt(this.source.split('_')[0], 10);
@@ -147,7 +151,14 @@ export class AddLendableItemPage implements OnInit {
       let lon = 0;
 
       if ( this.itemUseDefaultLocation ) {
-        // TODO
+        if (this.memory.defaultLocationIsAvailable()) {
+          this.glb.messagePrompt('Default Location is not Set', 'You cannot use default location before it is set in your Profile Settings.');
+        } else {
+          const coords = this.memory.getDefaultLocationCoordinates();
+          lat = coords.latitude;
+          lon = coords.longitude;
+          return;
+        }
       } else {
         lat = this.itemCustomLocationLat;
         lon = this.itemCustomLocationLon;

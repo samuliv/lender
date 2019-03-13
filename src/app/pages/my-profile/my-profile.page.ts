@@ -195,7 +195,7 @@ export class MyProfilePage implements OnInit {
   }
 
   changeMyDefaultLocation() {
-    this.router.navigate(['/set-default-location']);
+    this.router.navigate(['/set-default-location/myprofile']);
   }
 
   chaneProfilePicture() {

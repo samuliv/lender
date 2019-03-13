@@ -68,6 +68,9 @@ export class ChooseLocationPage implements OnInit {
 
   goBack() {
     switch ( this.source ) {
+      case 'set-default-location':
+      this.navController.navigateBack('/set-default-location/myprofile');
+        break;
       case 'add-lendable-item':
         this.navController.navigateBack('/add-lendable-item/' + this.extension);
         break;

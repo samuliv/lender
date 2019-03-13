@@ -26,9 +26,9 @@ const routes: Routes = [
   { path: 'give-feedback/:source', loadChildren: './pages/give-feedback/give-feedback.module#GiveFeedbackPageModule', canActivate: [AuthGuard] },
   { path: 'change-password', loadChildren: './pages/change-password/change-password.module#ChangePasswordPageModule', canActivate: [AuthGuard] },
   { path: 'browse-map/:params', loadChildren: './pages/browse-map/browse-map.module#BrowseMapPageModule', canActivate: [AuthGuard] },
-  { path: 'set-default-location', loadChildren: './pages/set-default-location/set-default-location.module#SetDefaultLocationPageModule', canActivate: [AuthGuard] },
+  { path: 'set-default-location/:params', loadChildren: './pages/set-default-location/set-default-location.module#SetDefaultLocationPageModule', canActivate: [AuthGuard] },
   { path: 'view-user-profile/:params', loadChildren: './pages/view-user-profile/view-user-profile.module#ViewUserProfilePageModule', canActivate: [AuthGuard] },
-  { path: 'change-profile-picture', loadChildren: './pages/change-profile-picture/change-profile-picture.module#ChangeProfilePicturePageModule' }
+  { path: 'change-profile-picture', loadChildren: './pages/change-profile-picture/change-profile-picture.module#ChangeProfilePicturePageModule', canActivate: [AuthGuard] }
 ];
 @NgModule({
   imports: [
