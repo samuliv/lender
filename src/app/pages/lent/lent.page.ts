@@ -39,6 +39,9 @@ export class LentPage implements OnInit {
       this.refreshLentList();
       this.refreshPendingList();
     });
+    this.events.subscribe('login', () => {
+      this.refreshAll();
+    });
     this.events.subscribe('feedback-given', (source, id) => {
       if (source === 'lent') {
         this.refreshFeedbackList();

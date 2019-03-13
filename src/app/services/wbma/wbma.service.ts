@@ -12,6 +12,7 @@ import { catchError } from 'rxjs/operators';
 import { WbmaMergableItem } from 'src/app/interfaces/wbma-mergable-item';
 import { MemoryService } from '../memory/memory.service';
 import { WbmaMergableUserItem } from 'src/app/interfaces/wbma-mergable-useritem';
+import { Events } from '@ionic/angular';
 
 /*
   Metropolia WBMA-api Communication Service

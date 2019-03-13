@@ -45,6 +45,9 @@ export class BorrowedPage implements OnInit {
         this.refreshFeedbackList();
       }
     });
+    this.events.subscribe('login', () => {
+      this.refreshAll();
+    });    
     this.refreshAll();
   }
 

@@ -113,21 +113,27 @@ export class GlobalService {
         if (stat.success) {
           let tabBarNeedsRefreshing = false;
           if (this.badgeTabBarBorrowed !== stat.unreaded_borrowings) {
-            this.badgeTabBarBorrowed = stat.unreaded_borrowings;
-            tabBarNeedsRefreshing = true;
-            this.events.publish('refresh-borrowed');
+            if (this.badgeTabBarBorrowed < stat.unreaded_borrowings) {
+              this.events.publish('refresh-borrowed');
+            }
+          this.badgeTabBarBorrowed = stat.unreaded_borrowings;
+          tabBarNeedsRefreshing = true;
           }
           if (this.badgeTabBarLent !== stat.unhandled_lends) {
-            this.badgeTabBarLent = stat.unhandled_lends;
-            tabBarNeedsRefreshing = true;
-            this.events.publish('refresh-lent');
+            if (this.badgeTabBarLent < stat.unhandled_lends) {
+              this.events.publish('refresh-lent');
+            }
+          this.badgeTabBarLent = stat.unhandled_lends;
+          tabBarNeedsRefreshing = true;
           }
           if (this.badgeTabBarMessages !== stat.unreaded_messages) {
+            if (this.badgeTabBarMessages < stat.unreaded_messages) {
+              this.events.publish('refresh-messages');
+              this.notify.publish('New Message', '');
+              }
             this.badgeTabBarMessages = stat.unreaded_messages;
             tabBarNeedsRefreshing = true;
-            this.events.publish('refresh-messages');
-            this.notify.publish('New Message', '');
-          }
+            }
           if (tabBarNeedsRefreshing) {
             this.events.publish('refresh-tab-badges');
           }

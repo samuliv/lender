@@ -120,7 +120,6 @@ export class AddLendableItemPage implements OnInit {
     if ( this.itemDescription.length < 3 ) {
       errors.push('Item description must contain over 3 characters.');
     }
-    // TODO : LOCATION
     if ( this.itemPrice === '' ) {
       errors.push('Item price must be specified.');
     } else {
@@ -238,11 +237,6 @@ export class AddLendableItemPage implements OnInit {
     this.itemUseDefaultLocation = true;
     this.itemCustomLocationSet = false;
     this.itemLocation = '(default location)';
-    this.checkDoesDefaultLocationExists();
-  }
-
-  checkDoesDefaultLocationExists() {
-    // TODO
   }
 
   choosePicture() {

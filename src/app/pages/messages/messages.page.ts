@@ -43,7 +43,9 @@ export class MessagesPage implements OnInit {
     this.events.subscribe('tour-messages-feedback-reset', (source, id) => {
       this.viewPage = 'inbox';
     });
-
+    this.events.subscribe('login', () => {
+      this.refreshAll();
+    });
   }
 
   getUserNames(arr: Message[], sent: boolean) {
@@ -118,21 +120,6 @@ export class MessagesPage implements OnInit {
     this.refreshFeedback();
   }
 
-  // readInboxMessage(id: number, alreadyReaded: boolean, message: Message) {
-  //   if ( !alreadyReaded ) {
-  //     this.extra.markMessageAsReaded(id).subscribe(res => {
-  //       console.log('This message was unreaded. Trying to mark as readed:');
-  //       console.log('...markMessageAsReaded(id): success = ' + res.success);
-  //       if ( res.success ) {
-  //         message.readed = true;
-  //         this.refreshBadgeInbox();
-  //         this.glb.tabBarIconsNeedRefreshing();
-  //       }
-  //     });
-  //   }
-  //   this.router.navigate(['/readmessage/' + id]);
-  // }
-
   inboxMessageClick(message: Message) {
     if (message.readed === false) {
       this.extra.markMessageAsReaded(message.id).subscribe(res => {
@@ -190,10 +177,6 @@ export class MessagesPage implements OnInit {
 
     await actionSheet.present();
   }
-
-  // readOutboxMessage(id: number) {
-  //   this.router.navigate(['/readmessage/' + id]);
-  // }
 
   readFeedback(id: number) {
     this.router.navigate(['/readmessage/' + id]);

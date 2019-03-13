@@ -46,21 +46,6 @@
       </div>
     </div>
 
-  <!-- <ion-list lines="full" *ngIf="viewPage === 'inbox'">
-    <div class="list-item received-item" [ngClass]="!message.readed ? 'unreaded' : 'list-item-secondary readed'" *ngFor="let message of inbox" (click)="readInboxMessage(message.id, message.readed, message)">
-      <ion-item color="transparent">
-        <ion-label>
-          <div class="span-container">
-            <span class="badge-unreaded" *ngIf="!message.readed">NEW</span>
-            <span class="badge-time">{{ message.ago }}</span>
-          </div>
-          <p class="message-text">{{ message.message }}</p>
-          <p class="message-sender-name">{{ message.sender_name }}</p>
-        </ion-label>
-      </ion-item>
-    </div>
-  </ion-list> -->
-
   <div *ngIf="(viewPage === 'inbox' && inbox.length === 0)" class="no-items">No messages in Inbox.</div>
   
   <div *ngIf="(viewPage === 'sent')">
@@ -77,21 +62,6 @@
     </div>
   </div>
 
-  <!-- <ion-list lines="full" *ngIf="viewPage === 'sent'">
-    <div class="list-item sent-item" [ngClass]="!message.readed ? 'unreaded' : 'list-item-secondary readed'" *ngFor="let message of outbox" (click)="readOutboxMessage(message.id)">
-      <ion-item color="transparent">
-        <ion-label>
-          <div class="span-container">
-            <span class="badge-unreaded" *ngIf="!message.readed">NEW</span>
-            <span class="badge-time">{{ message.ago }}</span>
-          </div>
-          <p class="message-text">{{ message.message }}</p>
-          <p class="message-sender-name">{{ message.recipient_name }}</p>
-        </ion-label>
-      </ion-item>
-    </div>
-  </ion-list> -->
-
   <div *ngIf="(viewPage === 'sent' && outbox.length === 0)" class="no-items">No messages in outbox.</div>
 
   <div *ngIf="(viewPage === 'feedback')">
@@ -107,25 +77,6 @@
       </div>
     </div>
   </div>
-
-  <!-- <ion-list lines="full" *ngIf="viewPage === 'feedback'">
-    <div class="list-item" [ngClass]="item.feedback === 1 ? 'list-item-success' : 'list-item-danger'" *ngFor="let item of feedback">
-      <ion-item color="transparent">
-        <ion-label>
-          <div class="span-container">
-            <span class="big-number">{{ item.feedback === 1 ? '+' : '-' }}</span>
-            <span class="badge-time">{{ item.ago }}</span>
-            <span class="badge-time">{{ item.role }}</span>
-          </div>
-          <div class="span-container" *ngIf="item.item_name">
-              <span class="badge-time">{{ item.item_name }}</span>
-            </div>
-          <p class="starts">{{ item.message }}</p>
-          <span class="username">{{ item.user_name }}</span>
-        </ion-label>
-      </ion-item>
-    </div>
-  </ion-list> -->
 
   <div *ngIf="(viewPage === 'feedback' && feedback.length === 0)" class="no-items">You have not received any feedback yet.</div>
 

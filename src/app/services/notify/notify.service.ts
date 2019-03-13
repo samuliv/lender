@@ -11,6 +11,7 @@ export class NotifyService {
   ) { }
 
   publish (notificationText: string, dataParameters: string) {
+    console.log('Notify Publish: ' + notificationText);
     this.localNotifications.schedule({
       text: notificationText,
       data: dataParameters

@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
-import { AlertController, Events } from '@ionic/angular';
+import { Events } from '@ionic/angular';
 import { ExtraService } from 'src/app/services/extra/extra.service';
-import { UsernameAvailable } from 'src/app/interfaces/usernameavailable';
-import { LoginInfo } from 'src/app/interfaces/logininfo';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -115,6 +112,7 @@ export class LoginPage implements OnInit {
       this.username = '';
       this.password = '';
       this.showLoading = false;
+      this.events.publish('login');
     }).catch((err) => {
       this.showLoading = false;
       this.glb.messagePrompt('Login Error', err);

@@ -125,10 +125,6 @@ export class ExtraService {
     return this.http.get<Success>(this.extraURL + '?operation=sendmessage&from=' + from_id.toString() + '&to=' + to_id.toString() + '&message=' + message);
   }
 
-  public backgroundRefresh() {
-    // todo
-  }
-
   public availabilityCheck(item: MediaItem, startTime: string, endTime: string) {
     return this.http.get<AvailabilityResponse>(this.extraURL + '?operation=availability-check&id=' + item.file_id + '&start=' + startTime + '&end=' + endTime + '&owner=' + item.user_id);
   }
