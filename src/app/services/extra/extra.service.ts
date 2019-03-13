@@ -104,6 +104,10 @@ export class ExtraService {
     return this.http.get<Success>(this.extraURL + '?operation=markmessageasreaded&id=' + message_id);
   }
 
+  public deleteMessage(message_id: number) {
+    return this.http.get<Success>(this.extraURL + '?operation=deletemessage&message_id=' + message_id);
+  }
+
   public getCategoryNameById(id: number) {
     return this.http.get<Category>(this.extraURL + '?operation=get-category-byid&id=' + id);
   }

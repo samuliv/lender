@@ -226,3 +226,76 @@ $color-fore-dark: #222;
 .action-sheet-destructive .sc-ion-action-sheet-ios {
     color: #ff0000 !important;
 }
+
+
+
+/* FEEDBACK */
+
+.feedback {
+    width: 100%;
+    margin-bottom: 9px;
+    font-size: 12px;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px #eee solid;
+}
+
+.feedback-block {
+    margin-top: 10px;
+    width: 100%;
+    display: table;
+}
+.feedback-icon {
+    display: table-cell;
+    width: 52px;
+    text-align: center;
+    font-size: 30px;
+    vertical-align: middle;
+}
+.feedback-data {
+    vertical-align: middle;
+    display: table-cell;
+    background: #eee linear-gradient(#f6f6f6, #eee);
+    -webkit-box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.05);
+    -moz-box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.05);
+    box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.05);
+    padding: 10px;
+    border: 1px solid #eaeaea;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.feedback-by-user,
+.feedback-time {
+    font-size: 10px;
+}
+.feedback-by-user {
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.feedback-positive {
+    color: #1d811d;
+}
+
+.feedback-negative {
+    color: #a52828;
+}
+.message-readed {
+    color: #222;
+}
+.message-readed .feedback-icon {
+    opacity: 0.3;
+}
+.message-unreaded .feedback-icon {
+    color: var(--ion-color-primary);
+}
+.message-unreaded .feedback-data {
+    background: var(--ion-color-primary) linear-gradient(#f8dd99,#fed772);
+}
+.message-unreaded {
+    color: #222;
+}
+.no-items {
+    font-size: 10px;
+}

@@ -5,7 +5,7 @@ import { Feedback } from '../../interfaces/feedback';
 import { Router } from '@angular/router';
 import { WbmaService } from 'src/app/services/wbma/wbma.service';
 import { GlobalService } from 'src/app/services/global/global.service';
-import { Events } from '@ionic/angular';
+import { Events, ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-messages',
@@ -25,7 +25,9 @@ export class MessagesPage implements OnInit {
     private wbma: WbmaService,
     private glb: GlobalService,
     private events: Events,
-    private router: Router) {
+    private router: Router,
+    private actionSheetController: ActionSheetController,
+    ) {
     this.viewPage = 'inbox';
   }
 
@@ -116,24 +118,82 @@ export class MessagesPage implements OnInit {
     this.refreshFeedback();
   }
 
-  readInboxMessage(id: number, alreadyReaded: boolean, message: Message) {
-    if ( !alreadyReaded ) {
-      this.extra.markMessageAsReaded(id).subscribe(res => {
-        console.log('This message was unreaded. Trying to mark as readed:');
-        console.log('...markMessageAsReaded(id): success = ' + res.success);
+  // readInboxMessage(id: number, alreadyReaded: boolean, message: Message) {
+  //   if ( !alreadyReaded ) {
+  //     this.extra.markMessageAsReaded(id).subscribe(res => {
+  //       console.log('This message was unreaded. Trying to mark as readed:');
+  //       console.log('...markMessageAsReaded(id): success = ' + res.success);
+  //       if ( res.success ) {
+  //         message.readed = true;
+  //         this.refreshBadgeInbox();
+  //         this.glb.tabBarIconsNeedRefreshing();
+  //       }
+  //     });
+  //   }
+  //   this.router.navigate(['/readmessage/' + id]);
+  // }
+
+  inboxMessageClick(message: Message) {
+    if (message.readed === false) {
+      this.extra.markMessageAsReaded(message.id).subscribe(res => {
         if ( res.success ) {
           message.readed = true;
           this.refreshBadgeInbox();
           this.glb.tabBarIconsNeedRefreshing();
         }
       });
+    } else {
+      this.messageOperations(message);
     }
-    this.router.navigate(['/readmessage/' + id]);
   }
 
-  readOutboxMessage(id: number) {
-    this.router.navigate(['/readmessage/' + id]);
+  outboxMessageClick(message: Message) {
+    this.messageOperations(message);
   }
+
+  async messageOperations(message: Message) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Message Operations',
+      buttons: [ {
+        text: 'Reply',
+        handler: () => {
+          this.router.navigate(['/send-message/messages-' + message.from]);
+        }
+      }, {
+        text: 'Delete Message',
+        role: 'destructive',
+        handler: () => {
+          this.extra.deleteMessage(message.id).subscribe((messageDeleted) => {
+            if (messageDeleted.success) {
+              let removeID = -1;
+              if (this.viewPage === 'inbox') {
+                removeID = this.inbox.indexOf(message);
+                if (removeID !== -1) {
+                  this.inbox.splice(removeID, 1);
+                }
+              }
+              if (this.viewPage === 'sent') {
+                removeID = this.outbox.indexOf(message);
+                if (removeID !== -1) {
+                  this.outbox.splice(removeID, 1);
+                }
+              } 
+            }
+          });
+        }
+      }, {
+        text: 'Cancel',
+        role: 'cancel'
+      }
+    ]
+    });
+
+    await actionSheet.present();
+  }
+
+  // readOutboxMessage(id: number) {
+  //   this.router.navigate(['/readmessage/' + id]);
+  // }
 
   readFeedback(id: number) {
     this.router.navigate(['/readmessage/' + id]);

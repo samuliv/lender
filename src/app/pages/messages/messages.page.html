@@ -32,7 +32,21 @@
     <ion-refresher-content pullingText="Pull to Refresh" refreshingText="Refreshing..."></ion-refresher-content>
   </ion-refresher>
 
-  <ion-list lines="full" *ngIf="viewPage === 'inbox'">
+  <div *ngIf="(viewPage === 'inbox')">
+      <div *ngFor="let msg of inbox" class="feedback-block" [ngClass]="msg.readed ? 'message-readed' : 'message-unreaded'" (click)="inboxMessageClick(msg);">
+        <div class="feedback-icon">
+          <ion-icon name="{{ msg.readed ? 'mail' : 'mail-unread' }}"></ion-icon>
+        </div>
+        <div class="feedback-data">
+          {{ msg.message }}
+          <br>
+          <span class="feedback-by-user">{{ msg.sender_name }}</span>
+          <span class="feedback-time">{{ msg.ago }}</span>
+        </div>
+      </div>
+    </div>
+
+  <!-- <ion-list lines="full" *ngIf="viewPage === 'inbox'">
     <div class="list-item received-item" [ngClass]="!message.readed ? 'unreaded' : 'list-item-secondary readed'" *ngFor="let message of inbox" (click)="readInboxMessage(message.id, message.readed, message)">
       <ion-item color="transparent">
         <ion-label>
@@ -45,11 +59,25 @@
         </ion-label>
       </ion-item>
     </div>
-  </ion-list>
+  </ion-list> -->
 
   <div *ngIf="(viewPage === 'inbox' && inbox.length === 0)" class="no-items">No messages in Inbox.</div>
+  
+  <div *ngIf="(viewPage === 'sent')">
+    <div *ngFor="let msg of outbox" class="feedback-block" [ngClass]="msg.readed ? 'message-readed' : 'message-unreaded'" (click)="outboxMessageClick(msg);">
+      <div class="feedback-icon">
+        <ion-icon name="{{ msg.readed ? 'mail' : 'mail-unread' }}"></ion-icon>
+      </div>
+      <div class="feedback-data">
+        {{ msg.message }}
+        <br>
+        <span class="feedback-by-user">{{ msg.recipient_name }}</span>
+        <span class="feedback-time">{{ msg.ago }}</span>
+      </div>
+    </div>
+  </div>
 
-  <ion-list lines="full" *ngIf="viewPage === 'sent'">
+  <!-- <ion-list lines="full" *ngIf="viewPage === 'sent'">
     <div class="list-item sent-item" [ngClass]="!message.readed ? 'unreaded' : 'list-item-secondary readed'" *ngFor="let message of outbox" (click)="readOutboxMessage(message.id)">
       <ion-item color="transparent">
         <ion-label>
@@ -62,11 +90,25 @@
         </ion-label>
       </ion-item>
     </div>
-  </ion-list>
+  </ion-list> -->
 
   <div *ngIf="(viewPage === 'sent' && outbox.length === 0)" class="no-items">No messages in outbox.</div>
 
-  <ion-list lines="full" *ngIf="viewPage === 'feedback'">
+  <div *ngIf="(viewPage === 'feedback')">
+    <div *ngFor="let f of feedback" class="feedback-block" [ngClass]="f.feedback === 1 ? 'feedback-positive' : 'feedback-negative'">
+      <div class="feedback-icon">
+        <ion-icon name="{{ f.feedback === 1 ? 'thumbs-up' : 'thumbs-down' }}"></ion-icon>
+      </div>
+      <div class="feedback-data">
+        {{ f.message }}
+        <br>
+        <span class="feedback-by-user">{{ f.user_name }}</span>
+        <span class="feedback-time">{{ f.ago }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- <ion-list lines="full" *ngIf="viewPage === 'feedback'">
     <div class="list-item" [ngClass]="item.feedback === 1 ? 'list-item-success' : 'list-item-danger'" *ngFor="let item of feedback">
       <ion-item color="transparent">
         <ion-label>
@@ -83,7 +125,7 @@
         </ion-label>
       </ion-item>
     </div>
-  </ion-list>
+  </ion-list> -->
 
   <div *ngIf="(viewPage === 'feedback' && feedback.length === 0)" class="no-items">You have not received any feedback yet.</div>
 
